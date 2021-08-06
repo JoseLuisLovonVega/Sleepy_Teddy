@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.PatientViews.CuestionarioPHQ9" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <StackLayout Margin="10, 12">
+            <Label Text="Durante las 2 últimas semanas, ¿con qué frecuencia ha sentido molestias debido a cualquiera de los siguientes problemas?"
+                   FontSize="17" TextColor="Black" FontAttributes="Bold"></Label>
+            <Label Text="1. Poco interés o placer en hacer las cosas" FontSize="16"></Label>
+            <Picker 
+                x:Name="picker1"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+            </Picker>
+            <Label Text="2. Sentirse desanimado/a, deprimido/a sin esperanzas" FontSize="16" FontAttributes="Bold"></Label>
+                <Picker 
+                x:Name="picker2"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+                </Picker>
+            <Label Text="3. Dificultades para quedarse dormido/a o mantenerse durmiendo, o dormir demasiado" FontSize="16" FontAttributes="Bold"></Label>
+                    <Picker 
+                x:Name="picker3"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+                    </Picker>
+            <Label Text="4. Sentirse cansado/a con poca energía" FontSize="16" FontAttributes="Bold"></Label>
+            <Picker 
+                x:Name="picker4" 
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+            </Picker>
+            <Label Text="5. Poco apetito o comer en exceso" FontSize="16" FontAttributes="Bold"></Label>
+            <Picker 
+                x:Name="picker5"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+            </Picker>
+            <Label Text="6. Sentirse mal acerca de si mismo/a - o sentir que es un fracasado/a o que se ha fallado a sí mismo o a su familia" FontSize="16" FontAttributes="Bold"></Label>
+            <Picker 
+                x:Name="picker6"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+            </Picker>
+            <Label Text="7. Dificultad para concentrarse en las cosas, tales como leer el periódico o ver televisión" FontSize="16" FontAttributes="Bold"></Label>
+            <Picker 
+                x:Name="picker7"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+            </Picker>
+            <Label Text="8. ¿Moverse o hablar tan despacio que otras personas lo pueden haber notado? O lo contrario - estar tan inquieto/a oo intraquilo/a que se ha estado moviendo mucho más de lo normal" FontSize="16" FontAttributes="Bold"></Label>
+            <Picker 
+                x:Name="picker8"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+            </Picker>
+            <Label Text="9. Pensamientos de que sería mejor estar muerto/a o que quisiera lastimarse a sí mismo de alguna manera" FontSize="16" FontAttributes="Bold"></Label>
+            <Picker 
+                x:Name="picker9"
+                Title="Seleccione una respuesta" 
+                ItemDisplayBinding="{Binding Name}">
+            </Picker>
+
+            <Button Grid.Row="7"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnAceptar"
+                    Text="Aceptar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnAceptar_clicked" />
+
+
+            <Button Grid.Row="8"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnCancelar"
+                    Text="Cancelar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10" 
+                     Clicked="btnCancelar_clicked" />
+
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

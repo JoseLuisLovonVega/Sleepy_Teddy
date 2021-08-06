@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="SleepyTeddy.Views.TherapistViews.VisualizarInformacionPaciente"
+             NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+
+        <StackLayout Margin="5">
+            <Label x:Name="PatientInfo" FontSize="19" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+            
+            <Picker ItemsSource="{Binding ListPatientInfo}"
+                    Title="Seleccione un registro de monitoreo del sueño"
+                    ItemDisplayBinding="{Binding}"
+                    x:Name="cbxPatientInfo"
+                    Grid.Row="0"
+                    Grid.Column="0"  />
+            
+            <Button Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnBuscar"
+                    Text="Buscar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnBuscar_clicked" />
+
+            <Button Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnCancelar"
+                    Text="Cancelar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnCancelar_clicked"/>
+
+            <Button Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnFiltrar"
+                    Text="Filtrar los 7 Primeros Registros según F. Realización"
+                    TextColor="White"
+                    IsVisible="false"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="300"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnFiltrar_clicked"/>
+
+            <ListView x:Name="list_questionnaireResults"
+                      Margin="10" 
+                      VerticalOptions="Center" 
+                      HorizontalOptions="Center"
+                      HasUnevenRows="True" 
+                      Grid.Row="2" 
+                      Grid.Column="0">
+                <ListView.Header>
+                    <StackLayout HorizontalOptions="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*" />
+                                <ColumnDefinition Width="30*" />
+                                <ColumnDefinition Width="30*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label  
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="F. Asignación" FontSize="17" FontAttributes="Bold"/>
+                            <Label 
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="F. Realización" FontSize="17" FontAttributes="Bold"/>
+                            <Label 
+                                    HorizontalOptions="Center"
+                                    Grid.Column="2" Text="Puntaje" FontSize="17" FontAttributes="Bold"/>
+                        </Grid>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*" />
+                                    <ColumnDefinition Width="30*" />
+                                    <ColumnDefinition Width="30*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label  
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="{Binding D_Assigned_Date_S}" FontSize="17"/>
+                                <Label 
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="{Binding D_Completed_Date_S}" FontSize="17"/>
+                                <Label 
+                                    HorizontalOptions="Center"
+                                    Grid.Column="2" Text="{Binding N_Result}" FontSize="17"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <microcharts:ChartView x:Name="lineGraphView"/>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

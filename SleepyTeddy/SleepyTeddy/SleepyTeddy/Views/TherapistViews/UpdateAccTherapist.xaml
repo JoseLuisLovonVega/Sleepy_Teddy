@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.TherapistViews.UpdateAccTherapist" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid Margin="15" HorizontalOptions="Center" VerticalOptions="Center" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="5"
+                   Text="Mi Cuenta"
+                   FontSize="30"
+                   TextColor="#2c3e50"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <Entry Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="nmTpt"
+                   Placeholder="Nombres"
+                   TextChanged="nmTpt_TextChanged"
+                   IsEnabled="false"
+                   WidthRequest="300"
+                   VerticalOptions="Center"/>
+
+            <Entry Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="apTpt"
+                   TextChanged="apTpt_TextChanged"
+                   Placeholder="Apellidos"
+                   IsEnabled="false"
+                   WidthRequest="300"
+                   VerticalOptions="Center"/>
+
+            <Entry Grid.Row="3"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="espTpt"
+                   TextChanged="espTpt_TextChanged"
+                   Placeholder="Especialidad"
+                   WidthRequest="300"
+                   IsEnabled="false"
+                   VerticalOptions="Center"/>
+
+            <Entry Grid.Row="4"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="txEmail"
+                   Placeholder="Email"
+                   WidthRequest="300"
+                   IsEnabled="false"
+                   VerticalOptions="Center"            
+                   Keyboard="Email"/>
+
+            <Entry Grid.Row="5"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="txPsw"
+                   IsPassword="True"
+                   Placeholder="Contraseña (8 a 16 caracteres)"
+                   WidthRequest="300"
+                   VerticalOptions="Center"/>
+
+            <Button Grid.Row="6"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnAceptar"
+                    Text="Aceptar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnAceptar_clicked"/>
+
+            <Button Grid.Row="7"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnCancelar"
+                    Text="Cancelar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnCancelar_clicked" />
+
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

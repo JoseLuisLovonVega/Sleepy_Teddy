@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.AdministratorViews.UpdatePatient" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid  HorizontalOptions="Center" VerticalOptions="Center" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="5"
+                   Text="Actualizar Paciente"
+                   FontSize="25"
+                   TextColor="#2c3e50"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <Entry Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="nmPaciente"
+                   TextChanged="nmPaciente_TextChanged"
+                   Placeholder="Nombres"
+                WidthRequest="300"
+                   HorizontalOptions="Center"/>
+
+            <Entry Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="apPaciente"
+                   TextChanged="apPaciente_TextChanged"
+                   Placeholder="Apellidos"
+               WidthRequest="300"
+                   HorizontalOptions="Center"/>
+
+            <Label Grid.Row="3"
+                   Grid.Column="0" 
+                   Text="Fecha de Nacimiento" 
+                        HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <DatePicker Grid.Row="4"
+                   Grid.Column="0"
+                   x:Name="dtNacimiento"                   
+              WidthRequest="300"            
+                   HorizontalOptions="Center"/>
+
+            <Entry Grid.Row="5"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="txEmail"
+                   Placeholder="Email"
+                   WidthRequest="300"
+                   HorizontalOptions="Center"            
+                   Keyboard="Email"/>
+
+            <Entry Grid.Row="6"
+                   Grid.Column="0"
+                   Margin="5"                 
+                   x:Name="txPsw"
+                   Placeholder="Contraseña (8 a 16 caracteres)"
+                   IsPassword="True"
+                    WidthRequest="300"
+                   HorizontalOptions="Center"/>
+
+
+            <Button Grid.Row="7"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnAceptar"
+                    Text="Aceptar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnAceptar_clicked"/>
+
+
+
+            <Button Grid.Row="8"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnCancelar"
+                    Text="Cancelar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnCancelar_clicked" />
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

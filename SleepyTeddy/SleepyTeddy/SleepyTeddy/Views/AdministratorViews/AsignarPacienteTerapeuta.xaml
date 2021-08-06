@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:local="clr-namespace:SleepyTeddy.Views"
+            x:Class="SleepyTeddy.Views.AdministratorViews.AsignarPacienteTerapeuta" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <!--Pages can be added as references or inline-->
+
+
+    <!--<Picker Title="Seleccionar paciente" ItemsSource="{Binding ListPatient}"  SelectedItem="{Binding SelectedColorName, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" x:Name="lista_pacientes" Grid.Row="0" Grid.Column="1"  />-->
+
+    <ContentPage.Content>
+        
+        <StackLayout Margin="20">
+            <Label Text="Terapeuta" FontAttributes="Bold" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0"  />
+            <Picker Title="Seleccionar terapeuta"  
+                    ItemDisplayBinding="{Binding nombre_completo}"
+                    SelectedItem="{Binding ObjTherapistSel}" 
+                    x:Name="cbxTherapists" 
+                    />
+
+            <Label Text="Paciente" FontAttributes="Bold" HorizontalOptions="Center" Grid.Row="1" Grid.Column="0"  />
+            <Picker Title="Seleccionar paciente"  
+                    ItemDisplayBinding="{Binding nombre_completo}"
+                    SelectedItem="{Binding ObjPatientSel}" 
+                    x:Name="cbxPacients" 
+                    />
+
+            <Button Grid.Row="30"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnAceptar"
+                    Text="Asignar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnAceptar_clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

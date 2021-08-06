@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "855043071612",
+    "firebase_url": "https://sleepy-teddy-tp-default-rtdb.firebaseio.com",
+    "project_id": "sleepy-teddy-tp",
+    "storage_bucket": "sleepy-teddy-tp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855043071612:android:4d4024b8f5be36a460b3f9",
+        "android_client_info": {
+          "package_name": "com.company.sleepyteddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855043071612-gdk4gl3jmccqkqcqonv481in6422hd8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwPObiFGt_CoXyWpjZhbAnJ0gfbdXdps8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855043071612-gdk4gl3jmccqkqcqonv481in6422hd8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

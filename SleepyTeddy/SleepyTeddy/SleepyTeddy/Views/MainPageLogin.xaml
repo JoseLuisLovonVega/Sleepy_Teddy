@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.MainPageLogin" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid Margin="15" HorizontalOptions="Center" VerticalOptions="Center" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="5"
+                   Text="Login"
+                   FontSize="40"
+                   TextColor="#2c3e50"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="5"
+                   Text="Bienvenido(a) a Sleepy Teddy"
+                   FontSize="20"
+                   TextColor="#2c3e50"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            
+                <!-- <Entry Placeholder="User New Email"  x:Name="UserNewEmail"></Entry>
+        <Entry Placeholder="User New Password"  x:Name="UserNewPassword"></Entry>
+        <Button BackgroundColor="Black" TextColor="White" Text="Signup" Clicked="signupbutton_Clicked" x:Name="signupbutton"/>
+        <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand" BackgroundColor="Gray"/>
+        -->
+                <Entry Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="15"
+                   x:Name="UserLoginEmail"
+                   Text="{Binding Email}"
+                   Placeholder="Email"
+                   WidthRequest="250"
+                   HorizontalOptions="Center"
+                   Keyboard="Email"/>
+            
+                <Entry Grid.Row="3"
+                   Grid.Column="0"
+                   Margin="15"
+                   x:Name="UserLoginPassword"
+                   Text="{Binding Password}"
+                   Placeholder="Contraseña"
+                   WidthRequest="250"
+                   IsPassword="True"
+                   HorizontalOptions="Center"/>
+
+                <Button Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnAceptar"
+                    Text="Ingresar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Command="{Binding LoginCommand}"
+                    />
+
+            <Label Grid.Row="5"
+                   Grid.Column="0"
+                   Margin="5"
+                   Text="¿Administrador, no tienes una cuenta?"
+                   FontSize="15"
+                   TextColor="#2c3e50"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   
+                   />
+
+            <Button Grid.Row="6"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnregister"
+                    Text="Registrate"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Command="{Binding SignUp}"/>
+            <!--<Entry Placeholder="User  Email"  x:Name="UserLoginEmail"></Entry>
+        <Entry Placeholder="User Password"  x:Name="UserLoginPassword"></Entry>
+        <Button BackgroundColor="Black" Clicked="loginbutton_Clicked" TextColor="White" Text="Login" x:Name="loginbutton"/>
+        -->
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

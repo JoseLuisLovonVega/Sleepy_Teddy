@@ -1,0 +1,142 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\UpdateTerapeuta.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\UpdateTerapeuta.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="account.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="account.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.514" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="FirebaseAdmin" Version="2.2.0" />
+    <PackageReference Include="FirebaseAuthentication.net" Version="3.7.1" />
+    <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
+    <PackageReference Include="Microcharts" Version="0.9.5.9" />
+    <PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
+    <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+    <PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" />
+    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Plugin.CloudFirestore" Version="4.1.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+  </ItemGroup>
+	
+	<ItemGroup>
+    <ProjectReference Include="C:\WindesHeartApp\WindesHeartApp\WindesHeartApp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\TherapistViews\AsignarCuestionarioPaciente.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Update="Views\AdministratorViews\PaginaPrincipalAdministrador.xaml.cs">
+      <DependentUpon>PaginaPrincipalAdministrador.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PatientViews\Wearable.xaml.cs">
+      <DependentUpon>Wearable.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\VisualizarInformacionPaciente.xaml.cs">
+      <DependentUpon>VisualizarInformacionPaciente.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\BuscarPacienteTerapeuta.xaml.cs">
+      <DependentUpon>BuscarPacienteTerapeuta.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AdministratorViews\BuscarTerapeuta.xaml.cs">
+      <DependentUpon>BuscarTerapeuta.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PatientViews\CuestionarioPHQ9.xaml.cs">
+      <DependentUpon>CuestionarioPHQ9.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PatientViews\MisCuestionarios.xaml.cs">
+      <DependentUpon>MisCuestionarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MiCuentaPaciente.xaml.cs">
+      <DependentUpon>MiCuentaPaciente.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MiCuenta.xaml.cs">
+      <DependentUpon>MiCuenta.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PatientViews\PaginaPrincipalPaciente.xaml.cs">
+      <DependentUpon>PaginaPrincipalPaciente.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\PaginaPrincipalTerapeuta.xaml.cs">
+      <DependentUpon>PaginaPrincipalTerapeuta.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PatientViews\UpdateAccPatient.xaml.cs">
+      <DependentUpon>UpdateAccPatient.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AdministratorViews\UpdatePatient.xaml.cs">
+      <DependentUpon>UpdatePatient.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AdministratorViews\UpdateTherapist.xaml.cs">
+      <DependentUpon>UpdateTherapist.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\UpdateAccTherapist.xaml.cs">
+      <DependentUpon>UpdateAccTerapeuta.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\AdministratorViews\AsignarPacienteTerapeuta.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdministratorViews\BuscarPaciente.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PatientViews\MisCuestionarios.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PatientViews\CuestionarioISI.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PatientViews\CuestionarioPHQ9.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PatientViews\CuestionarioPSQI.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainPageLogin.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdministratorViews\PaginaPrincipalAdministrador.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdministratorViews\RegAdministrador.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdministratorViews\RegPaciente.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdministratorViews\RegTerapeuta.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdministratorViews\UpdateAccAdm.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdministratorViews\UpdatePatient.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.AdministratorViews.BuscarTerapeuta" NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+
+        <ScrollView>
+            <Grid Margin="5, 15, 5, 15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+
+                <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="5"
+                   x:Name="apTherapist"
+                   TextChanged="apTherapist_TextChanged"
+                   Placeholder="Apellidos del terapeuta"
+                   WidthRequest="250"
+                   HorizontalOptions="Center"/>
+
+                <Button Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    x:Name="btnBuscar"
+                    Text="Buscar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnBuscar_clicked" />
+                
+                <Button Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="5"
+                    x:Name="btnRegisterTherapist"
+                    Text="Crear Terapeuta"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnRegisterTherapist_clicked" />
+
+
+                <ListView x:Name="list_therapist" 
+                      Margin="10" 
+                      VerticalOptions="Center" 
+                      ItemTapped="Handle_ItemTapped" 
+                      HasUnevenRows="True" 
+                      Grid.Row="3" 
+                      Grid.Column="0">
+                    <ListView.Header>
+                        <StackLayout HorizontalOptions="Center">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label  
+                                    HorizontalOptions="Center" FontAttributes="Bold"
+                                    Grid.Column="0" Text="Nombre Completo" FontSize="17"   />
+                            </Grid>
+                        </StackLayout>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="15,0">
+                                    <Label x:Name="nameTerapeuta" 
+                                       Text="{Binding nombre_completo}" 
+                                       FontSize="17" 
+                                       HorizontalOptions="Center"
+                                       Margin="10"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>

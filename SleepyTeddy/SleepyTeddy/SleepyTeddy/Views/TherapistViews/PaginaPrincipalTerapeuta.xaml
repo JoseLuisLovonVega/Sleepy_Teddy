@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:SleepyTeddy.Views.TherapistViews"
+            x:Class="SleepyTeddy.Views.TherapistViews.PaginaPrincipalTerapeuta" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="True">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="Mi Cuenta"
+                 IconImageSource="account.png"
+                 Order="Default"
+                 Priority="0"
+                 Clicked="AccountSelect"/>
+        <ToolbarItem Order="Primary" Priority="0" />
+        <ToolbarItem Order="Primary" Priority="0" />
+        <ToolbarItem Order="Primary" Priority="0" />
+        <ToolbarItem Order="Primary" Priority="0" />
+        <ToolbarItem Order="Primary" Priority="0" />
+        <ToolbarItem Order="Primary" Priority="0" />
+        <ToolbarItem Order="Primary" Priority="0" />
+        <ToolbarItem Order="Primary" Priority="0" />
+    </TabbedPage.ToolbarItems>
+
+    <NavigationPage  Title="PACIENTES" >
+            <x:Arguments>
+                <local:BuscarPacienteTerapeuta />
+            </x:Arguments>
+        </NavigationPage>
+        <NavigationPage Title="CUESTIONARIOS">
+            <x:Arguments>
+                <local:AsignarCuestionarioPaciente />
+            </x:Arguments>
+        </NavigationPage>
+
+</TabbedPage>

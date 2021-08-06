@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.MiCuenta">
+    <ContentPage.Content>
+        <Grid Margin="15" HorizontalOptions="Center" VerticalOptions="Center" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Margin="5"
+                   Text="Cuenta"
+                   FontSize="40"
+                   TextColor="#2c3e50"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <Image   Grid.Row="1" 
+                     x:Name = "fileImage" 
+                     Aspect = "AspectFit" 
+                     HeightRequest = "70" 
+                     WidthRequest = "70"
+                     Source="account.png"/>
+
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="15"
+                   x:Name="NombreCompleto"
+                   FontSize="18"
+                   TextColor="Black"
+                   IsEnabled="False"
+                   WidthRequest="250"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
+
+            <StackLayout Grid.Row="3">
+                <Entry 
+                   Margin="15"
+                   IsEnabled="False"
+                   WidthRequest="250"
+                   Text="Mi Cuenta"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                         Tapped="Micuenta"
+                         NumberOfTapsRequired="1">
+                    </TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <Image    Grid.Row="3"
+                      Grid.Column="1"
+                     x:Name = "ImageMicuenta" 
+                     Aspect = "AspectFit" 
+                     HeightRequest = "20" 
+                     WidthRequest = "20"
+                     Source="derecha.png"/>
+            
+            <StackLayout Grid.Row="4" Grid.Column="0">
+                <Entry 
+                   Margin="15"
+                   IsEnabled="False"
+                   WidthRequest="250"
+                   Text="Cerrar Sesión"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                         Tapped="CerrarSesion"
+                         NumberOfTapsRequired="1">
+                    </TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
+                
+            </StackLayout>
+            <Image    Grid.Row="4"
+                      Grid.Column="1"
+                     x:Name = "ImageCerrarSesion" 
+                     Aspect = "AspectFit" 
+                     HeightRequest = "20" 
+                     WidthRequest = "20"
+                     Source="derecha.png"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
