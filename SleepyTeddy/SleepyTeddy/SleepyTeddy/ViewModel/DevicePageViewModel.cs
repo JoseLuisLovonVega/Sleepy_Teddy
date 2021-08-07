@@ -13,7 +13,7 @@ using Xamarin.Forms;
 
 namespace SleepyTeddy.ViewModel
 {
-    internal class DevicePageViewModel
+    public class DevicePageViewModel: INotifyPropertyChanged
     {
         private bool _isLoading;
         private string _statusText;
@@ -28,16 +28,18 @@ namespace SleepyTeddy.ViewModel
             if (DeviceList == null)
                 DeviceList = new ObservableCollection<BLEScanResult>();
             if (Windesheart.PairedDevice == null)
-                StatusText = "Desconectado";
-            ScanButtonText = "Escanear";
+                StatusText = "Disconnected";
+            ScanButtonText = "Scan for devices";
         }
         public void DisconnectButtonClicked(object sender, EventArgs args)
         {
             IsLoading = true;
             Windesheart.PairedDevice?.Disconnect();
             IsLoading = false;
-            StatusText = "Desconectado";
+            StatusText = "Disconnected";
             DeviceList = new ObservableCollection<BLEScanResult>();
+            //Globals.HomePageViewModel.Heartrate = 0;
+            //Globals.HomePageViewModel.Battery = 0;
         }
         private void OnPropertyChanged([CallerMemberName] string name = "")
         {
@@ -108,7 +110,6 @@ namespace SleepyTeddy.ViewModel
 
         public async void ScanButtonClicked(object sender, EventArgs args)
         {
-            //Console.WriteLine("scan button clicked");
             DeviceList = new ObservableCollection<BLEScanResult>();
             DisconnectButtonClicked(sender, EventArgs.Empty);
             try
@@ -117,7 +118,7 @@ namespace SleepyTeddy.ViewModel
                 if (CrossBleAdapter.Current.IsScanning)
                 {
                     Windesheart.StopScanning();
-                    ScanButtonText = "Escanear";
+                    ScanButtonText = "Scan for devices";
                     IsLoading = false;
                 }
                 else
@@ -125,23 +126,23 @@ namespace SleepyTeddy.ViewModel
 
                     if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOff)
                     {
-                        await Application.Current.MainPage.DisplayAlert("Bluetooth apagado",
-                            "El Bluetooth está apagado. Por favor habilite el Bluetooth para iniciar con el escaneo de los dispositivos", "OK");
-                        StatusText = "Bluetooth apagado";
+                        await Application.Current.MainPage.DisplayAlert("Bluetooth turned off",
+                            "Bluetooth is turned off. Please enable bluetooth to start scanning for devices", "OK");
+                        StatusText = "Bluetooth turned off";
                         return;
                     }
 
                     //If started scanning
                     if (Windesheart.StartScanning(OnDeviceFound))
                     {
-                        ScanButtonText = "Detener escaneo";
-                        StatusText = "Escaneando...";
+                        ScanButtonText = "Stop scanning";
+                        StatusText = "Scanning...";
                         IsLoading = true;
                     }
                     else
                     {
-                        StatusText = "No se pudo iniciar el escaneo.";
-                        ScanButtonText = "Escanear";
+                        StatusText = "Could not start scanning.";
+                        ScanButtonText = "Scan for devices";
                     }
                 }
             }
@@ -156,11 +157,11 @@ namespace SleepyTeddy.ViewModel
         /// </summary>
         public void OnDisappearing()
         {
-            Console.WriteLine("Deteniendo escaneo...");
+            Console.WriteLine("Stopping scanning...");
             Windesheart.StopScanning();
             IsLoading = false;
             StatusText = "";
-            ScanButtonText = "Escanear";
+            ScanButtonText = "Scan for devices";
             DeviceList = new ObservableCollection<BLEScanResult>();
         }
 

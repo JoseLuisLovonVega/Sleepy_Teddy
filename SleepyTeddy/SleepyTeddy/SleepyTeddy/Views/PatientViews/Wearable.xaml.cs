@@ -115,7 +115,7 @@ namespace SleepyTeddy.Views.PatientViews
             devicePageViewModel.OnDisappearing();
         }
 
-        public IPageAnimation PageAnimation { get; } = new SlidePageAnimation { Duration = AnimationDuration.Short, Subtype = AnimationSubtype.FromTop };
+        public IPageAnimation PageAnimation { get; } = new SlidePageAnimation { Duration = AnimationDuration.Short, Subtype = AnimationSubtype.FromLeft };
 
         public void OnAnimationStarted(bool isPopAnimation)
         {
