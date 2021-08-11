@@ -4,6 +4,9 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using WindesHeartApp.Data;
+using WindesHeartApp.Data.Repository;
+using WindesHeartApp.Resources;
 
 namespace SleepyTeddy
 {
@@ -14,6 +17,8 @@ namespace SleepyTeddy
         public App()
         {
             InitializeComponent();
+            var database = new Database();
+            Globals.BuildGlobals(new HeartrateRepository(database), new SleepRepository(database), new StepsRepository(database), database);
             MainPage = new NavigationPage(new MainPageLogin());
         }
 
