@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using WindesHeartApp.Pages;
-using WindesHeartApp.Resources;
-using WindesHeartApp.Services;
+using SleepyTeddy.Views.PatientViews;
+using SleepyTeddy.Services;
+//using WindesHeartApp.Pages;
+//using WindesHeartApp.Resources;
+//using WindesHeartApp.Services;
 using WindesHeartSDK;
 using WindesHeartSDK.Models;
 using Xamarin.Forms;
@@ -104,7 +106,7 @@ namespace SleepyTeddy.ViewModel
                 if (_selectedDevice == null)
                     return;
                 DeviceSelected(_selectedDevice.Device);
-                DevicePage.Devicelist.SelectedItem = null;
+                Wearable.Devicelist.SelectedItem = null;
             }
         }
 

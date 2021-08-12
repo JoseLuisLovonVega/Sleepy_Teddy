@@ -39,12 +39,15 @@
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Plugin.CloudFirestore" Version="4.1.0" />
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.Forms.AnimationNavigation" Version="2.0.0" />
   </ItemGroup>
-	
-	<ItemGroup>
-    <ProjectReference Include="C:\WindesHeartApp\WindesHeartApp\WindesHeartApp.csproj" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\WindesHeartSDK\WindesHeartSDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>

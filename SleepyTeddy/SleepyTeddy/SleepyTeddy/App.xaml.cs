@@ -4,6 +4,9 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SleepyTeddy.Resources;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace SleepyTeddy
 {
@@ -14,6 +17,7 @@ namespace SleepyTeddy
         public App()
         {
             InitializeComponent();
+            Globals.BuildGlobals();
             MainPage = new NavigationPage(new MainPageLogin());
         }
 
@@ -27,6 +31,14 @@ namespace SleepyTeddy
 
         protected override void OnResume()
         {
+        }
+        public static async void RequestLocationPermission()
+        {
+            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+            if (permissionStatus != PermissionStatus.Granted)
+            {
+                await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+            }
         }
     }
 }

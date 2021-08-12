@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SleepyTeddy.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,9 @@ namespace SleepyTeddy.Views.PatientViews
         }
         private async void AccountSelect(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MiCuentaPaciente());
+            await Navigation.PushAsync(new MiCuentaPaciente() {
+                BindingContext = Globals.MiCuentaPacienteViewModel
+        });
         }
 
         //Método para bloquear boton retroceder
@@ -32,8 +35,6 @@ namespace SleepyTeddy.Views.PatientViews
             });
             return true;
         }
-
-
 
     }
 

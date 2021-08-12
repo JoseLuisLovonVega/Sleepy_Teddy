@@ -19,12 +19,11 @@ namespace SleepyTeddy.Views.PatientViews
     {
         Patient patient;
         string documentId;
-        string Patient_ID;
+        string Patient_ID=LoginViewModel.Patient_ID;
         String REGEX_EMAIL = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
 
-        public UpdateAccPatient(string key_pacient)
+        public UpdateAccPatient()
         {
-            Patient_ID = key_pacient;
             InitializeComponent();
             getPatient();
         }

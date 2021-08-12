@@ -14,10 +14,16 @@ namespace SleepyTeddy.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            TabLayoutResource = Resource.Layout.Tabbar;
+            ToolbarResource = Resource.Layout.Toolbar;
+            FormsControls.Droid.Main.Init(this);
             base.OnCreate(savedInstanceState);
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
             UserDialogs.Init(this);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
             FirebaseApp.InitializeApp(Application.Context);       
             LoadApplication(new App());
             FirestoreService.Init(this);
