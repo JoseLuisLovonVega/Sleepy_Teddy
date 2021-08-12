@@ -7,6 +7,8 @@ using Xamarin.Forms.Xaml;
 using WindesHeartApp.Data;
 using WindesHeartApp.Data.Repository;
 using WindesHeartApp.Resources;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace SleepyTeddy
 {
@@ -32,6 +34,14 @@ namespace SleepyTeddy
 
         protected override void OnResume()
         {
+        }
+        public static async void RequestLocationPermission()
+        {
+            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+            if (permissionStatus != PermissionStatus.Granted)
+            {
+                await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+            }
         }
     }
 }

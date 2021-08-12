@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleepyTeddy.Android", "Slee
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SleepyTeddy", "SleepyTeddy\SleepyTeddy\SleepyTeddy.csproj", "{60F56486-F04E-451A-8D89-5D779E7D67C9}"
 	ProjectSection(ProjectDependencies) = postProject
-		{EF4FA66C-CF4B-45E5-8D12-8BA509ADA998} = {EF4FA66C-CF4B-45E5-8D12-8BA509ADA998}
+		{9C176B25-634A-4BBD-A8D8-90B913FB24ED} = {9C176B25-634A-4BBD-A8D8-90B913FB24ED}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{909EA80B-BBE4-4F09-93A3-06F399A9FFF4}"
@@ -15,12 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindesHeartApp", "..\..\WindesHeartApp\WindesHeartApp\WindesHeartApp.csproj", "{EF4FA66C-CF4B-45E5-8D12-8BA509ADA998}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D9D8BCA8-0022-4246-A351-3786AC19BEEA} = {D9D8BCA8-0022-4246-A351-3786AC19BEEA}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindesHeartApp", "..\..\WindesHeartApp\WindesHeartApp\WindesHeartApp.csproj", "{9C176B25-634A-4BBD-A8D8-90B913FB24ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindesHeartSDK", "..\..\WindesHeartSDK\WindesHeartSDK.csproj", "{D9D8BCA8-0022-4246-A351-3786AC19BEEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindesHeartSDK", "..\..\WindesHeartSDK\WindesHeartSDK.csproj", "{0F53B084-BEA0-456E-B4C3-A7AFE20D981D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,14 +37,14 @@ Global
 		{60F56486-F04E-451A-8D89-5D779E7D67C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60F56486-F04E-451A-8D89-5D779E7D67C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60F56486-F04E-451A-8D89-5D779E7D67C9}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{EF4FA66C-CF4B-45E5-8D12-8BA509ADA998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF4FA66C-CF4B-45E5-8D12-8BA509ADA998}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF4FA66C-CF4B-45E5-8D12-8BA509ADA998}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF4FA66C-CF4B-45E5-8D12-8BA509ADA998}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9D8BCA8-0022-4246-A351-3786AC19BEEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9D8BCA8-0022-4246-A351-3786AC19BEEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9D8BCA8-0022-4246-A351-3786AC19BEEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9D8BCA8-0022-4246-A351-3786AC19BEEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C176B25-634A-4BBD-A8D8-90B913FB24ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C176B25-634A-4BBD-A8D8-90B913FB24ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C176B25-634A-4BBD-A8D8-90B913FB24ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C176B25-634A-4BBD-A8D8-90B913FB24ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F53B084-BEA0-456E-B4C3-A7AFE20D981D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F53B084-BEA0-456E-B4C3-A7AFE20D981D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F53B084-BEA0-456E-B4C3-A7AFE20D981D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F53B084-BEA0-456E-B4C3-A7AFE20D981D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
