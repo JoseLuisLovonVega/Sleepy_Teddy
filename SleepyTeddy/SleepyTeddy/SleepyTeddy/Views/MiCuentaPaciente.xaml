@@ -91,8 +91,12 @@
                      HeightRequest = "20" 
                      WidthRequest = "20"
                      Source="derecha.png"/>
-            
-            <StackLayout Grid.Row="5" Grid.Column="0">
+
+            <StackLayout Grid.Row="5">
+                <Button x:Name="btnGPS" HorizontalOptions="Center" Text="GPS" Clicked="btnGPS_Clicked"></Button>
+            </StackLayout>
+
+            <StackLayout Grid.Row="6" Grid.Column="0">
                 <Entry 
                    Margin="15"
                    IsEnabled="False"
@@ -109,7 +113,7 @@
                 </StackLayout.GestureRecognizers>
                 
             </StackLayout>
-            <Image    Grid.Row="5"
+            <Image    Grid.Row="6"
                       Grid.Column="1"
                      x:Name = "ImageCerrarSesionPaciente" 
                      Aspect = "AspectFit" 

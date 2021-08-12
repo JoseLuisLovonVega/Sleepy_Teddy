@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using WindesHeartApp.Pages;
+
+using Xamarin.Essentials;
 
 namespace SleepyTeddy.Views
 {
@@ -53,6 +56,17 @@ namespace SleepyTeddy.Views
         {
             await Navigation.PushAsync(new MainPageLogin());         
         }
+
+        private async void btnGPS_Clicked(object sender, EventArgs e)
+        {
+            var location = await Geolocation.GetLastKnownLocationAsync();
+
+            if (location != null)
+            {
+                Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+            }
+        }
+
 
     }
 }
