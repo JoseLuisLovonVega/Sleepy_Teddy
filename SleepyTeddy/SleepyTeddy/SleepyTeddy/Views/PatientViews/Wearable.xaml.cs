@@ -13,6 +13,7 @@ using SleepyTeddy.Models;
 using System.Text.RegularExpressions;
 using FormsControls.Base;
 using WindesHeartApp.Pages;
+using SleepyTeddy.Resources;
 
 namespace SleepyTeddy.Views.PatientViews
 {
@@ -20,24 +21,20 @@ namespace SleepyTeddy.Views.PatientViews
     public partial class Wearable : ContentPage, IAnimationPage
     {
         //DevicePageViewModel devicePageViewModel;
+        string Patient_ID=LoginViewModel.Patient_ID;
         public static ListView Devicelist;
         public static Button ScanButton;
         Patient patient;
         string documentId;
-        string Patient_ID;
         
-        public Wearable(string key_pacient)
+        public Wearable()
         {
-            Patient_ID = key_pacient;
             InitializeComponent(); 
-            getPatient();
-            //devicePageViewModel = new DevicePageViewModel();
-            //BindingContext = devicePageViewModel;
-            BindingContext = Globals.DevicePageViewModel;
+            //getPatient();
             BuildPage();
         }
 
-        private async void getPatient()
+        /*private async void getPatient()
         {
             String role_id = "2";
             var document = await CrossCloudFirestore.Current
@@ -48,10 +45,11 @@ namespace SleepyTeddy.Views.PatientViews
                                        .GetAsync();
             patient = document.Documents.ElementAt(0).ToObject<Patient>();
             documentId = document.Documents.ElementAt(0).Id;
-        }
+        }*/
         public static void BuildPageBasics(AbsoluteLayout layout, object sender)
         {
             NavigationPage.SetHasNavigationBar((ContentPage)sender, false);
+            layout.BackgroundColor = Color.White;
             ((ContentPage)sender).Content = layout;
         }
         private void BuildPage()
@@ -60,7 +58,7 @@ namespace SleepyTeddy.Views.PatientViews
             BuildPageBasics(absoluteLayout, this);
             PageBuilder.AddLabel(absoluteLayout, "Wearables Encontrados", 0.50, 0.05, Color.Black, "", 30);
 
-            ScanButton = PageBuilder.AddButton(absoluteLayout, "", Globals.DevicePageViewModel.ScanButtonClicked, 0.15, 0.25, 120, 50, 14, 12, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#0AB8AA"));
+            ScanButton = PageBuilder.AddButton(absoluteLayout, "", Global.DevicePageViewModel.ScanButtonClicked, 0.15, 0.25, 120, 50, 14, 12, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#0AB8AA"));
             ScanButton.SetBinding(Button.TextProperty, "ScanButtonText");
             PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.25, 50, 50, AbsoluteLayoutFlags.PositionProportional, Color.Black);
             PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.25, 50, 50, AbsoluteLayoutFlags.PositionProportional, Color.Black);
@@ -73,10 +71,9 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     ColumnDefinitions = new ColumnDefinitionCollection
                     {
-                        new ColumnDefinition {Width = 30},
-                        new ColumnDefinition {Width = 30},
-
-                        new ColumnDefinition {Width = 30},
+                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
+                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
+                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
                     }
                 };
 
@@ -104,7 +101,7 @@ namespace SleepyTeddy.Views.PatientViews
             #endregion
 
             #region disconnectButton
-            Button disconnectButton = PageBuilder.AddButton(absoluteLayout, "Desconectar", Globals.DevicePageViewModel.DisconnectButtonClicked, 0.50, 0.85, 120, 50, 14, 12, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#0AB8AA"));
+            Button disconnectButton = PageBuilder.AddButton(absoluteLayout, "Desconectar", Global.DevicePageViewModel.DisconnectButtonClicked, 0.50, 0.85, 120, 50, 14, 12, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#0AB8AA"));
             #endregion
 
             #region cancelButton
@@ -114,7 +111,7 @@ namespace SleepyTeddy.Views.PatientViews
 
         protected override void OnDisappearing()
         {
-            Globals.DevicePageViewModel.OnDisappearing();
+            Global.DevicePageViewModel.OnDisappearing();
         }
 
         public IPageAnimation PageAnimation { get; } = new SlidePageAnimation { Duration = AnimationDuration.Short, Subtype = AnimationSubtype.FromLeft };

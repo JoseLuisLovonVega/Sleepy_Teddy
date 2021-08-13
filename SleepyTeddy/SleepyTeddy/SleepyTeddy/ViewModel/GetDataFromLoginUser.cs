@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SleepyTeddy.ViewModel;
+using SleepyTeddy.Resources;
 
 namespace SleepyTeddy.ViewModel
 {
@@ -22,7 +23,8 @@ namespace SleepyTeddy.ViewModel
         public List<string> ListPatientInfo { get; set; }
         public List<QuestionnairesView> ListQuestionnairesPatient { get; set; }
         public List<QuestionnairesView> ListQuestionnaireData { get; set; }
-
+        public List<SleepRecordsView> ListSleepRecords { get; set; }
+        public List<SleepWakeDiariesView> ListSleepWakeDiaries { get; set; }
 
         public GetDataFromLoginUser()
         {
@@ -172,6 +174,57 @@ namespace SleepyTeddy.ViewModel
             resModel.ForEach(a => ListQuestionnaireData.Add(config.CreateMapper().Map<Questionnaire, QuestionnairesView>(a)));
             return;
         }
+        //Obtener los sleep records del paciente que inició sesión para completar los campos del SleepWakeDiary
+        public async Task GetSleepRecordsViewAsync()
+        {
+            ListSleepRecords = new List<SleepRecordsView>();
+            string patientId = LoginViewModel.Patient_ID;
+            var document = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("SleepRecords")
+                                       .WhereEqualsTo("SleepWakeDiary_ID", Global.MiCuentaPacienteViewModel.SleepWakeDiary)
+                                       .WhereEqualsTo("Patient_ID", patientId)
+                                       .GetAsync();
+
+            var resModel = document.ToObjects<SleepRecord>().ToList();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<SleepRecord, SleepRecordsView>()
+                .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepRecord_ID))
+                .ForMember(d => d.SleepWakeDiary_ID, o => o.MapFrom(c => c.SleepWakeDiary_ID))
+                .ForMember(d => d.DateTimeHour, o => o.MapFrom(c => c.DateTimeHour))
+                .ForMember(d => d.Kind, o => o.MapFrom(c => c.Kind));
+            });
+
+            resModel.ForEach(a => ListSleepRecords.Add(config.CreateMapper().Map<SleepRecord, SleepRecordsView>(a)));
+            return;
+        }
+
+        //Obtener los diarios de sueño del paciente seleccionado por el terapeuta que inició sesión
+        public async Task GetSleepWakeDiariesViewAsync(string patientId)
+        {
+            ListSleepWakeDiaries = new List<SleepWakeDiariesView>();
+            var document = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("SleepWakeDiaries")
+                                       .WhereEqualsTo("Patient_ID", patientId)
+                                       .GetAsync();
+
+            var resModel = document.ToObjects<SleepWakeDiary>().ToList();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<SleepWakeDiary, SleepWakeDiariesView>()
+                .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepWakeDiary_ID))
+                .ForMember(d => d.CreatedDate, o => o.MapFrom(c => c.CreatedDate))
+                .ForMember(d => d.SleepTime, o => o.MapFrom(c => c.SleepTime))
+                .ForMember(d => d.WakeUpTime, o => o.MapFrom(c => c.WakeUpTime))
+                .ForMember(d => d.HoursSlept, o => o.MapFrom(c => c.HoursSlept))
+                .ForMember(d => d.SleepEfficiency, o => o.MapFrom(c => c.SleepEfficiency));
+            });
+
+            resModel.ForEach(a => ListSleepWakeDiaries.Add(config.CreateMapper().Map<SleepWakeDiary, SleepWakeDiariesView>(a)));
+            return;
+        }
     }
         public class PatientsView
         {
@@ -199,5 +252,23 @@ namespace SleepyTeddy.ViewModel
             public string D_Completed_Date_S { get; set; }
             public float N_Result { get; set; }
         }
+        public class SleepRecordsView
+        {   
+        public string Key { get; set; }
+        public string SleepWakeDiary_ID { get; set; }
+        public DateTime DateTimeHour { get; set; }
+        public Kind Kind { get; set; }
+        }
+        public class SleepWakeDiariesView
+        {
+        public string Key { get; set; }
+        public string SleepWakeDiary_ID { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime SleepTime { get; set; }
+        public DateTime WakeUpTime { get; set; }
+        public Double HoursSlept { get; set; }
+        public Double SleepEfficiency { get; set; }
+    }
+
     public class ListQuestionnaireResultsPatient : ObservableCollection<QuestionnairesView> { }
 }

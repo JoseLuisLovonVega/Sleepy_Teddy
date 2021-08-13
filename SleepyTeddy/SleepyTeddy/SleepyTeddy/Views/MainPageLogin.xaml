@@ -16,8 +16,15 @@
                 <ColumnDefinition Width="Auto"/>
                 
             </Grid.ColumnDefinitions>
-            
-            <Label Grid.Row="0"
+
+            <Image   Grid.Row="0" 
+                     x:Name = "fileImage" 
+                     Aspect = "AspectFit" 
+                     HeightRequest = "90" 
+                     WidthRequest = "90"
+                     Source="Teddy.png"/>
+
+            <Label Grid.Row="1"
                    Grid.Column="0"
                    Margin="5"
                    Text="Login"
@@ -26,10 +33,10 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
             
-            <Label Grid.Row="1"
+            <Label Grid.Row="2"
                    Grid.Column="0"
                    Margin="5"
-                   Text="Bienvenido(a) a Sleepy Teddy"
+                   Text="Bienvenid@ a Sleepy Teddy"
                    FontSize="20"
                    TextColor="#2c3e50"
                    HorizontalOptions="Center"
@@ -40,7 +47,7 @@
         <Button BackgroundColor="Black" TextColor="White" Text="Signup" Clicked="signupbutton_Clicked" x:Name="signupbutton"/>
         <BoxView HeightRequest="1" HorizontalOptions="FillAndExpand" BackgroundColor="Gray"/>
         -->
-                <Entry Grid.Row="2"
+                <Entry Grid.Row="3"
                    Grid.Column="0"
                    Margin="15"
                    x:Name="UserLoginEmail"
@@ -50,7 +57,7 @@
                    HorizontalOptions="Center"
                    Keyboard="Email"/>
             
-                <Entry Grid.Row="3"
+                <Entry Grid.Row="4"
                    Grid.Column="0"
                    Margin="15"
                    x:Name="UserLoginPassword"
@@ -60,7 +67,7 @@
                    IsPassword="True"
                    HorizontalOptions="Center"/>
 
-                <Button Grid.Row="4"
+                <Button Grid.Row="5"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnAceptar"
@@ -73,7 +80,7 @@
                     Command="{Binding LoginCommand}"
                     />
 
-            <Label Grid.Row="5"
+            <Label Grid.Row="6"
                    Grid.Column="0"
                    Margin="5"
                    Text="¿Administrador, no tienes una cuenta?"
@@ -84,7 +91,7 @@
                    
                    />
 
-            <Button Grid.Row="6"
+            <Button Grid.Row="7"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnregister"

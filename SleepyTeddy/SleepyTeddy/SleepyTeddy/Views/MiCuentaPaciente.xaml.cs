@@ -12,7 +12,14 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using WindesHeartApp.Resources;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WindesHeartSDK;
+using WindesHeartApp.Services;
+using WindesHeartApp.Pages;
+using FormsControls.Base;
+using SleepyTeddy.Resources;
 
 namespace SleepyTeddy.Views
 {
@@ -20,13 +27,19 @@ namespace SleepyTeddy.Views
     public partial class MiCuentaPaciente : ContentPage
     {
         string patient_id = LoginViewModel.Patient_ID;
-        Patient patient;
+        Patient patient = new Patient();
+        public static Button UpdatePatientButton;
+        public static Button WearableButton;
+        public static Button CerrarSesionButton;
+        private readonly string _propertyKey = "LastConnectedDevice";
+        string NombreCompleto;
         public MiCuentaPaciente()
         {
             //accountViewModel = new AccountViewModel();
             InitializeComponent();
-            //BindingContext = accountViewModel;
-            getPatient();
+            BindingContext = Global.MiCuentaPacienteViewModel;
+            //getPatient();
+            BuildPage();
 
         }
 
@@ -38,7 +51,27 @@ namespace SleepyTeddy.Views
                 return;
         }
 
-        private async void getPatient()
+        //Set UUID in App-properties
+        private void SetApplicationProperties()
+        {
+            if (Windesheart.PairedDevice != null)
+            {
+                App.Current.Properties[_propertyKey] = Windesheart.PairedDevice.Uuid;
+            }
+        }
+
+        //Handle Auto-connect to the last connected device with App-properties
+        private async Task HandleAutoConnect()
+        {
+            var knownGuid = App.Current.Properties[_propertyKey].ToString();
+            if (!string.IsNullOrEmpty(knownGuid))
+            {
+                var knownDevice = await Windesheart.GetKnownDevice(Guid.Parse(knownGuid));
+                knownDevice.Connect(CallbackHandler.OnConnect);
+            }
+        }
+
+        private async Task getPatient()
         {
             string role_id = "2";
             var document = await CrossCloudFirestore.Current
@@ -48,19 +81,91 @@ namespace SleepyTeddy.Views
                                        .WhereEqualsTo("Patient_ID", patient_id)
                                        .GetAsync();
             patient = document.Documents.ElementAt(0).ToObject<Patient>();
-            NombreCompleto.Text = patient.Names + " " + patient.Last_Names;
+            NombreCompleto = patient.Names + " " + patient.Last_Names;
         }
+        public static void BuildPageBasics(AbsoluteLayout layout, object sender)
+        {
+            NavigationPage.SetHasNavigationBar((ContentPage)sender, true);
+            layout.BackgroundColor = Color.White;
+            ((ContentPage)sender).Content = layout;
+        }
+        public static void AddAccountImage(AbsoluteLayout layout)
+        {
+            Image accountOnlyImage = new Image { Source = "account.png" };
+            AbsoluteLayout.SetLayoutFlags(accountOnlyImage, AbsoluteLayoutFlags.PositionProportional);
+            AbsoluteLayout.SetLayoutBounds(accountOnlyImage, new Rectangle(0.5, 0.20, 120, 120));
+
+            layout.Children.Add(accountOnlyImage);
+        }
+        private async void BuildPage()
+        {
+            absoluteLayout = new AbsoluteLayout();
+            BuildPageBasics(absoluteLayout, this);
+            await getPatient();
+            PageBuilder.AddLabel(absoluteLayout, NombreCompleto, 0.5, 0.07, Color.Black, "", 22);
+            AddAccountImage(absoluteLayout);
+            #region define fetch progressbar 
+            ProgressBar fetchProgressBar = new ProgressBar
+            {
+                ProgressColor = Color.Red,
+                HeightRequest = 20
+            };
+
+            fetchProgressBar.SetBinding(ProgressBar.ProgressProperty, new Binding("FetchProgress"));
+            fetchProgressBar.SetBinding(ProgressBar.IsVisibleProperty, new Binding("FetchProgressVisible"));
+
+            AbsoluteLayout.SetLayoutBounds(fetchProgressBar, new Rectangle(0.5, 0.25, 0.95, -1));
+            AbsoluteLayout.SetLayoutFlags(fetchProgressBar, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.WidthProportional);
+
+            absoluteLayout.Children.Add(fetchProgressBar);
+            #endregion
+
+            #region define battery and hr Label
+            Image batteryImage = new Image { HeightRequest = (int)(10) };
+            batteryImage.SetBinding(Image.SourceProperty, new Binding("BatteryImage"));
+            AbsoluteLayout.SetLayoutBounds(batteryImage, new Rectangle(0.85, 0.183, -1, -1));
+            AbsoluteLayout.SetLayoutFlags(batteryImage, AbsoluteLayoutFlags.PositionProportional);
+
+            var bandNameLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.155, Color.Black, "BandNameLabel", 9);
+            bandNameLabel.FontAttributes = FontAttributes.Bold;
+            bandNameLabel.FontAttributes = FontAttributes.Italic;
+
+            var batteryLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.18, Color.Black, "DisplayBattery", (int)(10));
+            batteryLabel.FontAttributes = FontAttributes.Bold;
+            absoluteLayout.Children.Add(batteryImage);
+
+            /*Label hrLabel = new Label { FontSize = 2.5, FontAttributes = FontAttributes.Bold };
+            hrLabel.SetBinding(Label.TextProperty, new Binding("DisplayHeartRate"));
+            AbsoluteLayout.SetLayoutBounds(hrLabel, new Rectangle(0.15, 0.18, -1, -1));
+            AbsoluteLayout.SetLayoutFlags(hrLabel, AbsoluteLayoutFlags.PositionProportional);
+            absoluteLayout.Children.Add(hrLabel);*/
+            #endregion
+
+            PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.65, 80, 80, AbsoluteLayoutFlags.PositionProportional, Color.Black);
+
+            //int buttonSize = (int)(3);
+            UpdatePatientButton = PageBuilder.AddButton(absoluteLayout, "Mi Cuenta", Global.MiCuentaPacienteViewModel.MicuentaPaciente, 0.50, 0.50, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
+            WearableButton = PageBuilder.AddButton(absoluteLayout, "Wearable", Global.MiCuentaPacienteViewModel.Weareable, 0.50, 0.65, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
+            CerrarSesionButton = PageBuilder.AddButton(absoluteLayout, "Cerrar Sesión", Global.MiCuentaPacienteViewModel.CerrarSesion, 0.50, 0.80, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
+
+        }
+
+        public IPageAnimation PageAnimation { get; } = new SlidePageAnimation { Duration = AnimationDuration.Short, Subtype = AnimationSubtype.FromTop };
+
         private async void MicuentaPaciente(object sender, EventArgs args)
         {
-                await Navigation.PushAsync(new UpdateAccPatient(patient_id));
+            await Navigation.PushAsync(new UpdateAccPatient());
         }
         private async void Weareable(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new Wearable(patient_id));
+            await Navigation.PushAsync(new Wearable()
+            {
+                BindingContext = Global.DevicePageViewModel
+            });
         }
         private async void CerrarSesion(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new MainPageLogin());         
+            await Navigation.PushAsync(new MainPageLogin());
         }
 
     }
