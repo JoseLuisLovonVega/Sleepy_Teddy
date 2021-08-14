@@ -17,7 +17,7 @@ namespace SleepyTeddy.Services
 {
     public class SamplesService
     {
-        string patient_ID = LoginViewModel.Patient_ID;
+        //string patient_ID = LoginViewModel.Patient_ID;
         private DateTime _fetchingStartDate;
         private int _totalSamples = 0;
         SleepWakeDiary sleepWakeDiary;
@@ -137,7 +137,7 @@ namespace SleepyTeddy.Services
                          .AddAsync(new SleepWakeDiary
                          {
                              SleepWakeDiary_ID = Global.MiCuentaPacienteViewModel.SleepWakeDiary,
-                             Patient_ID = patient_ID,
+                             Patient_ID = LoginViewModel.Patient_ID,
                              CreatedDate = DateTime.Now.AddHours(-5),
                              SleepTime= DateTime.MinValue,
                              WakeUpTime= DateTime.MinValue,

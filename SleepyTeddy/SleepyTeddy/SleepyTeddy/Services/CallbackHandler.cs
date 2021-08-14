@@ -40,6 +40,7 @@ namespace SleepyTeddy.Services
             {
                 try
                 {
+                   
                     //Sync settings
                     Windesheart.PairedDevice.SetTime(DateTime.Now);
                     Windesheart.PairedDevice.SetDateDisplayFormat(DeviceSettings.DateFormatDMY);
@@ -64,25 +65,27 @@ namespace SleepyTeddy.Services
                     Windesheart.PairedDevice.Disconnect();
                     Global.DevicePageViewModel.IsLoading = false;
                 }
+                if (Global.DevicePageViewModel.StatusText != "Conectado")
+                {
+                    Global.MiCuentaPacienteViewModel.SleepWakeDiary = Guid.NewGuid().ToString().Replace("-", "");
+                    Global.SamplesService.AddSleepWakeDiary();
+                }
 
                 Global.DevicePageViewModel.StatusText = "Conectado";
                 Global.DevicePageViewModel.DeviceList = new ObservableCollection<BLEScanResult>();
                 Global.DevicePageViewModel.IsLoading = false;
-                Global.MiCuentaPacienteViewModel.SleepWakeDiary = Guid.NewGuid().ToString().Replace("-", "");
 
                 Global.MiCuentaPacienteViewModel.ReadCurrentBattery();
                 Global.MiCuentaPacienteViewModel.BandNameLabel = Windesheart.PairedDevice.Name;
-                Global.SamplesService.AddSleepWakeDiary();
 
                 Device.BeginInvokeOnMainThread(delegate { Application.Current.MainPage.Navigation.PopAsync(); });
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización exitosa - Registro de diario de sueño-vigilia iniciado", new TimeSpan(4));
+                //Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización exitosa - Registro de diario de sueño-vigilia iniciado", new TimeSpan(4));
                 Globals.SamplesService.StartFetching();
-                Global.SamplesService.StartFetching();
             }
             else if (result == ConnectionResult.Failed)
             {
                 Debug.WriteLine("ERROR");
-                Acr.UserDialogs.UserDialogs.Instance.Toast("ERROR - Sincronización fallida", new TimeSpan(3));
+                //Acr.UserDialogs.UserDialogs.Instance.Toast("ERROR - Sincronización fallida", new TimeSpan(3));
                 return;
             }
         }

@@ -54,9 +54,9 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     ColumnDefinitions = new ColumnDefinitionCollection
                     {
-                        new ColumnDefinition {Width = Globals.ScreenWidth / 100 * 33},
-                        new ColumnDefinition {Width = Globals.ScreenWidth / 100 * 33},
-                        new ColumnDefinition {Width = Globals.ScreenWidth / 100 * 33},
+                        new ColumnDefinition {Width = 100},
+                        new ColumnDefinition {Width = 100},
+                        new ColumnDefinition {Width = 100},
                     }
                 };
 

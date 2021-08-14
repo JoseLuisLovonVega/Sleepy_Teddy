@@ -198,7 +198,9 @@ namespace SleepyTeddy.ViewModel
                         }
                     }
                 }
-                device.Connect(SleepyTeddy.Services.CallbackHandler.OnConnect);
+                device.Connect(CallbackHandler.OnConnect);
+                //device.Connect(Services.CallbackHandler.OnConnect);
+
                 SelectedDevice = null;
 
             }

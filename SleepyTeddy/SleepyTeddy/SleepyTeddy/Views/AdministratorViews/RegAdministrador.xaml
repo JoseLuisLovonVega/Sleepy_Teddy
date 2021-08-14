@@ -20,7 +20,7 @@
                    Grid.Column="0"
                    Margin="5"
                    Text="Registrarme"
-                   FontSize="25"
+                   FontSize="40"
                    TextColor="#2c3e50"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
@@ -70,7 +70,7 @@
                    WidthRequest="300"
                    HorizontalOptions="Center"/>
 
-            <Button Grid.Row="6"
+            <Button Grid.Row="7"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnAceptar"
@@ -82,7 +82,7 @@
                     CornerRadius="10"
                     Clicked="btnAceptar_clicked"/>
             
-            <Button Grid.Row="7"
+            <Button Grid.Row="8"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnCancelar"

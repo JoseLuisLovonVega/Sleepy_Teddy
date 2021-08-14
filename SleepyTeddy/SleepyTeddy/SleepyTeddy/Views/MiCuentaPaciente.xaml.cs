@@ -93,7 +93,7 @@ namespace SleepyTeddy.Views
         {
             Image accountOnlyImage = new Image { Source = "account.png" };
             AbsoluteLayout.SetLayoutFlags(accountOnlyImage, AbsoluteLayoutFlags.PositionProportional);
-            AbsoluteLayout.SetLayoutBounds(accountOnlyImage, new Rectangle(0.5, 0.20, 120, 120));
+            AbsoluteLayout.SetLayoutBounds(accountOnlyImage, new Rectangle(0.5, 0.20, 90, 90));
 
             layout.Children.Add(accountOnlyImage);
         }
@@ -121,22 +121,22 @@ namespace SleepyTeddy.Views
             #endregion
 
             #region define battery and hr Label
-            Image batteryImage = new Image { HeightRequest = (int)(Globals.ScreenHeight / 100 * 2.5) };
+            Image batteryImage = new Image { HeightRequest = 30 };
             batteryImage.SetBinding(Image.SourceProperty, new Binding("BatteryImage"));
-            AbsoluteLayout.SetLayoutBounds(batteryImage, new Rectangle(0.85, 0.183, -1, -1));
+            AbsoluteLayout.SetLayoutBounds(batteryImage, new Rectangle(0.95, 0.24, 30, 30));
             AbsoluteLayout.SetLayoutFlags(batteryImage, AbsoluteLayoutFlags.PositionProportional);
 
             var bandNameLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.155, Color.Black, "BandNameLabel", 9);
             bandNameLabel.FontAttributes = FontAttributes.Bold;
             bandNameLabel.FontAttributes = FontAttributes.Italic;
 
-            var batteryLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.18, Color.Black, "DisplayBattery", (int)(Globals.ScreenHeight / 100 * 2.5));
+            var batteryLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.18, Color.Black, "DisplayBattery", 12);
             batteryLabel.FontAttributes = FontAttributes.Bold;
             absoluteLayout.Children.Add(batteryImage);
 
-            Label hrLabel = new Label { FontSize = Globals.ScreenHeight / 100 * 2.5, FontAttributes = FontAttributes.Bold };
+            Label hrLabel = new Label { FontSize = 10, FontAttributes = FontAttributes.Bold };
             hrLabel.SetBinding(Label.TextProperty, new Binding("DisplayHeartRate"));
-            AbsoluteLayout.SetLayoutBounds(hrLabel, new Rectangle(0.15, 0.18, -1, -1));
+            AbsoluteLayout.SetLayoutBounds(hrLabel, new Rectangle(0.15, 0.18, 30, 30));
             AbsoluteLayout.SetLayoutFlags(hrLabel, AbsoluteLayoutFlags.PositionProportional);
             absoluteLayout.Children.Add(hrLabel);
             #endregion
