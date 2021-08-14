@@ -105,7 +105,7 @@ namespace SleepyTeddy.ViewModel
                 if (_selectedDevice == null)
                     return;
                 DeviceSelected(_selectedDevice.Device);
-                DevicePage.Devicelist.SelectedItem = null;
+                SleepyTeddy.Views.PatientViews.Wearable.Devicelist.SelectedItem = null;
             }
         }
 
@@ -198,7 +198,7 @@ namespace SleepyTeddy.ViewModel
                         }
                     }
                 }
-                device.Connect(CallbackHandler.OnConnect);
+                device.Connect(SleepyTeddy.Services.CallbackHandler.OnConnect);
                 SelectedDevice = null;
 
             }

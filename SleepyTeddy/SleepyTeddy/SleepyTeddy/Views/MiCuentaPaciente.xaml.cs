@@ -24,7 +24,7 @@ using SleepyTeddy.Resources;
 namespace SleepyTeddy.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MiCuentaPaciente : ContentPage
+    public partial class MiCuentaPaciente : IAnimationPage
     {
         string patient_id = LoginViewModel.Patient_ID;
         Patient patient = new Patient();
@@ -121,7 +121,7 @@ namespace SleepyTeddy.Views
             #endregion
 
             #region define battery and hr Label
-            Image batteryImage = new Image { HeightRequest = (int)(10) };
+            Image batteryImage = new Image { HeightRequest = (int)(Globals.ScreenHeight / 100 * 2.5) };
             batteryImage.SetBinding(Image.SourceProperty, new Binding("BatteryImage"));
             AbsoluteLayout.SetLayoutBounds(batteryImage, new Rectangle(0.85, 0.183, -1, -1));
             AbsoluteLayout.SetLayoutFlags(batteryImage, AbsoluteLayoutFlags.PositionProportional);
@@ -130,18 +130,18 @@ namespace SleepyTeddy.Views
             bandNameLabel.FontAttributes = FontAttributes.Bold;
             bandNameLabel.FontAttributes = FontAttributes.Italic;
 
-            var batteryLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.18, Color.Black, "DisplayBattery", (int)(10));
+            var batteryLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.18, Color.Black, "DisplayBattery", (int)(Globals.ScreenHeight / 100 * 2.5));
             batteryLabel.FontAttributes = FontAttributes.Bold;
             absoluteLayout.Children.Add(batteryImage);
 
-            /*Label hrLabel = new Label { FontSize = 2.5, FontAttributes = FontAttributes.Bold };
+            Label hrLabel = new Label { FontSize = Globals.ScreenHeight / 100 * 2.5, FontAttributes = FontAttributes.Bold };
             hrLabel.SetBinding(Label.TextProperty, new Binding("DisplayHeartRate"));
             AbsoluteLayout.SetLayoutBounds(hrLabel, new Rectangle(0.15, 0.18, -1, -1));
             AbsoluteLayout.SetLayoutFlags(hrLabel, AbsoluteLayoutFlags.PositionProportional);
-            absoluteLayout.Children.Add(hrLabel);*/
+            absoluteLayout.Children.Add(hrLabel);
             #endregion
 
-            PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.65, 80, 80, AbsoluteLayoutFlags.PositionProportional, Color.Black);
+            PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.65, 80, 80, AbsoluteLayoutFlags.PositionProportional, Globals.LightTextColor);
 
             //int buttonSize = (int)(3);
             UpdatePatientButton = PageBuilder.AddButton(absoluteLayout, "Mi Cuenta", Global.MiCuentaPacienteViewModel.MicuentaPaciente, 0.50, 0.50, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
@@ -166,6 +166,15 @@ namespace SleepyTeddy.Views
         private async void CerrarSesion(object sender, EventArgs args)
         {
             await Navigation.PushAsync(new MainPageLogin());
+        }
+        public void OnAnimationStarted(bool isPopAnimation)
+        {
+            // Put your code here but leaving empty works just fine
+        }
+
+        public void OnAnimationFinished(bool isPopAnimation)
+        {
+            // Put your code here but leaving empty works just fine
         }
 
     }

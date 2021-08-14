@@ -20,32 +20,15 @@ namespace SleepyTeddy.Views.PatientViews
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Wearable : ContentPage, IAnimationPage
     {
-        //DevicePageViewModel devicePageViewModel;
-        string Patient_ID=LoginViewModel.Patient_ID;
         public static ListView Devicelist;
         public static Button ScanButton;
-        Patient patient;
-        string documentId;
         
         public Wearable()
         {
             InitializeComponent(); 
-            //getPatient();
             BuildPage();
         }
 
-        /*private async void getPatient()
-        {
-            String role_id = "2";
-            var document = await CrossCloudFirestore.Current
-                                       .Instance
-                                       .Collection("Users")
-                                       .WhereEqualsTo("Role_ID", role_id)
-                                       .WhereEqualsTo("Patient_ID", Patient_ID)
-                                       .GetAsync();
-            patient = document.Documents.ElementAt(0).ToObject<Patient>();
-            documentId = document.Documents.ElementAt(0).Id;
-        }*/
         public static void BuildPageBasics(AbsoluteLayout layout, object sender)
         {
             NavigationPage.SetHasNavigationBar((ContentPage)sender, false);
@@ -71,9 +54,9 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     ColumnDefinitions = new ColumnDefinitionCollection
                     {
-                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
-                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
-                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
+                        new ColumnDefinition {Width = Globals.ScreenWidth / 100 * 33},
+                        new ColumnDefinition {Width = Globals.ScreenWidth / 100 * 33},
+                        new ColumnDefinition {Width = Globals.ScreenWidth / 100 * 33},
                     }
                 };
 
@@ -126,20 +109,6 @@ namespace SleepyTeddy.Views.PatientViews
             // Put your code here but leaving empty works just fine
         }
 
-        /*private void btnScan_Clicked(object sender, EventArgs e)
-        {
-
-           devicePageViewModel.ScanButtonClicked(sender, EventArgs.Empty);
-
-        }
-        private void list_wearables_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-
-        }
-        private void btnDisconnect_Clicked(object sender, EventArgs e)
-        {
-
-        }*/
         private async void btnCancelar_clicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();

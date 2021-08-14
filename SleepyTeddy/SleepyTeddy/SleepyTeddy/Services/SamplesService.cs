@@ -28,6 +28,7 @@ namespace SleepyTeddy.Services
 
         public SamplesService()
         {
+            sleepWakeDiary = new SleepWakeDiary();
             objData= new GetDataFromLoginUser();
         }
 
@@ -37,7 +38,7 @@ namespace SleepyTeddy.Services
             Device.BeginInvokeOnMainThread(delegate
             {
                 Global.MiCuentaPacienteViewModel.FetchProgressVisible = true;
-                //Global.MiCuentaPacienteViewModel.EnableDisableButtons(false);
+                Global.MiCuentaPacienteViewModel.EnableDisableButtons(false);
                 Global.MiCuentaPacienteViewModel.IsLoading = true;
             });
             _fetchingStartDate = Globals.SamplesService.GetLastAddedDateTime();
@@ -77,7 +78,7 @@ namespace SleepyTeddy.Services
             Device.BeginInvokeOnMainThread(delegate
             {
                 Global.MiCuentaPacienteViewModel.IsLoading = false;
-                //Global.MiCuentaPacienteViewModel.EnableDisableButtons(true);
+                Global.MiCuentaPacienteViewModel.EnableDisableButtons(true);
                 Global.MiCuentaPacienteViewModel.ShowFetchProgress(1f);
             });
         }
@@ -159,6 +160,7 @@ namespace SleepyTeddy.Services
         {
             int count = 0;
             listSleepRecords = new List<SleepRecordsView>();
+            getSleepWakeDiary();
             await objData.GetSleepRecordsViewAsync();
             listSleepRecords = objData.ListSleepRecords.OrderByDescending(o => o.DateTimeHour).ToList();
             sleepWakeDiary.HoursTotal = (listSleepRecords.First().DateTimeHour-listSleepRecords.Last().DateTimeHour).TotalHours;

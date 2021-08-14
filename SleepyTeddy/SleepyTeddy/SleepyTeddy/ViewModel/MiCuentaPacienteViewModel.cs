@@ -161,18 +161,37 @@ namespace SleepyTeddy.ViewModel
 
         public async void MicuentaPaciente(object sender, EventArgs args)
         {
+            EnableDisableButtons(false);
+            IsLoading = true;
             await Application.Current.MainPage.Navigation.PushAsync(new UpdateAccPatient());
+            IsLoading = false;
+            EnableDisableButtons(true);
         }
         public async void Weareable(object sender, EventArgs args)
         {
+            EnableDisableButtons(false);
+            IsLoading = true;
             await Application.Current.MainPage.Navigation.PushAsync(new Wearable()
             {
                 BindingContext = Global.DevicePageViewModel
             });
+            IsLoading = false;
+            EnableDisableButtons(true);
         }
         public async void CerrarSesion(object sender, EventArgs args)
         {
+            EnableDisableButtons(false);
+            IsLoading = true;
             await Application.Current.MainPage.Navigation.PushAsync(new MainPageLogin());
+            IsLoading = false;
+            EnableDisableButtons(true);
+        }
+
+        public void EnableDisableButtons(bool enable)
+        {
+            MiCuentaPaciente.UpdatePatientButton.IsEnabled = enable;
+            MiCuentaPaciente.WearableButton.IsEnabled = enable;
+            MiCuentaPaciente.CerrarSesionButton.IsEnabled = enable;
         }
 
         public void ShowFetchProgress(float progress)

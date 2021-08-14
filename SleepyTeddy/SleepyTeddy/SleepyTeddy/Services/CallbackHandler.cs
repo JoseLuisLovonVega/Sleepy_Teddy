@@ -14,25 +14,25 @@ namespace SleepyTeddy.Services
     {
         private static readonly string _key = "LastConnectedDeviceGuid";
 
-        /*public static void OnHeartrateUpdated(WindesHeartSDK.Models.HeartrateData heartrate)
+        public static void OnHeartrateUpdated(WindesHeartSDK.Models.HeartrateData heartrate)
         {
             if (heartrate.Heartrate == 0)
                 return;
-            Globals.HomePageViewModel.Heartrate = heartrate.Heartrate;
-        }*/
+            Global.MiCuentaPacienteViewModel.Heartrate = heartrate.Heartrate;
+        }
 
         public static void OnBatteryUpdated(BatteryData battery)
         {
             Global.MiCuentaPacienteViewModel.UpdateBattery(battery);
         }
 
-        /*public static void OnStepsUpdated(StepData stepsInfo)
+        public static void OnStepsUpdated(StepData stepsInfo)
         {
             var count = stepsInfo.StepCount;
             Debug.WriteLine($"Stepcount updated: {count}");
             Globals.StepsPageViewModel.OnStepsUpdated(count);
 
-        }*/
+        }
 
         public static void OnConnect(ConnectionResult result)
         {
@@ -52,9 +52,9 @@ namespace SleepyTeddy.Services
                     Windesheart.PairedDevice.SetHeartrateMeasurementInterval(1);
 
                     //Callbacks
-                    //Windesheart.PairedDevice.EnableRealTimeHeartrate(OnHeartrateUpdated);
+                    Windesheart.PairedDevice.EnableRealTimeHeartrate(OnHeartrateUpdated);
                     Windesheart.PairedDevice.EnableRealTimeBattery(OnBatteryUpdated);
-                    Windesheart.PairedDevice.EnableRealTimeSteps(WindesHeartApp.Services.CallbackHandler.OnStepsUpdated);
+                    Windesheart.PairedDevice.EnableRealTimeSteps(OnStepsUpdated);
                     Windesheart.PairedDevice.SubscribeToDisconnect(OnDisconnect);
                 }
                 catch (Exception e)
@@ -66,9 +66,9 @@ namespace SleepyTeddy.Services
                 }
 
                 Global.DevicePageViewModel.StatusText = "Conectado";
-                Global.MiCuentaPacienteViewModel.SleepWakeDiary = Guid.NewGuid().ToString().Replace("-", "");
                 Global.DevicePageViewModel.DeviceList = new ObservableCollection<BLEScanResult>();
                 Global.DevicePageViewModel.IsLoading = false;
+                Global.MiCuentaPacienteViewModel.SleepWakeDiary = Guid.NewGuid().ToString().Replace("-", "");
 
                 Global.MiCuentaPacienteViewModel.ReadCurrentBattery();
                 Global.MiCuentaPacienteViewModel.BandNameLabel = Windesheart.PairedDevice.Name;
