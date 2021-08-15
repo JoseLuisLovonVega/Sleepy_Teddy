@@ -49,14 +49,11 @@ namespace SleepyTeddy.Views.PatientViews
             patient = document.Documents.ElementAt(0).ToObject<Patient>();
             documentId = document.Documents.ElementAt(0).Id;
         }
-        public static void BuildPageBasics(AbsoluteLayout layout, object sender)
-        {
-            ((ContentPage)sender).Content = layout;
-        }
+
         private void BuildPage()
         {
             absoluteLayout = new AbsoluteLayout();
-            BuildPageBasics(absoluteLayout, this);
+            PageBuilder.BuildPageBasics(absoluteLayout, this);
             PageBuilder.AddLabel(absoluteLayout, "Wearables Encontrados", 0.50, 0.05, Color.Black, "", 30);
 
             ScanButton = PageBuilder.AddButton(absoluteLayout, "", Globals.DevicePageViewModel.ScanButtonClicked, 0.15, 0.25, 120, 50, 14, 12, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#0AB8AA"));
@@ -72,10 +69,9 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     ColumnDefinitions = new ColumnDefinitionCollection
                     {
-                        new ColumnDefinition {Width = 30},
-                        new ColumnDefinition {Width = 30},
-
-                        new ColumnDefinition {Width = 30},
+                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
+                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
+                        new ColumnDefinition {Width = (int) Application .Current.MainPage.Width / 100 * 33},
                     }
                 };
 

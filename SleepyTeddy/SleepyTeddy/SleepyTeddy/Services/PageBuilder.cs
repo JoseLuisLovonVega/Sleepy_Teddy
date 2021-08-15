@@ -14,18 +14,13 @@ namespace SleepyTeddy.Services
             ((ContentPage)sender).Content = layout;
         }
 
-        public static void AddHeaderImages(AbsoluteLayout layout)
+        public static void AddAccountImage(AbsoluteLayout layout)
         {
             Image accountOnlyImage = new Image { Source = "account.png" };
             AbsoluteLayout.SetLayoutFlags(accountOnlyImage, AbsoluteLayoutFlags.PositionProportional);
-            AbsoluteLayout.SetLayoutBounds(accountOnlyImage, new Rectangle(0.5, 0.25, 100, 100));
+            AbsoluteLayout.SetLayoutBounds(accountOnlyImage, new Rectangle(0.5, 0.20, 90, 90));
 
-            /*Image textonlyImage = new Image { Source = "TextOnlyTransparent.png" };
-            AbsoluteLayout.SetLayoutFlags(textonlyImage, AbsoluteLayoutFlags.PositionProportional);
-            AbsoluteLayout.SetLayoutBounds(textonlyImage, new Rectangle(0.95, 0, Globals.ScreenWidth / 100 * 60, Globals.ScreenHeight / 100 * 10));
-            */
             layout.Children.Add(accountOnlyImage);
-            //layout.Children.Add(textonlyImage);
         }
 
         /*public static void AddReturnButton(AbsoluteLayout layout, object sender)

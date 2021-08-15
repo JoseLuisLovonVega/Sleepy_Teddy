@@ -13,25 +13,24 @@ namespace SleepyTeddy.Services
     {
         private static readonly string _key = "LastConnectedDeviceGuid";
 
-        /*public static void OnHeartrateUpdated(WindesHeartSDK.Models.HeartrateData heartrate)
+        public static void OnHeartrateUpdated(WindesHeartSDK.Models.HeartrateData heartrate)
         {
             if (heartrate.Heartrate == 0)
                 return;
-            Globals.HomePageViewModel.Heartrate = heartrate.Heartrate;
+            Globals.MiCuentaPacienteViewModel.Heartrate = heartrate.Heartrate;
         }
 
         public static void OnBatteryUpdated(BatteryData battery)
         {
-            Globals.HomePageViewModel.UpdateBattery(battery);
+            Globals.MiCuentaPacienteViewModel.UpdateBattery(battery);
         }
 
         public static void OnStepsUpdated(StepData stepsInfo)
         {
             var count = stepsInfo.StepCount;
             Debug.WriteLine($"Stepcount updated: {count}");
-            Globals.StepsPageViewModel.OnStepsUpdated(count);
-
-        }*/
+            //Globals.StepsPageViewModel.OnStepsUpdated(count);
+        }
 
         public static void OnConnect(ConnectionResult result)
         {
@@ -39,6 +38,7 @@ namespace SleepyTeddy.Services
             {
                 try
                 {
+
                     //Sync settings
                     Windesheart.PairedDevice.SetTime(DateTime.Now);
                     Windesheart.PairedDevice.SetDateDisplayFormat(DeviceSettings.DateFormatDMY);
@@ -51,41 +51,54 @@ namespace SleepyTeddy.Services
                     Windesheart.PairedDevice.SetHeartrateMeasurementInterval(1);
 
                     //Callbacks
-                    /*Windesheart.PairedDevice.EnableRealTimeHeartrate(OnHeartrateUpdated);
+                    Windesheart.PairedDevice.EnableRealTimeHeartrate(OnHeartrateUpdated);
                     Windesheart.PairedDevice.EnableRealTimeBattery(OnBatteryUpdated);
-                    Windesheart.PairedDevice.EnableRealTimeSteps(OnStepsUpdated);*/
+                    Windesheart.PairedDevice.EnableRealTimeSteps(OnStepsUpdated);
                     Windesheart.PairedDevice.SubscribeToDisconnect(OnDisconnect);
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
-                    Debug.WriteLine("Something went wrong while connecting to device, disconnecting...");
+                    Debug.WriteLine("Algo salió mal mientras se conectaba el wearable, desconectando...");
                     Windesheart.PairedDevice.Disconnect();
                     Globals.DevicePageViewModel.IsLoading = false;
                 }
+                if (Globals.DevicePageViewModel.StatusText != "Conectado")
+                {
+                    Globals.MiCuentaPacienteViewModel.SleepWakeDiary = Guid.NewGuid().ToString().Replace("-", "");
+                    Globals.SamplesService.AddSleepWakeDiary();
+                }
 
-                Globals.DevicePageViewModel.StatusText = "Connected";
+                Globals.DevicePageViewModel.StatusText = "Conectado";
                 Globals.DevicePageViewModel.DeviceList = new ObservableCollection<BLEScanResult>();
                 Globals.DevicePageViewModel.IsLoading = false;
 
-                //Globals.HomePageViewModel.ReadCurrentBattery();
-                //Globals.HomePageViewModel.BandNameLabel = Windesheart.PairedDevice.Name;
+
+                Globals.MiCuentaPacienteViewModel.ReadCurrentBattery();
+                Globals.MiCuentaPacienteViewModel.BandNameLabel = Windesheart.PairedDevice.Name;
 
                 Device.BeginInvokeOnMainThread(delegate { Application.Current.MainPage.Navigation.PopAsync(); });
-                //Globals.SamplesService.StartFetching();
+                //Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización exitosa - Registro de diario de sueño-vigilia iniciado", new TimeSpan(4));
+                Globals.SamplesService.StartFetching();
             }
             else if (result == ConnectionResult.Failed)
             {
-                Debug.WriteLine("FAIL");
+                Debug.WriteLine("ERROR");
+                //Acr.UserDialogs.UserDialogs.Instance.Toast("ERROR - Sincronización fallida", new TimeSpan(3));
                 return;
             }
         }
 
         public static void OnDisconnect(Object obj)
         {
-            Globals.DevicePageViewModel.StatusText = "Disconnected"; 
-            //Globals.HomePageViewModel.BandNameLabel = "";
-            //Globals.HomePageViewModel.BatteryImage = "";
+            Globals.DevicePageViewModel.StatusText = "Desconectado";
+            Globals.MiCuentaPacienteViewModel.BandNameLabel = "";
+            Globals.MiCuentaPacienteViewModel.BatteryImage = "";
+            /*if (Global.MiCuentaPacienteViewModel.SleepWakeDiary != "")
+            {
+                Global.SamplesService.CompleteSleepWakeDiary();
+            }*/
+            Globals.MiCuentaPacienteViewModel.SleepWakeDiary = "";
         }
     }
 }

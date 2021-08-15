@@ -1,21 +1,18 @@
 ﻿using Plugin.BluetoothLE;
+using SleepyTeddy.Resources;
+using SleepyTeddy.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using SleepyTeddy.Views.PatientViews;
-using SleepyTeddy.Services;
-//using WindesHeartApp.Pages;
-//using WindesHeartApp.Resources;
-//using WindesHeartApp.Services;
 using WindesHeartSDK;
 using WindesHeartSDK.Models;
 using Xamarin.Forms;
 
 namespace SleepyTeddy.ViewModel
 {
-    public class DevicePageViewModel: INotifyPropertyChanged
+    public class DevicePageViewModel : INotifyPropertyChanged
     {
         private bool _isLoading;
         private string _statusText;
@@ -30,18 +27,18 @@ namespace SleepyTeddy.ViewModel
             if (DeviceList == null)
                 DeviceList = new ObservableCollection<BLEScanResult>();
             if (Windesheart.PairedDevice == null)
-                StatusText = "Disconnected";
-            ScanButtonText = "Scan for devices";
+                StatusText = "Desconectado";
+            ScanButtonText = "Escanear por wearables";
         }
         public void DisconnectButtonClicked(object sender, EventArgs args)
         {
             IsLoading = true;
             Windesheart.PairedDevice?.Disconnect();
             IsLoading = false;
-            StatusText = "Disconnected";
+            StatusText = "Desconectado";
             DeviceList = new ObservableCollection<BLEScanResult>();
-            //Globals.HomePageViewModel.Heartrate = 0;
-            //Globals.HomePageViewModel.Battery = 0;
+            Globals.MiCuentaPacienteViewModel.Heartrate = 0;
+            Globals.MiCuentaPacienteViewModel.Battery = 0;
         }
         private void OnPropertyChanged([CallerMemberName] string name = "")
         {
@@ -106,7 +103,7 @@ namespace SleepyTeddy.ViewModel
                 if (_selectedDevice == null)
                     return;
                 DeviceSelected(_selectedDevice.Device);
-                Wearable.Devicelist.SelectedItem = null;
+                SleepyTeddy.Views.PatientViews.Wearable.Devicelist.SelectedItem = null;
             }
         }
 
@@ -120,7 +117,7 @@ namespace SleepyTeddy.ViewModel
                 if (CrossBleAdapter.Current.IsScanning)
                 {
                     Windesheart.StopScanning();
-                    ScanButtonText = "Scan for devices";
+                    ScanButtonText = "Escanear por wearables";
                     IsLoading = false;
                 }
                 else
@@ -128,23 +125,23 @@ namespace SleepyTeddy.ViewModel
 
                     if (CrossBleAdapter.Current.Status == AdapterStatus.PoweredOff)
                     {
-                        await Application.Current.MainPage.DisplayAlert("Bluetooth turned off",
-                            "Bluetooth is turned off. Please enable bluetooth to start scanning for devices", "OK");
-                        StatusText = "Bluetooth turned off";
+                        await Application.Current.MainPage.DisplayAlert("Bluetooth apagado",
+                            "El Bluetooth está apagado. Por favor habilite el Bluetooth para iniciar el escaneo de los wearables", "OK");
+                        StatusText = "Bluetooth apagado";
                         return;
                     }
 
                     //If started scanning
                     if (Windesheart.StartScanning(OnDeviceFound))
                     {
-                        ScanButtonText = "Stop scanning";
-                        StatusText = "Scanning...";
+                        ScanButtonText = "Detener escaneo";
+                        StatusText = "Escaneando...";
                         IsLoading = true;
                     }
                     else
                     {
-                        StatusText = "Could not start scanning.";
-                        ScanButtonText = "Scan for devices";
+                        StatusText = "No se pudo iniciar el escaneo.";
+                        ScanButtonText = "Escanear por wearables";
                     }
                 }
             }
@@ -159,11 +156,11 @@ namespace SleepyTeddy.ViewModel
         /// </summary>
         public void OnDisappearing()
         {
-            Console.WriteLine("Stopping scanning...");
+            Console.WriteLine("Deteniendo escaneo...");
             Windesheart.StopScanning();
             IsLoading = false;
             StatusText = "";
-            ScanButtonText = "Scan for devices";
+            ScanButtonText = "Escanear por wearables";
             DeviceList = new ObservableCollection<BLEScanResult>();
         }
 
@@ -183,7 +180,7 @@ namespace SleepyTeddy.ViewModel
             {
                 Windesheart.StopScanning();
 
-                StatusText = "Connecting...";
+                StatusText = "Conectando...";
                 IsLoading = true;
 
                 if (App.Current.Properties.ContainsKey(_propertyKey))
@@ -208,7 +205,5 @@ namespace SleepyTeddy.ViewModel
                 Debug.WriteLine(e.Message);
             }
         }
-
-
     }
 }

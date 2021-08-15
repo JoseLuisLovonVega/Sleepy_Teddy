@@ -7,6 +7,8 @@ using Xamarin.Forms.Xaml;
 using SleepyTeddy.Resources;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using SleepyTeddy.Data.Repository;
+using SleepyTeddy.Data;
 
 namespace SleepyTeddy
 {
@@ -17,7 +19,8 @@ namespace SleepyTeddy
         public App()
         {
             InitializeComponent();
-            Globals.BuildGlobals();
+            var database = new Database();
+            Globals.BuildGlobals(new HeartrateRepository(database), new SleepRepository(database), new StepsRepository(database), database);
             MainPage = new NavigationPage(new MainPageLogin());
         }
 
@@ -39,6 +42,10 @@ namespace SleepyTeddy
             {
                 await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
             }
+        }
+        public void CreateDatabase()
+        {
+
         }
     }
 }

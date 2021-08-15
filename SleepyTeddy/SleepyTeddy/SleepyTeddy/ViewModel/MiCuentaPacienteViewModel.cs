@@ -18,6 +18,7 @@ namespace SleepyTeddy.ViewModel
         private string _batteryImage = "";
         private bool _isLoading;
         public bool toggle;
+        public string SleepWakeDiary = "";
         private string _bandnameLabel;
         private float _fetchProgress;
         private bool _fetchProgressVisible;
@@ -55,19 +56,27 @@ namespace SleepyTeddy.ViewModel
                 return;
             }
 
-            if (battery.Percentage >= 0 && battery.Percentage < 26)
+            if (battery.Percentage >= 0 && battery.Percentage < 11)
+            {
+                BatteryImage = "BatteryLow.png";
+            }
+            else if (battery.Percentage >= 11 && battery.Percentage < 31)
             {
                 BatteryImage = "BatteryQuart.png";
             }
-            else if (battery.Percentage >= 26 && battery.Percentage < 51)
+            else if (battery.Percentage >= 31 && battery.Percentage < 51)
             {
                 BatteryImage = "BatteryHalf.png";
             }
-            else if (battery.Percentage >= 51 && battery.Percentage < 76)
+            else if (battery.Percentage >= 51 && battery.Percentage < 71)
+            {
+                BatteryImage = "BatteryTwoQuarts.png";
+            }
+            else if (battery.Percentage >= 71 && battery.Percentage < 91)
             {
                 BatteryImage = "BatteryThreeQuarts.png";
             }
-            else if (battery.Percentage >= 76)
+            else if (battery.Percentage >= 91)
             {
                 BatteryImage = "BatteryFull.png";
             }
@@ -160,18 +169,37 @@ namespace SleepyTeddy.ViewModel
 
         public async void MicuentaPaciente(object sender, EventArgs args)
         {
+            EnableDisableButtons(false);
+            IsLoading = true;
             await Application.Current.MainPage.Navigation.PushAsync(new UpdateAccPatient());
+            IsLoading = false;
+            EnableDisableButtons(true);
         }
         public async void Weareable(object sender, EventArgs args)
         {
+            EnableDisableButtons(false);
+            IsLoading = true;
             await Application.Current.MainPage.Navigation.PushAsync(new Wearable()
             {
                 BindingContext = Globals.DevicePageViewModel
             });
+            IsLoading = false;
+            EnableDisableButtons(true);
         }
         public async void CerrarSesion(object sender, EventArgs args)
         {
+            EnableDisableButtons(false);
+            IsLoading = true;
             await Application.Current.MainPage.Navigation.PushAsync(new MainPageLogin());
+            IsLoading = false;
+            EnableDisableButtons(true);
+        }
+
+        public void EnableDisableButtons(bool enable)
+        {
+            MiCuentaPaciente.UpdatePatientButton.IsEnabled = enable;
+            MiCuentaPaciente.WearableButton.IsEnabled = enable;
+            MiCuentaPaciente.CerrarSesionButton.IsEnabled = enable;
         }
 
         public void ShowFetchProgress(float progress)

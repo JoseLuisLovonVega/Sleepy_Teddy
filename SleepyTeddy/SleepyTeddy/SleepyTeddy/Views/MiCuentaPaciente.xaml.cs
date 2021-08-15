@@ -12,20 +12,20 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using SleepyTeddy.Resources;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WindesHeartSDK;
-using SleepyTeddy.Services;
 using FormsControls.Base;
+using SleepyTeddy.Resources;
+using SleepyTeddy.Services;
 
 namespace SleepyTeddy.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MiCuentaPaciente : ContentPage
+    public partial class MiCuentaPaciente : IAnimationPage
     {
         string patient_id = LoginViewModel.Patient_ID;
-        Patient patient= new Patient();
+        Patient patient = new Patient();
         public static Button UpdatePatientButton;
         public static Button WearableButton;
         public static Button CerrarSesionButton;
@@ -33,17 +33,14 @@ namespace SleepyTeddy.Views
         string NombreCompleto;
         public MiCuentaPaciente()
         {
-            //accountViewModel = new AccountViewModel();
             InitializeComponent();
-            //BindingContext = accountViewModel;
+            BindingContext = Globals.MiCuentaPacienteViewModel;
             //getPatient();
             BuildPage();
-
         }
 
         protected override void OnAppearing()
         {
-
             App.RequestLocationPermission();
             if (Windesheart.PairedDevice == null)
                 return;
@@ -83,7 +80,6 @@ namespace SleepyTeddy.Views
         }
         public static void BuildPageBasics(AbsoluteLayout layout, object sender)
         {
-            NavigationPage.SetHasNavigationBar((ContentPage)sender, true);
             layout.BackgroundColor = Color.White;
             ((ContentPage)sender).Content = layout;
         }
@@ -93,7 +89,7 @@ namespace SleepyTeddy.Views
             BuildPageBasics(absoluteLayout, this);
             await getPatient();
             PageBuilder.AddLabel(absoluteLayout, NombreCompleto, 0.5, 0.07, Color.Black, "", 22);
-            PageBuilder.AddHeaderImages(absoluteLayout);
+            PageBuilder.AddAccountImage(absoluteLayout);
             #region define fetch progressbar 
             ProgressBar fetchProgressBar = new ProgressBar
             {
@@ -104,39 +100,38 @@ namespace SleepyTeddy.Views
             fetchProgressBar.SetBinding(ProgressBar.ProgressProperty, new Binding("FetchProgress"));
             fetchProgressBar.SetBinding(ProgressBar.IsVisibleProperty, new Binding("FetchProgressVisible"));
 
-            AbsoluteLayout.SetLayoutBounds(fetchProgressBar, new Rectangle(0.5, 0.25, 0.95, -1));
+            AbsoluteLayout.SetLayoutBounds(fetchProgressBar, new Rectangle(0.5, 0.40, 0.95, -1));
             AbsoluteLayout.SetLayoutFlags(fetchProgressBar, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.WidthProportional);
 
             absoluteLayout.Children.Add(fetchProgressBar);
             #endregion
 
             #region define battery and hr Label
-            Image batteryImage = new Image { HeightRequest = (int)(10) };
+            Image batteryImage = new Image { HeightRequest = 30 };
             batteryImage.SetBinding(Image.SourceProperty, new Binding("BatteryImage"));
-            AbsoluteLayout.SetLayoutBounds(batteryImage, new Rectangle(0.85, 0.183, -1, -1));
+            AbsoluteLayout.SetLayoutBounds(batteryImage, new Rectangle(0.95, 0.24, 30, 30));
             AbsoluteLayout.SetLayoutFlags(batteryImage, AbsoluteLayoutFlags.PositionProportional);
 
             var bandNameLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.155, Color.Black, "BandNameLabel", 9);
             bandNameLabel.FontAttributes = FontAttributes.Bold;
             bandNameLabel.FontAttributes = FontAttributes.Italic;
 
-            var batteryLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.18, Color.Black, "DisplayBattery", (int)(10));
+            var batteryLabel = PageBuilder.AddLabel(absoluteLayout, "", 0.95, 0.18, Color.Black, "DisplayBattery", 12);
             batteryLabel.FontAttributes = FontAttributes.Bold;
             absoluteLayout.Children.Add(batteryImage);
 
-            Label hrLabel = new Label { FontSize = 2.5, FontAttributes = FontAttributes.Bold };
+            Label hrLabel = new Label { FontSize = 10, FontAttributes = FontAttributes.Bold };
             hrLabel.SetBinding(Label.TextProperty, new Binding("DisplayHeartRate"));
-            AbsoluteLayout.SetLayoutBounds(hrLabel, new Rectangle(0.15, 0.18, -1, -1));
+            AbsoluteLayout.SetLayoutBounds(hrLabel, new Rectangle(0.10, 0.155, 60, 60));
             AbsoluteLayout.SetLayoutFlags(hrLabel, AbsoluteLayoutFlags.PositionProportional);
             absoluteLayout.Children.Add(hrLabel);
             #endregion
 
-            PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.65, 80, 80, AbsoluteLayoutFlags.PositionProportional, Color.Black);
+            PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.45, 80, 80, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#999999"));
 
-            //int buttonSize = (int)(3);
-            UpdatePatientButton = PageBuilder.AddButton(absoluteLayout, "Mi Cuenta", Globals.MiCuentaPacienteViewModel.MicuentaPaciente, 0.50, 0.50, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
-            WearableButton = PageBuilder.AddButton(absoluteLayout, "Wearable", Globals.MiCuentaPacienteViewModel.Weareable, 0.50, 0.65, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
-            CerrarSesionButton = PageBuilder.AddButton(absoluteLayout, "Cerrar Sesión", Globals.MiCuentaPacienteViewModel.CerrarSesion, 0.50, 0.80, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
+            UpdatePatientButton = PageBuilder.AddButton(absoluteLayout, "Mi Cuenta", Globals.MiCuentaPacienteViewModel.MicuentaPaciente, 0.50, 0.60, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
+            WearableButton = PageBuilder.AddButton(absoluteLayout, "Wearable", Globals.MiCuentaPacienteViewModel.Weareable, 0.50, 0.75, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
+            CerrarSesionButton = PageBuilder.AddButton(absoluteLayout, "Cerrar Sesión", Globals.MiCuentaPacienteViewModel.CerrarSesion, 0.50, 0.90, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
 
         }
 
@@ -144,7 +139,7 @@ namespace SleepyTeddy.Views
 
         private async void MicuentaPaciente(object sender, EventArgs args)
         {
-                await Navigation.PushAsync(new UpdateAccPatient());
+            await Navigation.PushAsync(new UpdateAccPatient());
         }
         private async void Weareable(object sender, EventArgs args)
         {
@@ -155,7 +150,16 @@ namespace SleepyTeddy.Views
         }
         private async void CerrarSesion(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new MainPageLogin());         
+            await Navigation.PushAsync(new MainPageLogin());
+        }
+        public void OnAnimationStarted(bool isPopAnimation)
+        {
+            // Put your code here but leaving empty works just fine
+        }
+
+        public void OnAnimationFinished(bool isPopAnimation)
+        {
+            // Put your code here but leaving empty works just fine
         }
 
     }

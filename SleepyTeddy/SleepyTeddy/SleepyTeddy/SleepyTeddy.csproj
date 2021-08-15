@@ -19,14 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="account.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="account.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.514" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="FirebaseAdmin" Version="2.2.0" />
@@ -40,6 +32,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Plugin.CloudFirestore" Version="4.1.0" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
@@ -141,5 +134,9 @@
     <EmbeddedResource Update="Views\AdministratorViews\UpdatePatient.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
