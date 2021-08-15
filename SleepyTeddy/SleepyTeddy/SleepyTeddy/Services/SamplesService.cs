@@ -136,7 +136,7 @@ namespace SleepyTeddy.Services
                          {
                              SleepWakeDiary_ID = Globals.MiCuentaPacienteViewModel.SleepWakeDiary,
                              SleepRecord_ID = Guid.NewGuid().ToString().Replace("-", ""),
-                             DateTimeHour = sleep.DateTime,
+                             DateTimeHour = datetime.AddHours(-5),
                              Kind = (int)sleep.SleepType
                          });
         }
