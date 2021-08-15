@@ -28,7 +28,7 @@
                    Grid.Column="0"
                    Margin="5"
                    Text="Login"
-                   FontSize="40"
+                   FontSize="35"
                    TextColor="#2c3e50"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
