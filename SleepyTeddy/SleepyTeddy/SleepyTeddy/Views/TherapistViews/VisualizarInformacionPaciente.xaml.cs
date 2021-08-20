@@ -63,7 +63,7 @@ namespace SleepyTeddy.Views.TherapistViews
         {
             if (cbxPatientInfo.SelectedItem==null)
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe seleccionar un registro de monitoreo del sueño", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe seleccionar un tipo de registro de monitoreo del sueño", new TimeSpan(3));
             } else { 
                 if (cbxPatientInfo.SelectedItem.ToString() == "Diario de Sueño-Vigilia") {
                     //

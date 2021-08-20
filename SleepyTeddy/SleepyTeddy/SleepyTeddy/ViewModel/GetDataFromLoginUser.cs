@@ -24,6 +24,7 @@ namespace SleepyTeddy.ViewModel
         public List<QuestionnairesView> ListQuestionnairesPatient { get; set; }
         public List<QuestionnairesView> ListQuestionnaireData { get; set; }
         public List<SleepRecordsView> ListSleepRecords { get; set; }
+        public List<SleepRecordsView> ListSleepRecordsDateFilter { get; set; }
         public List<SleepWakeDiariesView> ListSleepWakeDiaries { get; set; }
 
         public GetDataFromLoginUser()
@@ -182,7 +183,6 @@ namespace SleepyTeddy.ViewModel
             var document = await CrossCloudFirestore.Current
                                        .Instance
                                        .Collection("SleepRecords")
-                                       .WhereEqualsTo("SleepWakeDiary_ID", Globals.MiCuentaPacienteViewModel.SleepWakeDiary)
                                        .WhereEqualsTo("Patient_ID", patientId)
                                        .GetAsync();
 
@@ -191,12 +191,35 @@ namespace SleepyTeddy.ViewModel
             {
                 cfg.CreateMap<SleepRecord, SleepRecordsView>()
                 .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepRecord_ID))
-                .ForMember(d => d.SleepWakeDiary_ID, o => o.MapFrom(c => c.SleepWakeDiary_ID))
                 .ForMember(d => d.DateTimeHour, o => o.MapFrom(c => c.DateTimeHour))
                 .ForMember(d => d.Kind, o => o.MapFrom(c => c.Kind));
             });
 
             resModel.ForEach(a => ListSleepRecords.Add(config.CreateMapper().Map<SleepRecord, SleepRecordsView>(a)));
+            return;
+        }
+        //Obtener los sleep records del paciente que inició sesión según una fecha en específico
+        public async Task GetSleepRecordsDateFilterViewAsync(int contador)
+        {
+            ListSleepRecordsDateFilter = new List<SleepRecordsView>();
+            string patientId = LoginViewModel.Patient_ID;
+            var document = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("SleepRecords")
+                                       .WhereEqualsTo("Patient_ID", patientId)
+                                       .WhereEqualsTo("DateTimeHour", DateTime.Today.AddDays(contador))
+                                       .GetAsync();
+
+            var resModel = document.ToObjects<SleepRecord>().ToList();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<SleepRecord, SleepRecordsView>()
+                .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepRecord_ID))
+                .ForMember(d => d.DateTimeHour, o => o.MapFrom(c => c.DateTimeHour))
+                .ForMember(d => d.Kind, o => o.MapFrom(c => c.Kind));
+            });
+
+            resModel.ForEach(a => ListSleepRecordsDateFilter.Add(config.CreateMapper().Map<SleepRecord, SleepRecordsView>(a)));
             return;
         }
 
@@ -255,7 +278,6 @@ namespace SleepyTeddy.ViewModel
     public class SleepRecordsView
     {
         public string Key { get; set; }
-        public string SleepWakeDiary_ID { get; set; }
         public DateTime DateTimeHour { get; set; }
         public int Kind { get; set; }
     }

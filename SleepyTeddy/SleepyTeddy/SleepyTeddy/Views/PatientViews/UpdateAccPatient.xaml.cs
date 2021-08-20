@@ -94,7 +94,7 @@ namespace SleepyTeddy.Views.PatientViews
             {
                 patient.Names = nmPct.Text;
                 patient.Last_Names = apPct.Text;
-                patient.Birthday = dtNacimiento.Date;
+                patient.Birthday = dtNacimiento.Date.AddHours(-5);
                 patient.Email = txEmail.Text;
                 patient.Password = txPsw.Text;
                 await CrossCloudFirestore.Current
@@ -102,7 +102,7 @@ namespace SleepyTeddy.Views.PatientViews
                      .Collection("Users")
                      .Document(documentId)
                      .UpdateAsync(patient);
-                await DisplayAlert("", "Cuenta actualizada correctamente", "OK");
+                await DisplayAlert("Actualización Exitosa", "Cuenta actualizada correctamente", "OK");
                 await Navigation.PushAsync(new PaginaPrincipalPaciente());
             }  
         }

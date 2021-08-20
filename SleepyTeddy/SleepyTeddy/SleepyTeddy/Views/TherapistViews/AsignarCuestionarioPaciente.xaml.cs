@@ -72,7 +72,7 @@ namespace SleepyTeddy.Views.TherapistViews
                                  D_Assigned_Date = DateTime.Now.AddHours(-5),
                                  D_Completed_Date = DateTime.MinValue
                              });
-                await DisplayAlert("", "Cuestionario asignado al paciente correctamente", "OK");
+                await DisplayAlert("Asignación Exitosa", "Cuestionario asignado al paciente correctamente", "OK");
                 lista_cuestionarios.SelectedItem = null;
                 lista_pacientes.SelectedItem=null;
             }

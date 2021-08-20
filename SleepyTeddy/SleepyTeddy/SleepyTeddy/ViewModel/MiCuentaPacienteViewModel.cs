@@ -18,7 +18,6 @@ namespace SleepyTeddy.ViewModel
         private string _batteryImage = "";
         private bool _isLoading;
         public bool toggle;
-        public string SleepWakeDiary = "";
         private string _bandnameLabel;
         private float _fetchProgress;
         private bool _fetchProgressVisible;

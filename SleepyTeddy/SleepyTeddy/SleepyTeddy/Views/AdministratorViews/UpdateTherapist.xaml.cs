@@ -113,7 +113,7 @@ namespace SleepyTeddy.Views.AdministratorViews
                                      .Document(documentID)
                                      .UpdateAsync(therapist);
 
-                await DisplayAlert("", "Terapeuta actualizado correctamente", "OK");
+                await DisplayAlert("Actualización Exitosa", "Terapeuta actualizado correctamente", "OK");
                 await Navigation.PushAsync(new BuscarTerapeuta());
 
             }

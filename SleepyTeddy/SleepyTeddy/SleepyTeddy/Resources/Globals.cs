@@ -12,6 +12,7 @@ namespace SleepyTeddy.Resources
         public static SamplesService SamplesService { get; private set; }
         public static MiCuentaPacienteViewModel MiCuentaPacienteViewModel;
         public static DevicePageViewModel DevicePageViewModel;
+        public static SleepPageViewModel SleepPageViewModel;
 
         public static IStepsRepository StepsRepository { get; set; }
         public static ISleepRepository SleepRepository { get; set; }
@@ -28,6 +29,7 @@ namespace SleepyTeddy.Resources
             SamplesService = new SamplesService(HeartrateRepository, StepsRepository, SleepRepository);
             DevicePageViewModel = new DevicePageViewModel();
             MiCuentaPacienteViewModel = new MiCuentaPacienteViewModel();
+            SleepPageViewModel = new SleepPageViewModel(SleepRepository);
         }
     }
 }

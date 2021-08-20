@@ -8,8 +8,8 @@ namespace SleepyTeddy.Models
 
     public class SleepRecord
     {
-        public string SleepRecord_ID { get; set; }
-        public string SleepWakeDiary_ID { get; set; }
+        public int SleepRecord_ID { get; set; }
+        //public string SleepWakeDiary_ID { get; set; }
         public DateTime DateTimeHour { get; set; }
         public int Kind { get; set; }
     }

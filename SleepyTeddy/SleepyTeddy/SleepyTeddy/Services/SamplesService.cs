@@ -85,6 +85,10 @@ namespace SleepyTeddy.Services
             }
             Globals.Database.Instance.Commit();
             Debug.WriteLine("DB filled with samples");
+            //Método para registrar sleep records en el firebase AQUÍ:
+            Globals.SleepPageViewModel.CreateSleepRecords();
+            Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
+            
             Device.BeginInvokeOnMainThread(delegate
             {
                 Globals.MiCuentaPacienteViewModel.IsLoading = false;
@@ -110,7 +114,7 @@ namespace SleepyTeddy.Services
             _stepsRepository.Add(step);
         }
 
-        private async void AddSleep(DateTime datetime, ActivitySample sample)
+        private void AddSleep(DateTime datetime, ActivitySample sample)
         {
             Sleep sleep;
             switch (sample.Category)
@@ -128,102 +132,7 @@ namespace SleepyTeddy.Services
                     sleep = new Sleep(datetime, SleepType.Awake);
                     break;
             }
-            _sleepRepository.Add(sleep);
-            await CrossCloudFirestore.Current
-                         .Instance
-                         .Collection("SleepRecords")
-                         .AddAsync(new SleepRecord
-                         {
-                             SleepWakeDiary_ID = Globals.MiCuentaPacienteViewModel.SleepWakeDiary,
-                             SleepRecord_ID = Guid.NewGuid().ToString().Replace("-", ""),
-                             DateTimeHour = datetime.AddHours(-5),
-                             Kind = (int)sleep.SleepType
-                         });
-        }
-        public async void AddSleepWakeDiary()
-        {
-            await CrossCloudFirestore.Current
-                         .Instance
-                         .Collection("SleepWakeDiaries")
-                         .AddAsync(new SleepWakeDiary
-                         {
-                             SleepWakeDiary_ID = Globals.MiCuentaPacienteViewModel.SleepWakeDiary,
-                             Patient_ID = LoginViewModel.Patient_ID,
-                             CreatedDate = DateTime.Now.AddHours(-5),
-                             SleepTime = DateTime.MinValue,
-                             WakeUpTime = DateTime.MinValue,
-                             HoursTotal = 0,
-                             HoursSlept = 0,
-                             SleepEfficiency = 0
-                         });
-        }
-        private async void getSleepWakeDiary()
-        {
-            var document = await CrossCloudFirestore.Current
-                                       .Instance
-                                       .Collection("SleepWakeDiaries")
-                                       .WhereEqualsTo("SleepWakeDiary_ID", Globals.MiCuentaPacienteViewModel.SleepWakeDiary)
-                                       .GetAsync();
-            sleepWakeDiary = document.Documents.ElementAt(0).ToObject<SleepWakeDiary>();
-            documentId = document.Documents.ElementAt(0).Id;
-        }
-        public async void CompleteSleepWakeDiary()
-        {
-            try
-            {
-                int count = 0;
-                listSleepRecords = new List<SleepRecordsView>();
-                getSleepWakeDiary();
-                await objData.GetSleepRecordsViewAsync();
-                listSleepRecords = objData.ListSleepRecords.OrderByDescending(o => o.DateTimeHour).ToList();
-                sleepWakeDiary.HoursTotal = (listSleepRecords.First().DateTimeHour - listSleepRecords.Last().DateTimeHour).TotalHours;
-                if (listSleepRecords.Count != 0)
-                {
-                    foreach (var SleepRecord in listSleepRecords)
-                    {
-                        if (SleepRecord.Kind != 0 && count == 0)
-                        {
-                            sleepWakeDiary.SleepTime = SleepRecord.DateTimeHour;
-                            count = 1;
-                        }
-                    }
-                    count = 0;
-                    listSleepRecords = objData.ListSleepRecords.OrderBy(o => o.DateTimeHour).ToList();
-                    for (int i = 0; i < listSleepRecords.Count; i++)
-                    {
-                        if (listSleepRecords.ElementAt(i).Kind == 0 && listSleepRecords.ElementAt(i + 1).Kind != 0 && count == 0)
-                        {
-                            sleepWakeDiary.WakeUpTime = listSleepRecords.ElementAt(i).DateTimeHour;
-                            count = 1;
-                        }
-                    }
-                    for (int i = 0; i < listSleepRecords.Count; i++)
-                    {
-                        if (listSleepRecords.ElementAt(i).Kind != 0)
-                        {
-                            //sum += listSleepRecords.ElementAt(i).DateTimeHour.ToShortTimeString();
-                        }
-                    }
-                    sleepWakeDiary.SleepEfficiency = sleepWakeDiary.HoursSlept / sleepWakeDiary.HoursTotal * 100;
-                    await CrossCloudFirestore.Current
-                            .Instance
-                            .Collection("SleepWakeDiaries")
-                            .Document(documentId)
-                            .UpdateAsync(sleepWakeDiary);
-                    Acr.UserDialogs.UserDialogs.Instance.Toast("Registro de diario de sueño-vigilia finalizado.", new TimeSpan(3));
-                }
-                else
-                {
-                    Acr.UserDialogs.UserDialogs.Instance.Toast("El diario de sueño-vigilia no tiene registros guardados.", new TimeSpan(3));
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                Debug.WriteLine("ERROR al completar el diario de sueño-vigilia");
-                Acr.UserDialogs.UserDialogs.Instance.Toast("El diario de sueño-vigilia no tiene registros guardados.", new TimeSpan(3));
-                return;
-            }
+            _sleepRepository.Add(sleep); 
         }
     }
 }

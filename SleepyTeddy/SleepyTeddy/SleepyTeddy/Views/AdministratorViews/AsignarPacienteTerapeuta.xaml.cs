@@ -83,7 +83,7 @@ namespace SleepyTeddy.Views.AdministratorViews
                     .Collection("Users")
                     .Document(documentID)
                     .UpdateAsync(patient);
-                await DisplayAlert("", "Paciente asignado al terapeuta correctamente", "OK");
+                await DisplayAlert("Asignación Exitosa", "Paciente asignado al terapeuta correctamente", "OK");
                 //await Navigation.PopAsync();
                 cbxPacients.SelectedItem = null;
                 cbxTherapists.SelectedItem = null;

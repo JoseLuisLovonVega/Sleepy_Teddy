@@ -40,11 +40,11 @@ namespace SleepyTeddy.Views.AdministratorViews
                                  Last_Names = apPaciente.Text,
                                  Email = txEmail.Text,
                                  Password = txPsw.Text.ToString(),
-                                 Birthday = dtNacimiento.Date,
+                                 Birthday = dtNacimiento.Date.AddHours(-5),
                                  Role_ID = "2"
                              });
 
-                    await App.Current.MainPage.DisplayAlert("", "Paciente registrado correctamente", "Ok");
+                    await App.Current.MainPage.DisplayAlert("Registro Exitoso", "Paciente registrado correctamente", "OK");
                     await Navigation.PushAsync(new BuscarPaciente());
                     /*nmTerapeuta.Text = "";
                     apTerapeuta.Text = "";

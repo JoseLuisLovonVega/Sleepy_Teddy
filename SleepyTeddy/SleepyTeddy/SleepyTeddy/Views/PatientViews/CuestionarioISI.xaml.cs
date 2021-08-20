@@ -42,6 +42,7 @@ namespace SleepyTeddy.Views.PatientViews
             id_questionnaire= key_questionnaire;
             InitializeComponent();
             getQuestionnaire();
+            LoadItems();
         }
 
         private async void getQuestionnaire()
@@ -92,11 +93,6 @@ namespace SleepyTeddy.Views.PatientViews
             picker5.ItemsSource = opts3;
         }
 
-        /*private void PickerOne_OnSelectedIndexChangue(object sender, EventArgs e)
-        {
-            var name = PickerOne.Items[PickerOne.SelectedIndex];
-        }*/
-
         private async void btnAceptar_clicked(object sender, EventArgs e)
         {
             {
@@ -146,7 +142,7 @@ namespace SleepyTeddy.Views.PatientViews
                         .Collection("Questionnaires")
                         .Document(documentID)
                         .UpdateAsync(questionnaire);
-                    await DisplayAlert("", "Cuestionario realizado correctamente", "OK");
+                    await DisplayAlert("Registro Exitoso", "Cuestionario realizado correctamente", "OK");
                     await Navigation.PushAsync(new MisCuestionarios());
                 }
             }

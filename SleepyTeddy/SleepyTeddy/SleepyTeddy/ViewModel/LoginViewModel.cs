@@ -68,7 +68,7 @@ namespace SleepyTeddy.ViewModel
             //null or empty field validation, check weather email and password is null or empty
             
             if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
-             await App.Current.MainPage.DisplayAlert("Campos vacíos", "Por favor, ingresa el usuario y contraseña", "OK");
+             await App.Current.MainPage.DisplayAlert("Campos vacíos", "Correo y/o contraseña incompletos", "OK");
             else
             {
                 //call GetUser function which we define in Firebase helper class
@@ -137,9 +137,9 @@ namespace SleepyTeddy.ViewModel
                         await App.Current.MainPage.Navigation.PushAsync(new PaginaPrincipalPaciente());
                     }
                     else
-                        await App.Current.MainPage.DisplayAlert("", "Por favor ingresa el email y contraseña correctos", "OK");
+                        await App.Current.MainPage.DisplayAlert("", "Correo y/o contraseña incorrectos", "OK");
                 else
-                    await App.Current.MainPage.DisplayAlert("", "Email y contraseña inválidos, por favor, registrate", "OK");
+                    await App.Current.MainPage.DisplayAlert("", "Correo y/o contraseña incorrectos", "OK");
             }
         }
     }

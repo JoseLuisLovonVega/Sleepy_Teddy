@@ -127,7 +127,7 @@ namespace SleepyTeddy.Views
             absoluteLayout.Children.Add(hrLabel);
             #endregion
 
-            PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.45, 80, 80, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#999999"));
+            PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.42, 80, 80, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#999999"));
 
             UpdatePatientButton = PageBuilder.AddButton(absoluteLayout, "Mi Cuenta", Globals.MiCuentaPacienteViewModel.MicuentaPaciente, 0.50, 0.60, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
             WearableButton = PageBuilder.AddButton(absoluteLayout, "Wearable", Globals.MiCuentaPacienteViewModel.Weareable, 0.50, 0.75, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));

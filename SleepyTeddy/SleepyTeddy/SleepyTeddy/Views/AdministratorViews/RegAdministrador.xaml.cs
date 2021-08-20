@@ -44,7 +44,7 @@ namespace SleepyTeddy.Views.AdministratorViews
                              Role_ID = "1"
                          });
 
-                    await App.Current.MainPage.DisplayAlert("", "Cuenta registrada correctamente", "Ok");
+                    await App.Current.MainPage.DisplayAlert("Registro Exitoso", "Cuenta registrada correctamente", "OK");
                     await Navigation.PushAsync(new MainPageLogin());
                 }
                 catch (Exception ex)

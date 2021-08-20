@@ -100,7 +100,7 @@ namespace SleepyTeddy.Views.AdministratorViews
                     .Collection("Users")
                     .Document(documentId)
                     .UpdateAsync(admin);
-                await DisplayAlert("", "Cuenta actualizada correctamente", "OK");
+                await DisplayAlert("Actualización Exitosa", "Cuenta actualizada correctamente", "OK");
                 await Navigation.PushAsync(new PaginaPrincipalAdministrador());
                 //await Navigation.PopAsync();
             }

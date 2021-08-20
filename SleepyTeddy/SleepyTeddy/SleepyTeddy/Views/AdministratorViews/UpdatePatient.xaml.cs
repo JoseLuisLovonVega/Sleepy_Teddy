@@ -96,7 +96,7 @@ namespace SleepyTeddy.Views.AdministratorViews
                     .Collection("Users")
                     .Document(documentId)
                     .UpdateAsync(patient);
-                await DisplayAlert("", "Paciente actualizado correctamente", "OK");
+                await DisplayAlert("Actualización Exitosa", "Paciente actualizado correctamente", "OK");
                 await Navigation.PushAsync(new BuscarPaciente());
                     //await Navigation.PopAsync();
                 }

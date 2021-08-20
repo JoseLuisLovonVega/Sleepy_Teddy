@@ -45,7 +45,7 @@ namespace SleepyTeddy.Views.AdministratorViews
                                  Role_ID = "3"
                              });
 
-                    await App.Current.MainPage.DisplayAlert("", "Terapeuta registrado correctamente", "Ok");
+                    await App.Current.MainPage.DisplayAlert("Registro Exitoso", "Terapeuta registrado correctamente", "OK");
                     await Navigation.PushAsync(new BuscarTerapeuta());
                     /*nmTerapeuta.Text = "";
                     apTerapeuta.Text = "";
