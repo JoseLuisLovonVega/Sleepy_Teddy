@@ -10,6 +10,7 @@ namespace SleepyTeddy.Models
     {
         public int SleepRecord_ID { get; set; }
         //public string SleepWakeDiary_ID { get; set; }
+        public string Patient_ID { get; set; }
         public DateTime DateTimeHour { get; set; }
         public int Kind { get; set; }
     }
