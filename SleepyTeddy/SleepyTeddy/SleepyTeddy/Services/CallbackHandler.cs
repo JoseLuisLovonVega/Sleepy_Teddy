@@ -73,7 +73,6 @@ namespace SleepyTeddy.Services
                 Globals.MiCuentaPacienteViewModel.BandNameLabel = Windesheart.PairedDevice.Name;
 
                 Device.BeginInvokeOnMainThread(delegate { Application.Current.MainPage.Navigation.PopAsync(); });
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Recibiendo la información del wearable...", new TimeSpan(5));
                 Globals.SamplesService.StartFetching();
             }
             else if (result == ConnectionResult.Failed)

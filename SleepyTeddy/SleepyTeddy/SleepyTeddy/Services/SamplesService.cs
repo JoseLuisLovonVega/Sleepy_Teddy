@@ -114,7 +114,7 @@ namespace SleepyTeddy.Services
             _stepsRepository.Add(step);
         }
 
-        private void AddSleep(DateTime datetime, ActivitySample sample)
+        private async void AddSleep(DateTime datetime, ActivitySample sample)
         {
             Sleep sleep;
             switch (sample.Category)
@@ -132,7 +132,7 @@ namespace SleepyTeddy.Services
                     sleep = new Sleep(datetime, SleepType.Awake);
                     break;
             }
-            _sleepRepository.Add(sleep); 
+            _sleepRepository.Add(sleep);
         }
     }
 }

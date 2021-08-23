@@ -30,17 +30,17 @@ namespace SleepyTeddy.ViewModel
                 StatusText = "Desconectado";
             ScanButtonText = "Escanear por wearables";
         }
-        public async void DisconnectButtonClicked(object sender, EventArgs args)
+        public void DisconnectButtonClicked(object sender, EventArgs args)
         {
             IsLoading = true;
             Windesheart.PairedDevice?.Disconnect();
             IsLoading = false;
             StatusText = "Desconectado";
-            await Application.Current.MainPage.DisplayAlert("Sincronización Finalizada", "Wearable desconectado", "OK");
             DeviceList = new ObservableCollection<BLEScanResult>();
             Globals.MiCuentaPacienteViewModel.Heartrate = 0;
             Globals.MiCuentaPacienteViewModel.Battery = 0;
         }
+
         private void OnPropertyChanged([CallerMemberName] string name = "")
         {
             try

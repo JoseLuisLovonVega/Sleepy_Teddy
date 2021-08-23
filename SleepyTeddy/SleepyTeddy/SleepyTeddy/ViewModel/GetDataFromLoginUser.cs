@@ -238,7 +238,7 @@ namespace SleepyTeddy.ViewModel
             {
                 cfg.CreateMap<SleepWakeDiary, SleepWakeDiariesView>()
                 .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepWakeDiary_ID))
-                .ForMember(d => d.CreatedDate, o => o.MapFrom(c => c.CreatedDate))
+                .ForMember(d => d.CreatedDate, o => o.MapFrom(c => c.CreatedDate.ToString("dd/MM/yy")))
                 .ForMember(d => d.SleepTime, o => o.MapFrom(c => c.SleepTime))
                 .ForMember(d => d.WakeUpTime, o => o.MapFrom(c => c.WakeUpTime))
                 .ForMember(d => d.HoursSlept, o => o.MapFrom(c => c.HoursSlept))
