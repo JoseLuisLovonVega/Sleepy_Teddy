@@ -21,10 +21,12 @@ namespace SleepyTeddy.ViewModel
         public List<PatientsView> ListPatientsAdministrator { get; set; }
         public List<string> ListQuestionnaires { get; set; }
         public List<string> ListPatientInfo { get; set; }
+        public List<string> ListResultsSleepWakeDiary { get; set; }
         public List<QuestionnairesView> ListQuestionnairesPatient { get; set; }
         public List<QuestionnairesView> ListQuestionnaireData { get; set; }
         public List<SleepRecordsView> ListSleepRecords { get; set; }
         public List<SleepWakeDiariesView> ListSleepWakeDiaries { get; set; }
+
 
         public GetDataFromLoginUser()
         {
@@ -37,6 +39,10 @@ namespace SleepyTeddy.ViewModel
             ListPatientInfo.Add("PHQ-9");
             ListPatientInfo.Add("ISI");
             ListPatientInfo.Add("PSQI");
+            ListResultsSleepWakeDiary = new List<string>();
+            ListResultsSleepWakeDiary.Add("Hora a la que durmió");
+            ListResultsSleepWakeDiary.Add("Hora a la que despertó el día siguiente");
+            ListResultsSleepWakeDiary.Add("Cantidad de horas que durmió");
         }
 
 
@@ -168,7 +174,7 @@ namespace SleepyTeddy.ViewModel
                 .ForMember(d => d.D_Assigned_Date_S, o => o.MapFrom(c => c.D_Assigned_Date.ToString("dd/MM/yy")))
                 .ForMember(d => d.D_Completed_Date, o => o.MapFrom(c => c.D_Completed_Date))
                 .ForMember(d => d.D_Completed_Date_S, o => o.MapFrom(c => c.D_Completed_Date.ToString("dd/MM/yy")))
-                .ForMember(d => d.N_Result, o => o.MapFrom(c => c.N_Result));
+                .ForMember(d => d.N_Result, o => o.MapFrom(c => Math.Round(c.N_Result,2)));
             });
 
             resModel.ForEach(a => ListQuestionnaireData.Add(config.CreateMapper().Map<Questionnaire, QuestionnairesView>(a)));
@@ -202,6 +208,7 @@ namespace SleepyTeddy.ViewModel
         public async Task GetSleepWakeDiariesViewAsync(string patientId)
         {
             ListSleepWakeDiaries = new List<SleepWakeDiariesView>();
+            string therapistId = LoginViewModel.Therapist_ID;
             var document = await CrossCloudFirestore.Current
                                        .Instance
                                        .Collection("SleepWakeDiaries")
@@ -213,10 +220,14 @@ namespace SleepyTeddy.ViewModel
             {
                 cfg.CreateMap<SleepWakeDiary, SleepWakeDiariesView>()
                 .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepWakeDiary_ID))
-                .ForMember(d => d.CreatedDate, o => o.MapFrom(c => c.CreatedDate.ToString("dd/MM/yy")))
+                .ForMember(d => d.CreatedDate, o => o.MapFrom(c => c.CreatedDate))
+                .ForMember(d => d.CreatedDate_S, o => o.MapFrom(c => c.CreatedDate.ToString("dd/MM/yy")))
                 .ForMember(d => d.SleepTime, o => o.MapFrom(c => c.SleepTime))
+                .ForMember(d => d.SleepTime_S, o => o.MapFrom(c => c.SleepTime.ToShortTimeString()))
                 .ForMember(d => d.WakeUpTime, o => o.MapFrom(c => c.WakeUpTime))
+                .ForMember(d => d.WakeUpTime_S, o => o.MapFrom(c => c.WakeUpTime.ToShortTimeString()))
                 .ForMember(d => d.HoursSlept, o => o.MapFrom(c => c.HoursSlept))
+
                 .ForMember(d => d.SleepEfficiency, o => o.MapFrom(c => c.SleepEfficiency));
             });
 
@@ -261,8 +272,11 @@ namespace SleepyTeddy.ViewModel
         public string Key { get; set; }
         public string SleepWakeDiary_ID { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string CreatedDate_S { get; set; }
         public DateTime SleepTime { get; set; }
+        public string SleepTime_S { get; set; }
         public DateTime WakeUpTime { get; set; }
+        public string WakeUpTime_S { get; set; }
         public Double HoursSlept { get; set; }
         public Double SleepEfficiency { get; set; }
     }

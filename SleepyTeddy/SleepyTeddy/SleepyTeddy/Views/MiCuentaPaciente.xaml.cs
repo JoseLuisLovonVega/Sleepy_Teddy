@@ -141,8 +141,7 @@ namespace SleepyTeddy.Views
 
         private async void MicuentaPaciente(object sender, EventArgs args)
         {
-            await objData.GetSleepRecordsDateFilterViewAsync(0);
-            //await Navigation.PushAsync(new UpdateAccPatient());
+            await Navigation.PushAsync(new UpdateAccPatient());
         }
         private async void Weareable(object sender, EventArgs args)
         {

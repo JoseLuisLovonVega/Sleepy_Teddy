@@ -27,6 +27,27 @@
                     HorizontalOptions="Center"
                     CornerRadius="10"
                     Clicked="btnBuscar_clicked" />
+            
+            <Picker ItemsSource="{Binding ListResultsSleepWakeDiary}"
+                    Title="Seleccione la información específica a ver"
+                    ItemDisplayBinding="{Binding}"
+                    x:Name="cbxResultsSleepWakeDiary"
+                    IsVisible="false"
+                    Grid.Row="0"
+                    Grid.Column="0"  />
+
+            <Button Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnBuscar2"
+                    Text="Buscar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    IsVisible="false"
+                    Clicked="btnBuscar2_clicked" />
 
             <Button Grid.Row="0"
                     Grid.Column="0"
@@ -44,7 +65,7 @@
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnFiltrar"
-                    Text="Filtrar los 7 Primeros Registros según F. Realización"
+                    Text="Filtrar Según: 7 Recientes Diarios Registrados"
                     TextColor="White"
                     IsVisible="false"
                     BackgroundColor="#2c3e50"
@@ -53,7 +74,186 @@
                     CornerRadius="10"
                     Clicked="btnFiltrar_clicked"/>
 
+            <Button Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnFiltrar2"
+                    Text="Filtrar Según: 7 Recientes Cuestionarios Realizados"
+                    TextColor="White"
+                    IsVisible="false"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="300"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnFiltrar2_clicked"/>
+
+            <ListView x:Name="list_sleepWakeDiariesSleepTime"
+                      IsVisible="false"
+                      Margin="10" 
+                      VerticalOptions="Center" 
+                      HorizontalOptions="Center"
+                      HasUnevenRows="True" 
+                      Grid.Row="2" 
+                      Grid.Column="0">
+                <ListView.Header>
+                    <StackLayout HorizontalOptions="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45*" />
+                                <ColumnDefinition Width="45*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label  
+                                    x:Name="HeaderDateSWDiary"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="F. Creación" FontSize="17" FontAttributes="Bold"/>
+                            <Label 
+                                    x:Name="HeaderInfoSWDiary"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="Hora a la que durmió" FontSize="17" FontAttributes="Bold"/>
+                        </Grid>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45*" />
+                                    <ColumnDefinition Width="45*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label  
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="{Binding CreatedTime_S}" FontSize="17"/>
+                                <Label 
+                                    
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="{Binding SleepTime_S}" FontSize="17"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView x:Name="list_sleepWakeDiariesWakeUpTime"
+                      IsVisible="false"
+                      Margin="10" 
+                      VerticalOptions="Center" 
+                      HorizontalOptions="Center"
+                      HasUnevenRows="True" 
+                      Grid.Row="2" 
+                      Grid.Column="0">
+                <ListView.Header>
+                    <StackLayout HorizontalOptions="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45*" />
+                                <ColumnDefinition Width="45*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label  
+                                    x:Name="HeaderDateSWDiary"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="F. Creación" FontSize="17" FontAttributes="Bold"/>
+                            <Label 
+                                    x:Name="HeaderInfoSWDiary"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="Hora a la que despertó" FontSize="17" FontAttributes="Bold"/>
+                        </Grid>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45*" />
+                                    <ColumnDefinition Width="45*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label  
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="{Binding CreatedTime_S}" FontSize="17"/>
+                                <Label 
+                                    
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="{Binding WakeUpTime_S}" FontSize="17"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView x:Name="list_sleepWakeDiariesHoursSlept"
+                      IsVisible="false"
+                      Margin="10" 
+                      VerticalOptions="Center" 
+                      HorizontalOptions="Center"
+                      HasUnevenRows="True" 
+                      Grid.Row="2" 
+                      Grid.Column="0">
+                <ListView.Header>
+                    <StackLayout HorizontalOptions="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45*" />
+                                <ColumnDefinition Width="45*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label  
+                                    x:Name="HeaderDateSWDiary"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="F. Creación" FontSize="17" FontAttributes="Bold"/>
+                            <Label 
+                                    x:Name="HeaderInfoSWDiary"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="Horas que durmió" FontSize="17" FontAttributes="Bold"/>
+                        </Grid>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45*" />
+                                    <ColumnDefinition Width="45*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label  
+                                    HorizontalOptions="Center"
+                                    Grid.Column="0" Text="{Binding CreatedTime_S}" FontSize="17"/>
+                                <Label 
+                                    
+                                    HorizontalOptions="Center"
+                                    Grid.Column="1" Text="{Binding HoursSlept}" FontSize="17"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
             <ListView x:Name="list_questionnaireResults"
+                      IsVisible="false"
                       Margin="10" 
                       VerticalOptions="Center" 
                       HorizontalOptions="Center"
