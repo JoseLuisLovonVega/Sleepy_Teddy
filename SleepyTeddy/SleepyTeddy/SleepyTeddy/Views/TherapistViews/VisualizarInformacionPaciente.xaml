@@ -107,11 +107,9 @@
                             </Grid.ColumnDefinitions>
 
                             <Label  
-                                    x:Name="HeaderDateSWDiary"
                                     HorizontalOptions="Center"
                                     Grid.Column="0" Text="F. Creación" FontSize="17" FontAttributes="Bold"/>
                             <Label 
-                                    x:Name="HeaderInfoSWDiary"
                                     HorizontalOptions="Center"
                                     Grid.Column="1" Text="Hora a la que durmió" FontSize="17" FontAttributes="Bold"/>
                         </Grid>
@@ -162,11 +160,9 @@
                             </Grid.ColumnDefinitions>
 
                             <Label  
-                                    x:Name="HeaderDateSWDiary"
                                     HorizontalOptions="Center"
                                     Grid.Column="0" Text="F. Creación" FontSize="17" FontAttributes="Bold"/>
                             <Label 
-                                    x:Name="HeaderInfoSWDiary"
                                     HorizontalOptions="Center"
                                     Grid.Column="1" Text="Hora a la que despertó" FontSize="17" FontAttributes="Bold"/>
                         </Grid>
@@ -217,11 +213,9 @@
                             </Grid.ColumnDefinitions>
 
                             <Label  
-                                    x:Name="HeaderDateSWDiary"
                                     HorizontalOptions="Center"
                                     Grid.Column="0" Text="F. Creación" FontSize="17" FontAttributes="Bold"/>
                             <Label 
-                                    x:Name="HeaderInfoSWDiary"
                                     HorizontalOptions="Center"
                                     Grid.Column="1" Text="Horas que durmió" FontSize="17" FontAttributes="Bold"/>
                         </Grid>
