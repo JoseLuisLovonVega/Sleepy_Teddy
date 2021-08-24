@@ -132,8 +132,8 @@ namespace SleepyTeddy.ViewModel
                         }
                     }
                     //Verificar si existen sleep records del día anterior y el día a evaluar
-                    if (listSleepRecords1.Count > 0 && listSleepRecords2.Count > 0)
-                    {
+                    //if (listSleepRecords1.Count > 0 && listSleepRecords2.Count > 0)
+                    //{
                         foreach (var sleepRecord in listSleepRecords1)
                         {
                             listSleepRecords3.Add(sleepRecord);
@@ -225,11 +225,11 @@ namespace SleepyTeddy.ViewModel
                         {
                             Debug.WriteLine("No existe data de sueño los días en cuestión");
                         }
-                    }
-                    else
-                    {
-                        Debug.WriteLine("No existe data de sleep records de los días en cuestión");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    Debug.WriteLine("No existe data de sleep records de los días en cuestión");
+                    //}
                 }
                 await Application.Current.MainPage.DisplayAlert("Sincronización Exitosa", "Registros de diarios de sueño-vigilia completados", "OK");
             }
