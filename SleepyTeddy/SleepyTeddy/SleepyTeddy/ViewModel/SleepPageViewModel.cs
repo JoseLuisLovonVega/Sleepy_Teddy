@@ -181,9 +181,9 @@ namespace SleepyTeddy.ViewModel
                             //Calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
                             //el sleep record registrado antes de éste es 1 o 2
                             listSleepRecords1 = listSleepRecords1.OrderByDescending(o => o.DateTimeHour).ToList();
-                            for (int i = 0; i < listSleepRecords1.Count; i++)
+                            for (int i = 1; i < listSleepRecords1.Count; i++)
                             {
-                                if (listSleepRecordsSleepKinds.ElementAt(i).Kind > 0 && listSleepRecordsSleepKinds.ElementAt(i + 1).Kind == 0 && count == 0)
+                                if (listSleepRecordsSleepKinds.ElementAt(i-1).Kind > 0 && listSleepRecordsSleepKinds.ElementAt(i).Kind == 0 && count == 0)
                                 {
                                     sleepWakeDiary.WakeUpTime = listSleepRecordsSleepKinds.ElementAt(i).DateTimeHour;
                                     count = 1;
