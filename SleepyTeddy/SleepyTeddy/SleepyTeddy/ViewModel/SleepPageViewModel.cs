@@ -30,7 +30,6 @@ namespace SleepyTeddy.ViewModel
         List<SleepRecordsView> listSleepRecords3;
         List<SleepRecordsView> listSleepRecordsSleepKinds;
 
-        int unicaVerificiacion = 0;
         int count = 0;
         double amountMinutes = 0;
         double sum = 0;
@@ -111,6 +110,7 @@ namespace SleepyTeddy.ViewModel
         {
             try
             {
+                //CreateSleepRecords();
                 for (int contador = 0; contador > -7; contador--)
                 {
                     amountMinutes = 0;
@@ -191,9 +191,9 @@ namespace SleepyTeddy.ViewModel
                             }
                             Debug.WriteLine("Se calculó la hora a la que se despertó del diario de sueño-vigilia");
                             //Se calcula los minutos que el paciente estuvo dormido
-                            for (int i = 0; i < listSleepRecordsSleepKinds.Count; i++)
+                            for (int i = 1; i < listSleepRecordsSleepKinds.Count; i++)
                             {
-                                amountMinutes = listSleepRecordsSleepKinds.ElementAt(i + 1).DateTimeHour.Subtract(listSleepRecordsSleepKinds.ElementAt(i).DateTimeHour).TotalMinutes;
+                                amountMinutes = listSleepRecordsSleepKinds.ElementAt(i).DateTimeHour.Subtract(listSleepRecordsSleepKinds.ElementAt(i-1).DateTimeHour).TotalMinutes;
                                 sum = sum + amountMinutes;
                             }
                             //Los minutos se pasan a horas
