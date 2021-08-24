@@ -31,6 +31,8 @@ namespace SleepyTeddy.Views
         public static Button CerrarSesionButton;
         private readonly string _propertyKey = "LastConnectedDevice";
         string NombreCompleto;
+
+        GetDataFromLoginUser objData { get; set; }
         public MiCuentaPaciente()
         {
             InitializeComponent();
@@ -139,7 +141,8 @@ namespace SleepyTeddy.Views
 
         private async void MicuentaPaciente(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new UpdateAccPatient());
+            await objData.GetSleepRecordsDateFilterViewAsync(0);
+            //await Navigation.PushAsync(new UpdateAccPatient());
         }
         private async void Weareable(object sender, EventArgs args)
         {

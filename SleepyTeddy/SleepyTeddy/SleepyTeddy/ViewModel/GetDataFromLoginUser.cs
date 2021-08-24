@@ -175,30 +175,7 @@ namespace SleepyTeddy.ViewModel
             resModel.ForEach(a => ListQuestionnaireData.Add(config.CreateMapper().Map<Questionnaire, QuestionnairesView>(a)));
             return;
         }
-        //Obtener los sleep records del paciente que inició sesión para completar los campos del SleepWakeDiary
-        public async Task GetSleepRecordsViewAsync()
-        {
-            ListSleepRecords = new List<SleepRecordsView>();
-            string patientId = LoginViewModel.Patient_ID;
-            var document = await CrossCloudFirestore.Current
-                                       .Instance
-                                       .Collection("SleepRecords")
-                                       .WhereEqualsTo("Patient_ID", patientId)
-                                       .GetAsync();
-
-            var resModel = document.ToObjects<SleepRecord>().ToList();
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<SleepRecord, SleepRecordsView>()
-                .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepRecord_ID))
-                .ForMember(d => d.DateTimeHour, o => o.MapFrom(c => c.DateTimeHour))
-                .ForMember(d => d.Kind, o => o.MapFrom(c => c.Kind));
-            });
-
-            resModel.ForEach(a => ListSleepRecords.Add(config.CreateMapper().Map<SleepRecord, SleepRecordsView>(a)));
-            return;
-        }
-        //Obtener los sleep records del paciente que inició sesión según una fecha en específico
+        //Obtener los sleep records del paciente que inició sesión y tienen que ser del rango 0 am a 4 pm del día a evaluar
         public async Task GetSleepRecordsDateFilterViewAsync(int contador)
         {
             ListSleepRecordsDateFilter = new List<SleepRecordsView>();
@@ -207,7 +184,8 @@ namespace SleepyTeddy.ViewModel
                                        .Instance
                                        .Collection("SleepRecords")
                                        .WhereEqualsTo("Patient_ID", patientId)
-                                       .WhereEqualsTo("DateTimeHour", DateTime.Today.AddDays(contador))
+                                       .WhereGreaterThan("DateTimeHour", DateTime.Today.AddDays(contador))
+                                       .WhereLessThan("DateTimeHour", DateTime.Today.AddDays(contador).AddHours(16))
                                        .GetAsync();
 
             var resModel = document.ToObjects<SleepRecord>().ToList();
@@ -220,6 +198,32 @@ namespace SleepyTeddy.ViewModel
             });
 
             resModel.ForEach(a => ListSleepRecordsDateFilter.Add(config.CreateMapper().Map<SleepRecord, SleepRecordsView>(a)));
+            return;
+        }
+        //Obtener los sleep records del rango 4 pm del día anterior hasta 4 pm del día a evaluar y tienen que
+        //ser sleep records tipo 1 o 2
+        public async Task GetSleepRecordsViewAsync(int contador)
+        {
+            ListSleepRecords = new List<SleepRecordsView>();
+            string patientId = LoginViewModel.Patient_ID;
+            var document = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("SleepRecords")
+                                       .WhereEqualsTo("Patient_ID", patientId)
+                                       .WhereGreaterThan("DateTimeHour", DateTime.Today.AddDays(contador-1).AddHours(16))
+                                       .WhereLessThan("DateTimeHour", DateTime.Today.AddDays(contador).AddHours(16))
+                                       .GetAsync();
+
+            var resModel = document.ToObjects<SleepRecord>().ToList();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<SleepRecord, SleepRecordsView>()
+                .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepRecord_ID))
+                .ForMember(d => d.DateTimeHour, o => o.MapFrom(c => c.DateTimeHour))
+                .ForMember(d => d.Kind, o => o.MapFrom(c => c.Kind));
+            });
+
+            resModel.ForEach(a => ListSleepRecords.Add(config.CreateMapper().Map<SleepRecord, SleepRecordsView>(a)));
             return;
         }
 

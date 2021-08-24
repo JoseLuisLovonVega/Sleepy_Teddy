@@ -20,13 +20,16 @@ namespace SleepyTeddy.ViewModel
         public static IEnumerable<Sleep> SleepInfo = new List<Sleep>();
         public DateTime StartDate { get; }
         public DateTime SelectedDate;
+
         SleepWakeDiary sleepWakeDiary;
         GetDataFromLoginUser objData { get; set; }
 
-        List<SleepRecordsView> listSleepRecords;
-        List<SleepRecordsView> listSleepRecords2;
         List<SleepRecordsView> listSleepRecordsDateFilter;
-        int unicaVerficiacion = 0;
+        List<SleepRecordsView> listSleepRecordsDaysToEvaluate;
+        List<SleepRecordsView> listSleepRecordsSleepKindsDatesToEvaluate;
+        
+
+        int unicaVerificiacion = 0;
         int count = 0;
         double amountMinutes = 0;
         double sum = 0;
@@ -40,10 +43,13 @@ namespace SleepyTeddy.ViewModel
             _sleepRepository = sleepRepository;
             StartDate = DateTime.Today;
             //SelectedDate = StartDate;
+
+            objData = new GetDataFromLoginUser();
             sleepWakeDiary = new SleepWakeDiary();
-            listSleepRecords = new List<SleepRecordsView>();
-            listSleepRecords2 = new List<SleepRecordsView>();
+
             listSleepRecordsDateFilter = new List<SleepRecordsView>();
+            listSleepRecordsDaysToEvaluate = new List<SleepRecordsView>();
+            listSleepRecordsSleepKindsDatesToEvaluate = new List<SleepRecordsView>(); 
         }
 
         private List<Sleep> GetCurrentSleep()
@@ -104,8 +110,10 @@ namespace SleepyTeddy.ViewModel
             { 
                 for (int contador = 0; contador > -7; contador--)
                 {
-                    unicaVerficiacion = 0;
+                    unicaVerificiacion = 0;
+                    count = 0;
                     await objData.GetSleepRecordsDateFilterViewAsync(contador);
+                    Debug.WriteLine("Se logró obtener los sleep records desde las 0 am hasta antes de las 4 pm del dia a evaluar");
                     //Chequear si existen sleep records del día a evaluar
                     if (objData.ListSleepRecordsDateFilter.Count > 0)
                     {
@@ -115,67 +123,73 @@ namespace SleepyTeddy.ViewModel
                         // crear un diario de sueño-vigilia
                         foreach (var sleepRecord in listSleepRecordsDateFilter)
                         {
-                            if (sleepRecord.DateTimeHour.Hour < 16 && sleepRecord.Kind > 0 && unicaVerficiacion == 0)
+                            if (sleepRecord.Kind > 0 && unicaVerificiacion == 0)
                             {
-                                //Solo verificar una vez si hay data para registrar el atributo de 
-                                unicaVerficiacion = 1;
                                 //Por tanto se define la fecha de creación del diario de sueño como un día antes del día de
                                 //de creación del sleep record verificado que se creó en la mañana
                                 sleepWakeDiary.CreatedDate = sleepRecord.DateTimeHour.Date.AddDays(-1);
+
+                                //Solo verificar una vez si hay data para registrar el atributo de 
+                                unicaVerificiacion = 1; 
                             }
                         }
+
                         //Crear una lista de sleep records con cada sleep record del rango 4 pm del día anterior
                         //hasta 4 pm del día siguiente y tienen que ser sleeprecords tipo 1 y 2
-                        await objData.GetSleepRecordsViewAsync();
-                        listSleepRecords = objData.ListSleepRecords.OrderByDescending(o => o.DateTimeHour).ToList();
-                        foreach (var sleepRecord2 in listSleepRecords)
+                        await objData.GetSleepRecordsViewAsync(contador);
+                        Debug.WriteLine("Se logró obtener los sleep records desde las 4 pm del dia anterior hasta antes de las 4 pm del dia a evaluar");
+
+                        listSleepRecordsDaysToEvaluate = objData.ListSleepRecords.OrderByDescending(o => o.DateTimeHour).ToList();
+                        foreach (var sleepRecord in listSleepRecordsDaysToEvaluate)
                         {
-                            if ((sleepRecord2.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).ToString("dd/MM/yy") && sleepRecord2.DateTimeHour.Hour<16) 
-                                || (sleepRecord2.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador-1).ToString("dd/MM/yy") && sleepRecord2.DateTimeHour.Hour > 16)
-                                && sleepRecord2.Kind > 0)
-                                {
-                                            listSleepRecords2.Add(sleepRecord2);
-                                }
+                            if (sleepRecord.Kind > 0)
+                            {
+                                listSleepRecordsSleepKindsDatesToEvaluate.Add(sleepRecord);
+                            }
                         }
+                        Debug.WriteLine("Se creó la lista con el rango de los días para el diario de sueño-vigilia");
                         //Verificar si la lista creada no es nula
-                        if (listSleepRecords2.Count > 0)
+                        if (listSleepRecordsSleepKindsDatesToEvaluate.Count > 0)
                         {
-                        listSleepRecords2= listSleepRecords2.OrderByDescending(o => o.DateTimeHour).ToList();
+                        //listSleepRecordsSleepKindsDateEvaluate = listSleepRecordsSleepKindsDateEvaluate.OrderByDescending(o => o.DateTimeHour).ToList();
                         //Calcular las horas dormidas restando las fechas del primer con el último elemento de la lista
-                        sleepWakeDiary.HoursTotal = (listSleepRecords2.Last().DateTimeHour - listSleepRecords2.First().DateTimeHour).TotalHours;
-                        foreach (var SleepRecord in listSleepRecords2)
+                        sleepWakeDiary.HoursTotal = (listSleepRecordsSleepKindsDatesToEvaluate.Last().DateTimeHour - listSleepRecordsSleepKindsDatesToEvaluate.First().DateTimeHour).TotalHours;
+                        Debug.WriteLine("Se calcularon las horas totales del diario de sueño-vigilia");
+                        //Calcular a qué hora se durmió el paciente el día anterior al día a evaluar
+                        foreach (var SleepRecord in listSleepRecordsSleepKindsDatesToEvaluate)
                         {
                             if (SleepRecord.Kind == 2 && count == 0)
                                 {
                                 sleepWakeDiary.SleepTime = SleepRecord.DateTimeHour;
                                 count = 1;
                                 }
-                            }
+                        }
+                        Debug.WriteLine("Se calculó la hora a la que se durmió del diario de sueño-vigilia");
                         count = 0;
-                        //Ordenar la lista descendentemente osea de fecha más actual a más antigua
-                        //listSleepRecords2 = objData.ListSleepRecords.OrderByDescending(o => o.DateTimeHour).ToList();
-
-                        //Para así calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
-                        //el sleep record registrado antes de este es 1 o 2
-                        for (int i = 0; i < listSleepRecordsDateFilter.Count; i++)
+                        //Calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
+                        //el sleep record registrado antes de éste es 1 o 2
+                        for (int i = 0; i < listSleepRecordsSleepKindsDatesToEvaluate.Count; i++)
                         {
-                            if (listSleepRecordsDateFilter.ElementAt(i).Kind == 0 && listSleepRecordsDateFilter.ElementAt(i - 1).Kind > 0 && count == 0)
+                            if (listSleepRecordsSleepKindsDatesToEvaluate.ElementAt(i).DateTimeHour.Date== DateTime.Today.AddDays(contador).Date && listSleepRecordsSleepKindsDatesToEvaluate.ElementAt(i).Kind > 0 && listSleepRecordsSleepKindsDatesToEvaluate.ElementAt(i+1).Kind == 0 && count == 0)
                             {
-                                sleepWakeDiary.WakeUpTime = listSleepRecordsDateFilter.ElementAt(i).DateTimeHour;
+                                sleepWakeDiary.WakeUpTime = listSleepRecordsSleepKindsDatesToEvaluate.ElementAt(i).DateTimeHour;
                                 count = 1;
                             }
                         }
-                        for (int i = 0; i < listSleepRecords2.Count; i++)
+                        Debug.WriteLine("Se calculó la hora a la que se despertó del diario de sueño-vigilia");
+                        for (int i = 0; i < listSleepRecordsSleepKindsDatesToEvaluate.Count; i++)
                         {
-                            amountMinutes = listSleepRecords2.ElementAt(i + 1).DateTimeHour.Subtract(listSleepRecords2.ElementAt(i).DateTimeHour).TotalMinutes;
+                            amountMinutes = listSleepRecordsSleepKindsDatesToEvaluate.ElementAt(i + 1).DateTimeHour.Subtract(listSleepRecordsSleepKindsDatesToEvaluate.ElementAt(i).DateTimeHour).TotalMinutes;
                             sum += amountMinutes;
                         }
                         //Los minutos se pasan a horas
                         sum = sum / 60;
                         //Se calcula las horas dormidas
                         sleepWakeDiary.HoursSlept = sum;
+                        Debug.WriteLine("Se calculó las horas horas dormidas del diario de sueño-vigilia");
                         //Y con ell la eficiencia del sueño del diario de sueño-vigilia
                         sleepWakeDiary.SleepEfficiency = sleepWakeDiary.HoursSlept / sleepWakeDiary.HoursTotal * 100;
+                        Debug.WriteLine("Se calculó la eficiencia del sueño del diario de sueño-vigilia");
                         //Se crea el diario de sueño-vigilia
                         await CrossCloudFirestore.Current
                                   .Instance
@@ -191,11 +205,11 @@ namespace SleepyTeddy.ViewModel
                                   HoursSlept = sleepWakeDiary.HoursSlept,
                                   SleepEfficiency = sleepWakeDiary.SleepEfficiency
                                   });
-                                  count = 0;
+                        Debug.WriteLine("Se registró el diario de sueño-vigilia del día a evaluar: Día: " + contador);
                         }
                         else
                         {
-                        Acr.UserDialogs.UserDialogs.Instance.Toast("No existe data para registrar los diarios de sueño-vigilia", new TimeSpan(3));
+                        Acr.UserDialogs.UserDialogs.Instance.Toast("No existe data del día en cuestión", new TimeSpan(3));
                         }
                     }
                 }
