@@ -208,7 +208,6 @@ namespace SleepyTeddy.ViewModel
         public async Task GetSleepWakeDiariesViewAsync(string patientId)
         {
             ListSleepWakeDiaries = new List<SleepWakeDiariesView>();
-            string therapistId = LoginViewModel.Therapist_ID;
             var document = await CrossCloudFirestore.Current
                                        .Instance
                                        .Collection("SleepWakeDiaries")
