@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "36083965742",
-    "project_id": "tesis-bkp",
-    "storage_bucket": "tesis-bkp.appspot.com"
+    "project_number": "855043071612",
+    "firebase_url": "https://sleepy-teddy-tp-default-rtdb.firebaseio.com",
+    "project_id": "sleepy-teddy-tp",
+    "storage_bucket": "sleepy-teddy-tp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:36083965742:android:666c5c0e7d6677f05a24bf",
+        "mobilesdk_app_id": "1:855043071612:android:4d4024b8f5be36a460b3f9",
         "android_client_info": {
           "package_name": "com.company.sleepyteddy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "36083965742-tgh0s5m7b0fcgt8tvkin8kpl197lq18s.apps.googleusercontent.com",
+          "client_id": "855043071612-gdk4gl3jmccqkqcqonv481in6422hd8g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAreo9JFnEdCZhx2bRqP7GAA_jjms_suHE"
+          "current_key": "AIzaSyAwPObiFGt_CoXyWpjZhbAnJ0gfbdXdps8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "36083965742-tgh0s5m7b0fcgt8tvkin8kpl197lq18s.apps.googleusercontent.com",
+              "client_id": "855043071612-gdk4gl3jmccqkqcqonv481in6422hd8g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
