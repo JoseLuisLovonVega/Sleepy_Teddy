@@ -205,7 +205,7 @@ namespace SleepyTeddy.ViewModel
 
                         foreach (var sleepRecord in listSleepRecordsObjData)
                         {
-                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador - 1).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour > 18)
+                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador - 1).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour > 18 )
                             {
                                 listSleepRecords1.Add(sleepRecord);
                             }
@@ -215,7 +215,7 @@ namespace SleepyTeddy.ViewModel
 
                         foreach (var sleepRecord in listSleepRecordsObjData)
                         {
-                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 16)
+                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 14)
                             {
                                 listSleepRecords2.Add(sleepRecord);
                             }
