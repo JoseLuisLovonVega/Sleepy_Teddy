@@ -79,7 +79,7 @@ namespace SleepyTeddy.ViewModel
             OrderBy(x => x.DateTime).ToList();
         }
 
-       /* public async void CreateSleepRecords()
+       public async void CreateSleepRecords()
         {
             SleepInfo = _sleepRepository.GetAll();
 
@@ -119,9 +119,9 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
-        }*/
+        }
 
-        public async void CreateSleepRecords()
+        /*public async void CreateSleepRecords()
         {
             await objData.GetSleepRecordsViewAsync();
             objData.ListSleepRecords.OrderBy(o => o.DateTimeHour).ToList();
@@ -153,7 +153,7 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
-        }
+        }*/
 
             public async void CreateCompletedSleepWakeDiaries()
         {
