@@ -19,8 +19,8 @@ namespace SleepyTeddy.Data.Repository
             var command = _database.Instance.CreateCommand(query, new object[] { sleep.DateTime, sleep.SleepType });
             command.ExecuteNonQuery();
         }
-        //IEnumerable
-        public List<Sleep> GetAll()
+
+        public IEnumerable<Sleep> GetAll()
         {
             return _database.Instance.Table<Sleep>().OrderBy(x => x.DateTime).ToList();
         }
