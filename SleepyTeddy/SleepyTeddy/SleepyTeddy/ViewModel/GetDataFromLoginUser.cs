@@ -262,7 +262,7 @@ namespace SleepyTeddy.ViewModel
     }
     public class SleepRecordsView
     {
-        public string Key { get; set; }
+        public int Key { get; set; }
         public DateTime DateTimeHour { get; set; }
         public int Kind { get; set; }
     }

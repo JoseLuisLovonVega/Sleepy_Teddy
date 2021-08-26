@@ -5,7 +5,8 @@ namespace SleepyTeddy.Data.Interfaces
 {
     public interface ISleepRepository
     {
-        IEnumerable<Sleep> GetAll();
+        //IEnumerable
+        List<Sleep> GetAll();
         void Add(Sleep sleep);
         void RemoveAll();
     }

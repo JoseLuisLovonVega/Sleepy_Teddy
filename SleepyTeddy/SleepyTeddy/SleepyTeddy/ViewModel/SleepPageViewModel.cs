@@ -33,10 +33,16 @@ namespace SleepyTeddy.ViewModel
         SleepRecordsView sleepRecords1;
         SleepRecordsView sleepRecords2;
 
+        List<SleepRecordsView> listSleepRecords12;
+        List<SleepRecordsView> listSleepRecords22;
+
         int count = 0;
         double amountMinutes = 0;
         double sum = 0;
-        bool verificacion=false;
+        int verificacion = 0;
+        int verificacion2 = 0;
+
+        int dia;
 
         private ISleepRepository _sleepRepository;
 
@@ -57,8 +63,11 @@ namespace SleepyTeddy.ViewModel
             listSleepRecords3 = new List<SleepRecordsView>();
             listSleepRecordsSleepKinds = new List<SleepRecordsView>();
 
-            sleepRecords1= new SleepRecordsView();
+            sleepRecords1 = new SleepRecordsView();
             sleepRecords2 = new SleepRecordsView();
+
+            listSleepRecords12 = new List<SleepRecordsView>();
+            listSleepRecords22 = new List<SleepRecordsView>();
         }
 
         private List<Sleep> GetCurrentSleep()
@@ -70,7 +79,7 @@ namespace SleepyTeddy.ViewModel
             OrderBy(x => x.DateTime).ToList();
         }
 
-        public async void CreateSleepRecords()
+       /* public async void CreateSleepRecords()
         {
             SleepInfo = _sleepRepository.GetAll();
 
@@ -110,29 +119,65 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
-            Acr.UserDialogs.UserDialogs.Instance.Toast("Registros de información del sueño completados.", new TimeSpan(4));
+        }*/
+
+        public async void CreateSleepRecords()
+        {
+            await objData.GetSleepRecordsViewAsync();
+            objData.ListSleepRecords.OrderBy(o => o.DateTimeHour).ToList();
+
+            for (int i = 0; i < _sleepRepository.GetAll().Count; i++)
+            {
+                verificacion2 = 0;
+                for (int j = 1; i < objData.ListSleepRecords.Count; i++)
+                {
+                    if(_sleepRepository.GetAll().ElementAt(i).Id == objData.ListSleepRecords.ElementAt(j).Key)
+                    {
+                        verificacion2 = 1;
+                    }
+                }
+                if (verificacion2 == 0)
+                {
+                    if (_sleepRepository.GetAll().ElementAt(i) != null)
+                    {
+                        await CrossCloudFirestore.Current
+                        .Instance
+                        .Collection("SleepRecords")
+                        .AddAsync(new SleepRecord
+                        {
+                            SleepRecord_ID = _sleepRepository.GetAll().ElementAt(i).Id,
+                            Patient_ID = LoginViewModel.Patient_ID,
+                            DateTimeHour = _sleepRepository.GetAll().ElementAt(i).DateTime.AddHours(-5),
+                            Kind = (int)_sleepRepository.GetAll().ElementAt(i).SleepType
+                        });
+                    }
+                }
+            }
         }
 
-        public async void CreateCompletedSleepWakeDiaries()
+            public async void CreateCompletedSleepWakeDiaries()
         {
             try
             {
+                await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
                 //CreateSleepRecords();
                 for (int contador = 0; contador > -6; contador--)
                 {
-                    verificacion = false;
-                    await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
+                    verificacion = 0;
+
                     if (objData.ListSleepWakeDiaries.Count > 0)
                     {
                         foreach (var sleepWakeDiary in objData.ListSleepWakeDiaries)
                         {
-                            if (sleepWakeDiary.CreatedDate_S == DateTime.Today.AddDays(contador).ToString("dd/MM/yy"))
+                            if (sleepWakeDiary.CreatedDate.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).ToString("dd/MM/yy"))
                             {
-                                verificacion = true;
+                                verificacion = 1;
                             }
                         }
                     }
-                    if (verificacion == false)
+                    Debug.WriteLine("Evaluando Día " + contador);
+                    Debug.WriteLine("La verificación del Día " + contador + "es: " + verificacion);
+                    if (verificacion == 0)
                     {
                         sleepWakeDiary = new SleepWakeDiary();
                         amountMinutes = 0;
@@ -143,14 +188,19 @@ namespace SleepyTeddy.ViewModel
                         listSleepRecords2 = new List<SleepRecordsView>();
                         listSleepRecords3 = new List<SleepRecordsView>();
                         listSleepRecordsSleepKinds = new List<SleepRecordsView>();
-                        
+
                         sleepRecords1 = new SleepRecordsView();
                         sleepRecords2 = new SleepRecordsView();
-                        
+
+                        listSleepRecords12 = new List<SleepRecordsView>();
+                        listSleepRecords22 = new List<SleepRecordsView>();
+
+                        dia = contador;
+
                         await objData.GetSleepRecordsViewAsync();
-                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente");
+                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Today.AddDays(contador));
                         //Ordenar de la más antigua a la más reciente
-                        listSleepRecordsObjData = objData.ListSleepRecords.OrderByDescending(o => o.DateTimeHour).ToList();
+                        listSleepRecordsObjData = objData.ListSleepRecords.OrderBy(o => o.DateTimeHour).ToList();
                         Debug.WriteLine("Se logró ordenar descendientemente todos los sleep records del paciente");
 
                         foreach (var sleepRecord in listSleepRecordsObjData)
@@ -160,7 +210,12 @@ namespace SleepyTeddy.ViewModel
                                 listSleepRecords1.Add(sleepRecord);
                             }
                         }
-                        Debug.WriteLine("Cantidad de sleeprecords1: " + listSleepRecords1.Count); 
+                        Debug.WriteLine("Cantidad de sleeprecords1: " + listSleepRecords1.Count);
+                        //Ordenar de la más antigua a la más reciente
+                        listSleepRecords1 = listSleepRecords1.OrderBy(o => o.DateTimeHour).ToList();
+                        Debug.WriteLine("El primer sleeprecord de la lista sleeprecords1: " + listSleepRecords1.First().DateTimeHour);
+                        Debug.WriteLine("El último sleeprecord de la lista sleeprecords1: " + listSleepRecords1.Last().DateTimeHour);
+
                         foreach (var sleepRecord in listSleepRecordsObjData)
                         {
                             if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 16)
@@ -169,22 +224,46 @@ namespace SleepyTeddy.ViewModel
                             }
                         }
                         Debug.WriteLine("Cantidad de sleeprecords2: " + listSleepRecords2.Count);
-                        if (listSleepRecords1.Count > 0 && listSleepRecords2.Count > 0)
-                        {
-                            //Ordenar de la más antigua a la más reciente
-                            listSleepRecords1 = listSleepRecords1.OrderByDescending(o => o.DateTimeHour).ToList();
-                        Debug.WriteLine("El primer sleeprecord de la lista sleeprecords1: " + listSleepRecords1.First().DateTimeHour);
-                        Debug.WriteLine("El último sleeprecord de la lista sleeprecords1: " + listSleepRecords1.Last().DateTimeHour);
                         //Ordenar de la más antigua a la más reciente
-                        listSleepRecords2 = listSleepRecords2.OrderByDescending(o => o.DateTimeHour).ToList();
-                        Debug.WriteLine("El primer sleeprecord de la lista sleeprecords2: " + listSleepRecords1.First().DateTimeHour);
-                        Debug.WriteLine("El último sleeprecord de la lista sleeprecords2: " + listSleepRecords1.Last().DateTimeHour);
-                        Debug.WriteLine("Se logró registrar las listas de los sleep records del paciente de 4 pm del dia anterior a 4 pm del dia a evaluar");
-                        Debug.WriteLine("Fecha de día a evaluar: " + DateTime.Today.AddDays(contador));
-                        
-                        //Verificar si existen sleep records del día anterior y el día a evaluar
-                        
-                            foreach (var sleepRecord in listSleepRecords1)
+                        listSleepRecords2 = listSleepRecords2.OrderBy(o => o.DateTimeHour).ToList();
+                        Debug.WriteLine("El primer sleeprecord de la lista sleeprecords2: " + listSleepRecords2.First().DateTimeHour);
+                        Debug.WriteLine("El último sleeprecord de la lista sleeprecords2: " + listSleepRecords2.Last().DateTimeHour);
+
+                        foreach (var sleepRecord in listSleepRecords1)
+                        {
+                            if (sleepRecord.Kind != 0)
+                            {
+                                listSleepRecords12.Add(sleepRecord);
+                            }
+                        }
+
+                        Debug.WriteLine("Cantidad de sleeprecords12: " + listSleepRecords12.Count);
+                        //Ordenar de la más antigua a la más reciente
+                        listSleepRecords2 = listSleepRecords2.OrderBy(o => o.DateTimeHour).ToList();
+                        Debug.WriteLine("El primer sleeprecord de la lista sleeprecords12: " + listSleepRecords12.First().DateTimeHour);
+                        Debug.WriteLine("El último sleeprecord de la lista sleeprecords12: " + listSleepRecords12.Last().DateTimeHour);
+
+                        foreach (var sleepRecord in listSleepRecords2)
+                        {
+                            if (sleepRecord.Kind != 0)
+                            {
+                                listSleepRecords22.Add(sleepRecord);
+                            }
+                        }
+                        Debug.WriteLine("Cantidad de sleeprecords22: " + listSleepRecords22.Count);
+                        //Ordenar de la más antigua a la más reciente
+                        listSleepRecords2 = listSleepRecords2.OrderBy(o => o.DateTimeHour).ToList();
+                        Debug.WriteLine("El primer sleeprecord de la lista sleeprecords22: " + listSleepRecords22.First().DateTimeHour);
+                        Debug.WriteLine("El último sleeprecord de la lista sleeprecords22: " + listSleepRecords22.Last().DateTimeHour);
+
+                        if (listSleepRecords12.Count > 0 && listSleepRecords22.Count > 0)
+                        {
+                            
+                            
+                            Debug.WriteLine("Se logró registrar las listas de los sleep records del paciente de 4 pm del dia anterior a 4 pm del dia a evaluar");
+                            Debug.WriteLine("Fecha de día a evaluar: " + DateTime.Today.AddDays(contador - 1));
+
+                            /*foreach (var sleepRecord in listSleepRecords1)
                             {
                                 listSleepRecords3.Add(sleepRecord);
                             }
@@ -194,16 +273,18 @@ namespace SleepyTeddy.ViewModel
                             }
                             Debug.WriteLine("Cantidad de sleeprecords3: " + listSleepRecords3.Count);
                             //Ordenar de la más antigua a la más reciente
-                            listSleepRecords3 = listSleepRecords3.OrderByDescending(o => o.DateTimeHour).ToList();
+                            listSleepRecords3 = listSleepRecords3.OrderBy(o => o.DateTimeHour).ToList();
                             Debug.WriteLine("El primer sleeprecord de la lista sleeprecords3: " + listSleepRecords3.First().DateTimeHour);
                             Debug.WriteLine("El último sleeprecord de la lista sleeprecords3: " + listSleepRecords3.Last().DateTimeHour);
+                            */
+
                             Debug.WriteLine("Se logró obtener los sleep records desde las 4 pm del dia anterior hasta antes de las 4 pm del dia a evaluar");
 
                             //Se define la fecha de creación del diario de sueño como un día antes del día a evaluar
                             sleepWakeDiary.CreatedDate = DateTime.Today.AddDays(contador - 1);
                             Debug.WriteLine("Se registro la fecha de creación del diario de sueño-vigilia");
                             //Calcular las horas en la cama restando las fechas del primer con el último elemento de la lista
-                            sleepWakeDiary.HoursTotal = (listSleepRecords3.Last().DateTimeHour - listSleepRecords3.First().DateTimeHour).TotalHours;
+                            sleepWakeDiary.HoursTotal = listSleepRecords2.Last().DateTimeHour.Subtract(listSleepRecords1.First().DateTimeHour).TotalHours;
                             Debug.WriteLine("Se calcularon las horas totales del diario de sueño-vigilia");
 
                             //Calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
@@ -218,16 +299,18 @@ namespace SleepyTeddy.ViewModel
                             Debug.WriteLine("Se calculó la hora a la que se despertó del diario de sueño-vigilia");
 
                             //Se crea la lista con los sleep records sólo kind 1 o 2
-                            foreach (var sleepRecord in listSleepRecords3)
+                            foreach (var sleepRecord in listSleepRecords12)
                             {
-                                if (sleepRecord.Kind != 0)
-                                {
-                                    listSleepRecordsSleepKinds.Add(sleepRecord);
-                                }
+                                listSleepRecordsSleepKinds.Add(sleepRecord);
                             }
+                            foreach (var sleepRecord in listSleepRecords22)
+                            {
+                                listSleepRecordsSleepKinds.Add(sleepRecord);
+                            }
+
                             Debug.WriteLine("Cantidad de sleeprecordsSleepKinds: " + listSleepRecordsSleepKinds.Count);
                             //Ordenar de la más antigua a la más reciente
-                            listSleepRecordsSleepKinds = listSleepRecordsSleepKinds.OrderByDescending(o => o.DateTimeHour).ToList();
+                            listSleepRecordsSleepKinds = listSleepRecordsSleepKinds.OrderBy(o => o.DateTimeHour).ToList();
                             Debug.WriteLine("El primer sleeprecord de la lista sleeprecordsSleepKinds: " + listSleepRecordsSleepKinds.First().DateTimeHour);
                             Debug.WriteLine("El último sleeprecord de la lista sleeprecordsSleepKinds: " + listSleepRecordsSleepKinds.Last().DateTimeHour);
 
@@ -256,7 +339,7 @@ namespace SleepyTeddy.ViewModel
                                 //Los minutos se pasan a horas
                                 sum = sum / 60;
 
-                                //Se calcula las horas dormidas
+                                //Se calculan las horas dormidas
                                 sleepWakeDiary.HoursSlept = sum;
                                 sleepWakeDiary.HoursSlept = Math.Round(sleepWakeDiary.HoursSlept, 2);
                                 Debug.WriteLine("Se calculó las horas horas dormidas del diario de sueño-vigilia");
@@ -285,12 +368,12 @@ namespace SleepyTeddy.ViewModel
                             }
                             else
                             {
-                                Debug.WriteLine("No existe data de sueño de los días en cuestión");
+                                Debug.WriteLine("No existen sleep records de kind 1 o 2 en los días en cuestión. : Día: " + contador);
                             }
                         }
                         else
                         {
-                            Debug.WriteLine("No existe data de sleep records de los días en cuestión");
+                            Debug.WriteLine("No existe data de sleep records de los días en cuestión.: Día: " + contador);
                         }
                     }
                     if (contador == -5)
@@ -304,8 +387,9 @@ namespace SleepyTeddy.ViewModel
             }
             catch (Exception e)
             {
+                
                 Debug.WriteLine(e.Message);
-                Debug.WriteLine("ERROR al completar los diarios de sueño-vigilia");
+                Debug.WriteLine("ERROR al completar los diarios de sueño-vigilia. Día: " + dia);
                 Acr.UserDialogs.UserDialogs.Instance.Toast("ERROR al completar los diarios de sueño-vigilia.", new TimeSpan(3));
                 return;
             }
