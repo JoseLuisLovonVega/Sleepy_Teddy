@@ -134,19 +134,19 @@ namespace SleepyTeddy.ViewModel
                     }
                     if (verificacion == false)
                     {
-                        sleepWakeDiary = null;
+                        sleepWakeDiary = new SleepWakeDiary();
                         amountMinutes = 0;
                         sum = 0;
                         count = 0;
 
-                        listSleepRecordsObjData = null;
-                        listSleepRecords1 = null;
-                        listSleepRecords2 = null;
-                        listSleepRecords3 = null;
-                        listSleepRecordsSleepKinds = null;
+                        listSleepRecordsObjData = new List<SleepRecordsView>();
+                        listSleepRecords1 = new List<SleepRecordsView>();
+                        listSleepRecords2 = new List<SleepRecordsView>();
+                        listSleepRecords3 = new List<SleepRecordsView>();
+                        listSleepRecordsSleepKinds = new List<SleepRecordsView>();
                         
-                        sleepRecords1 = null;
-                        sleepRecords2 = null;
+                        sleepRecords1 = new SleepRecordsView();
+                        sleepRecords2 = new SleepRecordsView();
                         
                         await objData.GetSleepRecordsViewAsync();
                         Debug.WriteLine("Se logró obtener todos los sleep records del paciente");
