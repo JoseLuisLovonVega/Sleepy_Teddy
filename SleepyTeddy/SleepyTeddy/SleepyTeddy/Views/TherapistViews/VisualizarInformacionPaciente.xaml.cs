@@ -78,6 +78,7 @@ namespace SleepyTeddy.Views.TherapistViews
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
                     }
+
                     else
                     {
                         list_questionnaireResults.IsVisible = false;
@@ -91,10 +92,12 @@ namespace SleepyTeddy.Views.TherapistViews
                             listSleepWakeDiariesPatientSearched.Add(objSearch.ListSleepWakeDiaries.ElementAt(i)); 
                         }
                         list_sleepWakeDiariesSleepTime.ItemsSource = listSleepWakeDiariesPatientSearched;
+                        list_sleepWakeDiariesSleepTime.IsVisible = true;
                         if ((list_sleepWakeDiariesSleepTime.ItemsSource as List<SleepWakeDiariesView>).Count >= 7)
                         {
                             btnFiltrar.IsVisible = true;
                         }
+                        list_sleepWakeDiariesSleepTime.IsVisible = true;
                     }
                 } else {
                     btnFiltrar.IsVisible = false;
@@ -105,6 +108,7 @@ namespace SleepyTeddy.Views.TherapistViews
                     list_sleepWakeDiariesSleepTime.IsVisible = false;
                     listresultsQuestionnairePatientSearched = new List<QuestionnairesView>();
                     await objSearch.GetQuestionnaireResultsViewAsync(cbxPatientInfo.SelectedItem.ToString(), id_patient);
+                    //Ordenar de la más antigua a la más reciente
                     objSearch.ListQuestionnaireData = objSearch.ListQuestionnaireData.OrderByDescending(o => o.D_Assigned_Date).ToList();
                     if (objSearch.ListQuestionnaireData.Count == 0)
                     {
@@ -271,8 +275,10 @@ namespace SleepyTeddy.Views.TherapistViews
                 listColorResults.Add("#F3352C");
                 DataLineGraph = new List<ChartEntry>();
                 listData = new List<QuestionnairesView>();
+                //Ordenar de la más reciente a la más antigua
                 listData = listresultsQuestionnairePatientSearched.OrderBy(o => o.D_Completed_Date).ToList();
                 listData = listData.GetRange(0, 7);
+                //Ordenar de la más antigua a la más reciente
                 listData = listData.OrderByDescending(o => o.D_Completed_Date).ToList();
                 for (int i = 0; i < listData.Count; i++)
                 {
