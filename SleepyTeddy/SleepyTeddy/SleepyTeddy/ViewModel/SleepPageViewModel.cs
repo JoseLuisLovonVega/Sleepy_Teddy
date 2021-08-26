@@ -139,7 +139,6 @@ namespace SleepyTeddy.ViewModel
                         sum = 0;
                         count = 0;
 
-                        listSleepRecordsObjData = new List<SleepRecordsView>();
                         listSleepRecords1 = new List<SleepRecordsView>();
                         listSleepRecords2 = new List<SleepRecordsView>();
                         listSleepRecords3 = new List<SleepRecordsView>();
@@ -170,9 +169,10 @@ namespace SleepyTeddy.ViewModel
                             }
                         }
                         Debug.WriteLine("Cantidad de sleeprecords2: " + listSleepRecords2.Count);
-
-                        //Ordenar de la más antigua a la más reciente
-                        listSleepRecords1 = listSleepRecords1.OrderByDescending(o => o.DateTimeHour).ToList();
+                        if (listSleepRecords1.Count > 0 && listSleepRecords2.Count > 0)
+                        {
+                            //Ordenar de la más antigua a la más reciente
+                            listSleepRecords1 = listSleepRecords1.OrderByDescending(o => o.DateTimeHour).ToList();
                         Debug.WriteLine("El primer sleeprecord de la lista sleeprecords1: " + listSleepRecords1.First().DateTimeHour);
                         Debug.WriteLine("El último sleeprecord de la lista sleeprecords1: " + listSleepRecords1.Last().DateTimeHour);
                         //Ordenar de la más antigua a la más reciente
@@ -183,8 +183,7 @@ namespace SleepyTeddy.ViewModel
                         Debug.WriteLine("Fecha de día a evaluar: " + DateTime.Today.AddDays(contador));
                         
                         //Verificar si existen sleep records del día anterior y el día a evaluar
-                        if (listSleepRecords1.Count > 0 && listSleepRecords2.Count > 0)
-                        {
+                        
                             foreach (var sleepRecord in listSleepRecords1)
                             {
                                 listSleepRecords3.Add(sleepRecord);
