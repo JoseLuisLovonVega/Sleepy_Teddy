@@ -13,8 +13,8 @@ namespace SleepyTeddy.Models
         public DateTime CreatedDate { get; set; }
         public DateTime SleepTime { get; set; }
         public DateTime WakeUpTime { get; set; }
-        public Double HoursTotal { get; set; }
-        public Double HoursSlept { get; set; }
-        public Double SleepEfficiency { get; set; }
+        public double HoursTotal { get; set; }
+        public double HoursSlept { get; set; }
+        public double SleepEfficiency { get; set; }
     }
 }

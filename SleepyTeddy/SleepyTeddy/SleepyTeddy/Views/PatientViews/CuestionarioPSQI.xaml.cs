@@ -1,5 +1,6 @@
 ﻿using Plugin.CloudFirestore;
 using SleepyTeddy.Models;
+using SleepyTeddy.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,20 @@ namespace SleepyTeddy.Views.PatientViews
         Questionnaire questionnaire;
         string documentID;
         int Component1, Component2, Component3, Component4, Component5, Component6, Component7;
+        GetDataFromLoginUser objData { get; set; }
 
+        List<SleepWakeDiariesView> listSleepWakeDiaries;
+
+        double sum = 0;
+        int contador = 0;
+        int temp = 0;
+
+        int GoToSleepHour = 0;
+        int WakeUpHour = 0;
+
+        double HoursSlept=0;
+        double HoursTotal=0;
+        double SleepEfficiency=0;
         public class Option
         {
             public string Name { get; set; }
@@ -60,6 +74,7 @@ namespace SleepyTeddy.Views.PatientViews
         {
             base.OnAppearing();
             LoadItems();
+            LoadResultsSWDiary();
         }
 
         private void LoadItems()
@@ -98,6 +113,80 @@ namespace SleepyTeddy.Views.PatientViews
             picker9.ItemsSource = opts3;
         }
 
+        private async void LoadResultsSWDiary()
+        {
+            objData = new GetDataFromLoginUser();
+            listSleepWakeDiaries = new List<SleepWakeDiariesView>();
+
+            await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
+
+            foreach(var SWDiary in objData.ListSleepWakeDiaries)
+            {
+                if(SWDiary.CreatedDate.Month == DateTime.Today.AddMonths(-1).Month)
+                {
+                    listSleepWakeDiaries.Add(SWDiary);
+                }
+            }
+            for(int i=0; i<listSleepWakeDiaries.Count;i++)
+            {
+                contador = 0;
+                for (int j = 1; j < listSleepWakeDiaries.Count; j++)
+                {  
+                    if (listSleepWakeDiaries.ElementAt(i).CreatedDate.Hour== listSleepWakeDiaries.ElementAt(j).CreatedDate.Hour)
+                    {
+                        contador++;
+                    }
+                }
+                if (contador >= temp)
+                {
+                    temp = contador;
+                    GoToSleepHour = temp;
+                }
+            }
+            answer1.Text = GoToSleepHour.ToString();
+
+            //Hacer answer2
+
+
+            temp = 0;
+            for (int i = 0; i < listSleepWakeDiaries.Count; i++)
+            {
+                contador = 0;
+                for (int j = 1; j < listSleepWakeDiaries.Count; j++)
+                {
+                    if (listSleepWakeDiaries.ElementAt(i).WakeUpTime.Hour == listSleepWakeDiaries.ElementAt(j).WakeUpTime.Hour)
+                    {
+                        contador++;
+                    }
+                }
+                if (contador >= temp)
+                {
+                    temp = contador;
+                    WakeUpHour = temp;
+                }
+            }
+            answer3.Text = WakeUpHour.ToString();
+
+            HoursTotal = Math.Abs(WakeUpHour - GoToSleepHour);
+            foreach (var SWDiary in listSleepWakeDiaries)
+            {
+                sum = sum + SWDiary.HoursSlept;
+            }
+            HoursSlept = sum / listSleepWakeDiaries.Count;
+            /*sum = 0;
+            foreach (var SWDiary in listSleepWakeDiaries)
+            {
+                sum = sum + SWDiary.HoursTotal;
+            }
+            HoursTotal = sum / listSleepWakeDiaries.Count;
+            sum = 0;
+            SleepEfficiency = Math.Round(HoursSlept / HoursTotal * 100, 2);
+            answer4.Text = HoursSlept.ToString();*/
+
+            SleepEfficiency = Math.Round(HoursSlept / HoursTotal * 100, 2);
+            answer4.Text = HoursSlept.ToString();
+
+        }
         private async void btnAceptar_clicked(object sender, EventArgs e)
         {
             var answer5a= (Option)picker5a.SelectedItem;
@@ -191,7 +280,7 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     Component2 = 3;
                 }
-                Component2 = Component2+answer5a.Number;
+                Component2 = Component2 + answer5a.Number;
                 if (Component2 == 0)
                 {
                     Component2 = 0;
@@ -226,9 +315,6 @@ namespace SleepyTeddy.Views.PatientViews
                     Component3 = 3;
                 }
                 //Componente 4
-                float HoursSlept = float.Parse(answer4.Text);
-                float HoursSpentOnBed = float.Parse(answer3.Text) - float.Parse(answer1.Text);
-                float SleepEfficiency = (HoursSlept / HoursSpentOnBed) * 100;
                 if (SleepEfficiency > 85)
                 {
                     Component4 = 0;

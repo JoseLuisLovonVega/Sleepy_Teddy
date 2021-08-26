@@ -30,8 +30,8 @@ namespace SleepyTeddy.ViewModel
         List<SleepRecordsView> listSleepRecords3;
         List<SleepRecordsView> listSleepRecordsSleepKinds;
 
-        SleepRecordsView sleepRecords1;
-        SleepRecordsView sleepRecords2;
+        //SleepRecordsView sleepRecords1;
+        //leepRecordsView sleepRecords2;
 
         List<SleepRecordsView> listSleepRecords12;
         List<SleepRecordsView> listSleepRecords22;
@@ -63,8 +63,8 @@ namespace SleepyTeddy.ViewModel
             listSleepRecords3 = new List<SleepRecordsView>();
             listSleepRecordsSleepKinds = new List<SleepRecordsView>();
 
-            sleepRecords1 = new SleepRecordsView();
-            sleepRecords2 = new SleepRecordsView();
+            //sleepRecords1 = new SleepRecordsView();
+            //sleepRecords2 = new SleepRecordsView();
 
             listSleepRecords12 = new List<SleepRecordsView>();
             listSleepRecords22 = new List<SleepRecordsView>();
@@ -189,8 +189,8 @@ namespace SleepyTeddy.ViewModel
                         listSleepRecords3 = new List<SleepRecordsView>();
                         listSleepRecordsSleepKinds = new List<SleepRecordsView>();
 
-                        sleepRecords1 = new SleepRecordsView();
-                        sleepRecords2 = new SleepRecordsView();
+                        //sleepRecords1 = new SleepRecordsView();
+                        //sleepRecords2 = new SleepRecordsView();
 
                         listSleepRecords12 = new List<SleepRecordsView>();
                         listSleepRecords22 = new List<SleepRecordsView>();
@@ -281,7 +281,7 @@ namespace SleepyTeddy.ViewModel
                             Debug.WriteLine("Se logró obtener los sleep records desde las 4 pm del dia anterior hasta antes de las 4 pm del dia a evaluar");
 
                             //Se define la fecha de creación del diario de sueño como un día antes del día a evaluar
-                            sleepWakeDiary.CreatedDate = DateTime.Today.AddDays(contador - 1);
+                            sleepWakeDiary.CreatedDate = listSleepRecords12.First().DateTimeHour.AddHours(-5);
                             Debug.WriteLine("Se registro la fecha de creación del diario de sueño-vigilia");
                             //Calcular las horas en la cama restando las fechas del primer con el último elemento de la lista
                             sleepWakeDiary.HoursTotal = listSleepRecords2.Last().DateTimeHour.Subtract(listSleepRecords1.First().DateTimeHour).TotalHours;

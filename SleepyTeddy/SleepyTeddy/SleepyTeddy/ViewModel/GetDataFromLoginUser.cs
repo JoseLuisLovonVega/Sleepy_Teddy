@@ -225,8 +225,8 @@ namespace SleepyTeddy.ViewModel
                 .ForMember(d => d.SleepTime_S, o => o.MapFrom(c => c.SleepTime.ToShortTimeString()))
                 .ForMember(d => d.WakeUpTime, o => o.MapFrom(c => c.WakeUpTime))
                 .ForMember(d => d.WakeUpTime_S, o => o.MapFrom(c => c.WakeUpTime.ToShortTimeString()))
-                .ForMember(d => d.HoursSlept, o => o.MapFrom(c => c.HoursSlept))
-
+                .ForMember(d => d.HoursTotal, o => o.MapFrom(c => Math.Round(c.HoursTotal)))
+                .ForMember(d => d.HoursSlept, o => o.MapFrom(c => Math.Round(c.HoursSlept)))
                 .ForMember(d => d.SleepEfficiency, o => o.MapFrom(c => c.SleepEfficiency));
             });
 
@@ -276,8 +276,9 @@ namespace SleepyTeddy.ViewModel
         public string SleepTime_S { get; set; }
         public DateTime WakeUpTime { get; set; }
         public string WakeUpTime_S { get; set; }
-        public Double HoursSlept { get; set; }
-        public Double SleepEfficiency { get; set; }
+        public double HoursSlept { get; set; }
+        public double HoursTotal { get; set; }
+        public double SleepEfficiency { get; set; }
     }
 
     public class ListQuestionnaireResultsPatient : ObservableCollection<QuestionnairesView> { }
