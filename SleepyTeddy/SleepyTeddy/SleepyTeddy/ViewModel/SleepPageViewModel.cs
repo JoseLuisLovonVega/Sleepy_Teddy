@@ -387,11 +387,11 @@ namespace SleepyTeddy.ViewModel
                     if (contador == -5)
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.", new TimeSpan(3));
+                        Debug.WriteLine("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.");
                     }
                 }
                 //await Application.Current.MainPage.DisplayAlert("Sincronización Exitosa", "Registros de diarios de sueño-vigilia completados", "OK");
                 //Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.", new TimeSpan(3));
-                Debug.WriteLine("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.");
             }
             catch (Exception e)
             {
