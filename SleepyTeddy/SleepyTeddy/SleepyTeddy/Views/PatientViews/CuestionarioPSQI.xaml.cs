@@ -29,6 +29,8 @@ namespace SleepyTeddy.Views.PatientViews
 
         int GoToSleepHour = 0;
         int WakeUpHour = 0;
+        double TimeToSleep = 0;
+        double GoToSleepTime = 0;
 
         double HoursSlept=0;
         double HoursTotal=0;
@@ -127,6 +129,7 @@ namespace SleepyTeddy.Views.PatientViews
                     listSleepWakeDiaries.Add(SWDiary);
                 }
             }
+            //Answer1
             for(int i=0; i<listSleepWakeDiaries.Count;i++)
             {
                 contador = 0;
@@ -145,9 +148,16 @@ namespace SleepyTeddy.Views.PatientViews
             }
             answer1.Text = GoToSleepHour.ToString();
 
-            //Hacer answer2
+            //Answer2
+            sum = 0;
+            foreach (var SWDiary in listSleepWakeDiaries)
+            {
+                sum = sum + SWDiary.GoToSleepTime;
+            }
+            GoToSleepTime = sum / listSleepWakeDiaries.Count;
+            answer2.Text = GoToSleepTime.ToString();
 
-
+            //Answer3
             temp = 0;
             for (int i = 0; i < listSleepWakeDiaries.Count; i++)
             {
@@ -167,12 +177,15 @@ namespace SleepyTeddy.Views.PatientViews
             }
             answer3.Text = WakeUpHour.ToString();
 
-            HoursTotal = Math.Abs(WakeUpHour - GoToSleepHour);
+            //Asnwer4
+            sum = 0;
+            
             foreach (var SWDiary in listSleepWakeDiaries)
             {
                 sum = sum + SWDiary.HoursSlept;
             }
             HoursSlept = sum / listSleepWakeDiaries.Count;
+            answer4.Text = HoursSlept.ToString();
             /*sum = 0;
             foreach (var SWDiary in listSleepWakeDiaries)
             {
@@ -183,8 +196,10 @@ namespace SleepyTeddy.Views.PatientViews
             SleepEfficiency = Math.Round(HoursSlept / HoursTotal * 100, 2);
             answer4.Text = HoursSlept.ToString();*/
 
+            //Calcular eficiencia del sueño en el último mes
+            HoursTotal = Math.Abs(WakeUpHour - GoToSleepHour);
             SleepEfficiency = Math.Round(HoursSlept / HoursTotal * 100, 2);
-            answer4.Text = HoursSlept.ToString();
+            
 
         }
         private async void btnAceptar_clicked(object sender, EventArgs e)
@@ -276,7 +291,7 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     Component2 = 2;
                 }
-                else if (int.Parse(answer2.Text) < 60)
+                else if (int.Parse(answer2.Text) > 60)
                 {
                     Component2 = 3;
                 }
@@ -289,7 +304,7 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     Component2 = 1;
                 }
-                else if (Component5 >= 3 && Component2 <= 4)
+                else if (Component2 >= 3 && Component2 <= 4)
                 {
                     Component2 = 2;
                 }
@@ -310,7 +325,7 @@ namespace SleepyTeddy.Views.PatientViews
                 {
                     Component3 = 2;
                 }
-                else if (int.Parse(answer4.Text) <5)
+                else if (int.Parse(answer4.Text) < 5)
                 {
                     Component3 = 3;
                 }
@@ -379,7 +394,7 @@ namespace SleepyTeddy.Views.PatientViews
                     .Collection("Questionnaires")
                     .Document(documentID)
                     .UpdateAsync(questionnaire);
-                await DisplayAlert("", "Cuestionario realizado correctamente", "OK");
+                await DisplayAlert("Registro Exitoso", "Cuestionario realizado correctamente", "OK");
                 await Navigation.PushAsync(new MisCuestionarios());
             }
         }

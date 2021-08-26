@@ -226,6 +226,7 @@ namespace SleepyTeddy.ViewModel
                 .ForMember(d => d.WakeUpTime, o => o.MapFrom(c => c.WakeUpTime))
                 .ForMember(d => d.WakeUpTime_S, o => o.MapFrom(c => c.WakeUpTime.ToShortTimeString()))
                 .ForMember(d => d.HoursTotal, o => o.MapFrom(c => Math.Round(c.HoursTotal)))
+                .ForMember(d => d.GoToSleepTime, o => o.MapFrom(c => Math.Round(c.GoToSleepTime)))
                 .ForMember(d => d.HoursSlept, o => o.MapFrom(c => Math.Round(c.HoursSlept)))
                 .ForMember(d => d.SleepEfficiency, o => o.MapFrom(c => c.SleepEfficiency));
             });
@@ -277,6 +278,7 @@ namespace SleepyTeddy.ViewModel
         public DateTime WakeUpTime { get; set; }
         public string WakeUpTime_S { get; set; }
         public double HoursSlept { get; set; }
+        public double GoToSleepTime { get; set; }
         public double HoursTotal { get; set; }
         public double SleepEfficiency { get; set; }
     }

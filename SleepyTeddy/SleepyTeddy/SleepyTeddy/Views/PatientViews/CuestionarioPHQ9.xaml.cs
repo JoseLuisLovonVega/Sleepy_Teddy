@@ -129,7 +129,7 @@ namespace SleepyTeddy.Views.PatientViews
                     .Collection("Questionnaires")
                     .Document(documentID)
                     .UpdateAsync(questionnaire);
-                await DisplayAlert("", "Cuestionario realizado correctamente", "OK");
+                await DisplayAlert("Registro Exitoso", "Cuestionario realizado correctamente", "OK");
                 await Navigation.PushAsync(new MisCuestionarios());
             }
         }
