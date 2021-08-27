@@ -17,7 +17,7 @@ namespace SleepyTeddy.Views.TherapistViews
     public partial class VisualizarInformacionPaciente : ContentPage
     {
         string id_patient;
-        Patient patient=new Patient();
+        Patient patient = new Patient();
         List<ChartEntry> DataLineGraph;
         List<QuestionnairesView> listData;
         List<SleepWakeDiariesView> listDataSWDiary;
@@ -64,21 +64,23 @@ namespace SleepyTeddy.Views.TherapistViews
         private async void btnBuscar_clicked(object sender, EventArgs e)
         {
             objSearch = new GetDataFromLoginUser();
-            if (cbxPatientInfo.SelectedItem==null)
+            if (cbxPatientInfo.SelectedItem == null)
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Debe seleccionar un tipo de registro de monitoreo del sueño", new TimeSpan(3));
-            } else { 
-                if (cbxPatientInfo.SelectedItem.ToString() == "Diario de Sueño-Vigilia") {
+            }
+            else
+            {
+                if (cbxPatientInfo.SelectedItem.ToString() == "Diario de Sueño-Vigilia")
+                {
                     btnFiltrar2.IsVisible = false;
                     list_questionnaireResults.IsVisible = false;
                     listSleepWakeDiariesPatientSearched = new List<SleepWakeDiariesView>();
                     await objSearch.GetSleepWakeDiariesViewAsync(id_patient);
-                    objSearch.ListSleepWakeDiaries=objSearch.ListSleepWakeDiaries.OrderByDescending(o => o.CreatedDate).ToList();
+                    objSearch.ListSleepWakeDiaries = objSearch.ListSleepWakeDiaries.OrderByDescending(o => o.CreatedDate).ToList();
                     if (objSearch.ListSleepWakeDiaries.Count == 0)
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
                     }
-
                     else
                     {
                         list_questionnaireResults.IsVisible = false;
@@ -89,7 +91,7 @@ namespace SleepyTeddy.Views.TherapistViews
                         btnBuscar2.IsVisible = true;
                         for (int i = 0; i < objSearch.ListSleepWakeDiaries.Count; i++)
                         {
-                            listSleepWakeDiariesPatientSearched.Add(objSearch.ListSleepWakeDiaries.ElementAt(i)); 
+                            listSleepWakeDiariesPatientSearched.Add(objSearch.ListSleepWakeDiaries.ElementAt(i));
                         }
                         list_sleepWakeDiariesSleepTime.ItemsSource = listSleepWakeDiariesPatientSearched;
                         list_sleepWakeDiariesSleepTime.IsVisible = true;
@@ -99,7 +101,10 @@ namespace SleepyTeddy.Views.TherapistViews
                         }
                         list_sleepWakeDiariesSleepTime.IsVisible = true;
                     }
-                } else {
+                }
+                else if (cbxPatientInfo.SelectedItem.ToString() == "PHQ-9" || cbxPatientInfo.SelectedItem.ToString() == "ISI"
+                  || cbxPatientInfo.SelectedItem.ToString() == "PSQI")
+                {
                     btnFiltrar.IsVisible = false;
                     cbxResultsSleepWakeDiary.IsVisible = false;
                     btnBuscar2.IsVisible = false;
@@ -113,28 +118,37 @@ namespace SleepyTeddy.Views.TherapistViews
                     if (objSearch.ListQuestionnaireData.Count == 0)
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
-                    } else {
+                    }
+                    else
+                    {
                         for (int i = 0; i < objSearch.ListQuestionnaireData.Count; i++)
                         {
-                            if (objSearch.ListQuestionnaireData.ElementAt(i).D_Completed_Date.ToString("dd/MM/yyyy") != "01/01/0001")
+                            if (objSearch.ListQuestionnaireData.ElementAt(i).D_Completed_Date.ToString("dd/MM/yyyy") != DateTime.MinValue.ToString("dd/MM/yyyy"))
                             {
                                 listresultsQuestionnairePatientSearched.Add(objSearch.ListQuestionnaireData.ElementAt(i));
                             }
-                        } 
-                        list_questionnaireResults.ItemsSource = listresultsQuestionnairePatientSearched;
-                        list_questionnaireResults.IsVisible = true;
-                        if ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count >= 7)
-                        {
-                            btnFiltrar2.IsVisible = true;
                         }
-                    }   
+                        if (listresultsQuestionnairePatientSearched.Count == 0)
+                        {
+                            Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
+                        }
+                        else
+                        {
+                            list_questionnaireResults.ItemsSource = listresultsQuestionnairePatientSearched;
+                            list_questionnaireResults.IsVisible = true;
+                            if ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count >= 7)
+                            {
+                                btnFiltrar2.IsVisible = true;
+                            }
+                        }
+                    }
                 }
             }
         }
 
         private void btnBuscar2_clicked(object sender, EventArgs e)
         {
-            if(cbxResultsSleepWakeDiary.SelectedItem.ToString()=="Hora a la que durmió")
+            if (cbxResultsSleepWakeDiary.SelectedItem.ToString() == "Hora a la que durmió")
             {
                 btnFiltrar.IsVisible = false;
                 list_sleepWakeDiariesHoursSlept.IsVisible = false;
@@ -146,7 +160,7 @@ namespace SleepyTeddy.Views.TherapistViews
                 }
 
             }
-            else if(cbxResultsSleepWakeDiary.SelectedItem.ToString() == "Hora a la que despertó el día siguiente")
+            else if (cbxResultsSleepWakeDiary.SelectedItem.ToString() == "Hora a la que despertó el día siguiente")
             {
                 btnFiltrar.IsVisible = false;
                 list_sleepWakeDiariesHoursSlept.IsVisible = false;
@@ -175,7 +189,7 @@ namespace SleepyTeddy.Views.TherapistViews
 
         private void btnFiltrar_clicked(object sender, EventArgs e)
         {
-            int count=-1;
+            int count = -1;
             if (btnFiltrar.Text == "Filtrar Según: 7 Recientes Diarios Registrados")
             {
                 btnFiltrar.Text = "Retirar el Filtrado";
@@ -235,7 +249,7 @@ namespace SleepyTeddy.Views.TherapistViews
                         });
                     }
                 }
-                
+
                 var lineGraph = new LineChart() { Entries = DataLineGraph, LabelTextSize = 35, ValueLabelOrientation = Orientation.Horizontal };
                 lineGraphView.HeightRequest = 300;
                 lineGraphView.Chart = lineGraph;
@@ -289,15 +303,17 @@ namespace SleepyTeddy.Views.TherapistViews
                         Color = SKColor.Parse(listColorResults.ElementAt(i))
                     });
                 }
-                var lineGraph = new LineChart() { Entries = DataLineGraph, LabelTextSize = 35, ValueLabelOrientation= Orientation.Horizontal };
+                var lineGraph = new LineChart() { Entries = DataLineGraph, LabelTextSize = 35, ValueLabelOrientation = Orientation.Horizontal };
                 lineGraphView.HeightRequest = 300;
                 lineGraphView.Chart = lineGraph;
-            } else {
+            }
+            else
+            {
                 btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Realizados";
                 lineGraphView.IsVisible = false;
                 list_questionnaireResults.IsVisible = true;
             }
-            
+
         }
 
         private async void btnCancelar_clicked(object sender, EventArgs e)
