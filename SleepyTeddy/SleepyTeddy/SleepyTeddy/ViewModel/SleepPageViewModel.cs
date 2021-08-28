@@ -24,13 +24,14 @@ namespace SleepyTeddy.ViewModel
         SleepWakeDiary sleepWakeDiary;
         GetDataFromLoginUser objData { get; set; }
 
+        List<SleepRecordsView> listSleepRecordsLocalDB;
         List<SleepRecordsView> listSleepRecordsObjData;
         List<SleepRecordsView> listSleepRecords1;
         List<SleepRecordsView> listSleepRecords2;
         List<SleepRecordsView> listSleepRecords3;
         List<SleepRecordsView> listSleepRecordsSleepKinds;
 
-        //SleepRecordsView sleepRecords1;
+        SleepRecordsView sleepRecord;
         //leepRecordsView sleepRecords2;
 
         List<SleepRecordsView> listSleepRecords12;
@@ -57,12 +58,13 @@ namespace SleepyTeddy.ViewModel
             objData = new GetDataFromLoginUser();
             sleepWakeDiary = new SleepWakeDiary();
 
+            listSleepRecordsLocalDB = new List<SleepRecordsView>();
             listSleepRecordsObjData = new List<SleepRecordsView>();
             listSleepRecords1 = new List<SleepRecordsView>();
             listSleepRecords2 = new List<SleepRecordsView>();
             listSleepRecordsSleepKinds = new List<SleepRecordsView>();
 
-            //sleepRecords1 = new SleepRecordsView();
+            sleepRecord = new SleepRecordsView();
             //sleepRecords2 = new SleepRecordsView();
 
             listSleepRecords12 = new List<SleepRecordsView>();
@@ -78,13 +80,13 @@ namespace SleepyTeddy.ViewModel
             OrderBy(x => x.DateTime).ToList();
         }
 
-        public async void CreateSleepRecords()
+        public void CreateSleepRecords()
         {
             SleepInfo = _sleepRepository.GetAll();
 
             for (int k = 0; k > -7; k--)
             {
-
+                listSleepRecordsLocalDB = new List<SleepRecordsView>();
                 SelectedDate = StartDate.AddDays(k);
                 List<Sleep> sleepData = GetCurrentSleep();
 
@@ -103,7 +105,13 @@ namespace SleepyTeddy.ViewModel
                         {
                             if (data.ElementAtOrDefault(j) != null)
                             {
-                                await CrossCloudFirestore.Current
+                                sleepRecord = new SleepRecordsView();
+                                sleepRecord.Key = data[j].Id;
+                                sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
+                                sleepRecord.DateTimeHour = data[j].DateTime;
+                                sleepRecord.Kind = (int)data[j].SleepType;
+                                listSleepRecordsLocalDB.Add(sleepRecord);
+                                /*await CrossCloudFirestore.Current
                                 .Instance
                                 .Collection("SleepRecords")
                                 .AddAsync(new SleepRecord
@@ -112,7 +120,7 @@ namespace SleepyTeddy.ViewModel
                                     Patient_ID = LoginViewModel.Patient_ID,
                                     DateTimeHour = data[j].DateTime.AddHours(-5),
                                     Kind = (int)data[j].SleepType
-                                });
+                                });*/
                             }
                         }
                     }
@@ -120,41 +128,25 @@ namespace SleepyTeddy.ViewModel
             }
         }
 
-        /*public async void CreateSleepRecords()
+        public async Task TransferToFirebaseSleepRecords()
         {
-            await objData.GetSleepRecordsViewAsync();
-            objData.ListSleepRecords.OrderBy(o => o.DateTimeHour).ToList();
-
-            for (int i = 0; i < _sleepRepository.GetAll().ToList().Count; i++)
+            foreach (var sleepRecord in listSleepRecordsLocalDB)
             {
-                verificacion2 = 0;
-                for (int j = 1; i < objData.ListSleepRecords.Count; i++)
-                {
-                    if(_sleepRepository.GetAll().ToList().ElementAt(i).Id == objData.ListSleepRecords.ElementAt(j).Key)
-                    {
-                        verificacion2 = 1;
-                    }
-                }
-                if (verificacion2 == 0)
-                {
-                    if (_sleepRepository.GetAll().ToList().ElementAt(i) != null)
-                    {
-                        await CrossCloudFirestore.Current
-                        .Instance
-                        .Collection("SleepRecords")
-                        .AddAsync(new SleepRecord
-                        {
-                            SleepRecord_ID = _sleepRepository.GetAll().ToList().ElementAt(i).Id,
-                            Patient_ID = LoginViewModel.Patient_ID,
-                            DateTimeHour = _sleepRepository.GetAll().ToList().ElementAt(i).DateTime.AddHours(-5),
-                            Kind = (int) _sleepRepository.GetAll().ToList().ElementAt(i).SleepType
-                        });
-                    }
-                }
+                await CrossCloudFirestore.Current
+                                     .Instance
+                                     .Collection("SleepRecords")
+                                     .AddAsync(new SleepRecord
+                                     {
+                                         SleepRecord_ID = sleepRecord.Key,
+                                         Patient_ID = sleepRecord.Patient_ID,
+                                         DateTimeHour = sleepRecord.DateTimeHour.AddHours(-5),
+                                         Kind = sleepRecord.Kind
+                                     });
             }
-        }*/
+            await CreateCompletedSleepWakeDiaries();
+        }
 
-        public async void CreateCompletedSleepWakeDiaries()
+        public async Task CreateCompletedSleepWakeDiaries()
         {
             try
             {

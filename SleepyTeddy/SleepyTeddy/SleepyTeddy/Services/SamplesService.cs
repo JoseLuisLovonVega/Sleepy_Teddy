@@ -71,7 +71,7 @@ namespace SleepyTeddy.Services
                 Globals.MiCuentaPacienteViewModel.ShowFetchProgress(calculatedProgress);
             });
         }
-        private void FillDatabase(List<ActivitySample> samples)
+        private async void FillDatabase(List<ActivitySample> samples)
         {
             Debug.WriteLine("Filling DB with samples: " + samples.Count);
             Globals.Database.Instance.BeginTransaction();
@@ -86,7 +86,7 @@ namespace SleepyTeddy.Services
             Globals.Database.Instance.Commit();
             //Método para registrar sleep records en el firebase AQUÍ:
             Globals.SleepPageViewModel.CreateSleepRecords();
-            Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
+            await Globals.SleepPageViewModel.TransferToFirebaseSleepRecords();
             Debug.WriteLine("DB filled with samples");
             Device.BeginInvokeOnMainThread(delegate
             {
