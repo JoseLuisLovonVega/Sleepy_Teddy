@@ -83,10 +83,9 @@ namespace SleepyTeddy.ViewModel
         public void CreateSleepRecords()
         {
             SleepInfo = _sleepRepository.GetAll();
-
+            //listSleepRecordsLocalDB = new List<SleepRecordsView>();
             for (int k = 0; k > -7; k--)
             {
-                listSleepRecordsLocalDB = new List<SleepRecordsView>();
                 SelectedDate = StartDate.AddDays(k);
                 List<Sleep> sleepData = GetCurrentSleep();
 
