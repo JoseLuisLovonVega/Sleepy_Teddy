@@ -126,6 +126,7 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
+            Debug.WriteLine("Cantidad de sleep records agregados a la lista: " + listSleepRecordsLocalDB.Count);
             Debug.WriteLine("Se completó la carga de sleep records a la lista asignada.");
         }
 
@@ -192,11 +193,13 @@ namespace SleepyTeddy.ViewModel
 
                         dia = contador;
 
-                        await objData.GetSleepRecordsViewAsync();
+                        //await objData.GetSleepRecordsViewAsync();
                         Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Today.AddDays(contador));
                         //Ordenar de la más antigua a la más reciente
-                        listSleepRecordsObjData = objData.ListSleepRecords.OrderBy(o => o.DateTimeHour).ToList();
-                        Debug.WriteLine("Se logró ordenar descendientemente todos los sleep records del paciente");
+                        listSleepRecordsObjData = listSleepRecordsLocalDB.OrderBy(o => o.DateTimeHour).ToList();
+                        //listSleepRecordsObjData = objData.ListSleepRecords.OrderBy(o => o.DateTimeHour).ToList();
+                        Debug.WriteLine("Cantidad de sleep records de la lista es: " + listSleepRecordsObjData.Count);
+                        Debug.WriteLine("Se logró ordenar descendentemente todos los sleep records del paciente");
 
                         foreach (var sleepRecord in listSleepRecordsObjData)
                         {

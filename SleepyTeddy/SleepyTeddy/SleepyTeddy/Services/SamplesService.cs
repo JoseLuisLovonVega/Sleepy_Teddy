@@ -86,7 +86,8 @@ namespace SleepyTeddy.Services
             Globals.Database.Instance.Commit();
             //Método para registrar sleep records en el firebase AQUÍ:
             Globals.SleepPageViewModel.CreateSleepRecords();
-            await Globals.SleepPageViewModel.TransferToFirebaseSleepRecords();
+            //await Globals.SleepPageViewModel.TransferToFirebaseSleepRecords();
+            await Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
             Debug.WriteLine("DB filled with samples");
             Device.BeginInvokeOnMainThread(delegate
             {
