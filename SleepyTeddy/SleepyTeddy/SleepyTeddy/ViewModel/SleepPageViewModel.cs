@@ -82,6 +82,7 @@ namespace SleepyTeddy.ViewModel
 
         public void CreateSleepRecords()
         {
+            Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo = _sleepRepository.GetAll();
             //listSleepRecordsLocalDB = new List<SleepRecordsView>();
             for (int k = 0; k > -7; k--)
@@ -125,10 +126,12 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
+            Debug.WriteLine("Se completó la carga de sleep records a la lista asignada.");
         }
 
         public async Task TransferToFirebaseSleepRecords()
         {
+            Debug.WriteLine("Iniciando la subida de elementos de la lista de sleeprecords al Firebase");
             foreach (var sleepRecord in listSleepRecordsLocalDB)
             {
                 await CrossCloudFirestore.Current
@@ -142,6 +145,8 @@ namespace SleepyTeddy.ViewModel
                                          Kind = sleepRecord.Kind
                                      });
             }
+            Debug.WriteLine("Se completó la subida de sleeprecords al Firebase");
+            Debug.WriteLine("Iniciando el registro de diarios de sueño-vigilia");
             await CreateCompletedSleepWakeDiaries();
         }
 
