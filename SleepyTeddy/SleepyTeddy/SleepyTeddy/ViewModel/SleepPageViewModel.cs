@@ -202,6 +202,13 @@ namespace SleepyTeddy.ViewModel
                     if (verificacion == 0)
                     {
                         sleepWakeDiary = new SleepWakeDiary();
+                        sleepWakeDiary.SleepTime=DateTime.MinValue;
+                        sleepWakeDiary.WakeUpTime = DateTime.MinValue;
+                        sleepWakeDiary.GoToSleepTime=0;
+                        sleepWakeDiary.HoursSlept=0;
+                        sleepWakeDiary.HoursTotal=0;
+                        sleepWakeDiary.SleepEfficiency=0;
+
                         amountMinutes = 0;
                         sum = 0;
                         count = 0;
