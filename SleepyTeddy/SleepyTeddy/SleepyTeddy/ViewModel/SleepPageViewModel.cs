@@ -142,15 +142,15 @@ namespace SleepyTeddy.ViewModel
             {
                 for (int i = 0; i < SleepInfo2.Count; i++)
                 {
-                    if (SleepInfo2.ElementAt(i) != null)
-                    {
+                    //if (SleepInfo2.ElementAt(i) != null)
+                    //{
                         sleepRecord = new SleepRecordsView();
                         sleepRecord.Key = SleepInfo2.ElementAt(i).Id;
                         sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
                         sleepRecord.DateTimeHour = SleepInfo2.ElementAt(i).DateTime;
                         sleepRecord.Kind = (int)SleepInfo2.ElementAt(i).SleepType;
                         listSleepRecordsLocalDB.Add(sleepRecord);
-                    }
+                    //}
                 }
             }
         }
