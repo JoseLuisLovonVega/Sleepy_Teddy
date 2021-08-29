@@ -22,19 +22,11 @@ namespace SleepyTeddy.Services
         private DateTime _fetchingStartDate;
         private int _totalSamples = 0;
 
-        SleepWakeDiary sleepWakeDiary;
-        string documentId;
-        GetDataFromLoginUser objData { get; set; }
-        List<SleepRecordsView> listSleepRecords;
-        TimeSpan sum;
-
         public SamplesService(IHeartrateRepository heartrateRepository, IStepsRepository stepsRepository, ISleepRepository sleepRepository)
         {
             _heartrateRepository = heartrateRepository;
             _stepsRepository = stepsRepository;
             _sleepRepository = sleepRepository;
-            sleepWakeDiary = new SleepWakeDiary();
-            objData = new GetDataFromLoginUser();
         }
 
         public void StartFetching()
@@ -85,7 +77,7 @@ namespace SleepyTeddy.Services
             }
             Globals.Database.Instance.Commit();
             //Método para registrar sleep records en el firebase AQUÍ:
-            Globals.SleepPageViewModel.CreateSleepRecords();
+            Globals.SleepPageViewModel.CreateSleepRecords2();
             //await Globals.SleepPageViewModel.TransferToFirebaseSleepRecords();
             await Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
             Debug.WriteLine("DB filled with samples");
