@@ -67,7 +67,7 @@ namespace SleepyTeddy.Views.TherapistViews
                 listSleepWakeDiaries = new List<SleepWakeDiariesView>();
                 foreach (var SWDiary in objSearch.ListSleepWakeDiaries)
                 {
-                    if (SWDiary.CreatedDate.Month == DateTime.Today.AddMonths(-1).Month && SWDiary.CreatedDate.Year == DateTime.Today.Year)
+                    if (SWDiary.CreatedDate.Month == DateTime.Today.Month-1 && SWDiary.CreatedDate.Year == DateTime.Today.Year)
                     {
                         listSleepWakeDiaries.Add(SWDiary);
                     }

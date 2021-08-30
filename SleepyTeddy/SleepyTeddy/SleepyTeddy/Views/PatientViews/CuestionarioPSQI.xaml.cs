@@ -3,6 +3,7 @@ using SleepyTeddy.Models;
 using SleepyTeddy.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,7 @@ namespace SleepyTeddy.Views.PatientViews
             InitializeComponent();
             getQuestionnaire();
             LoadItems();
+            LoadResultsSWDiary();
         }
         private async void getQuestionnaire()
         {
@@ -124,12 +126,13 @@ namespace SleepyTeddy.Views.PatientViews
 
             foreach(var SWDiary in objData.ListSleepWakeDiaries)
             {
-                if(SWDiary.CreatedDate.Month == DateTime.Today.AddMonths(-1).Month && SWDiary.CreatedDate.Year == DateTime.Today.Year)
+                if(SWDiary.CreatedDate.Month == questionnaire.D_Assigned_Date.Month-1 && SWDiary.CreatedDate.Year == questionnaire.D_Assigned_Date.Year)
                 {
                     listSleepWakeDiaries.Add(SWDiary);
                 }
             }
             //Answer1
+            //Hallando la hora a la que se acuesta el paciente, en específico la hora que más se repite del CreatedDate
             for(int i=0; i<listSleepWakeDiaries.Count;i++)
             {
                 contador = 0;
@@ -140,25 +143,32 @@ namespace SleepyTeddy.Views.PatientViews
                         contador++;
                     }
                 }
-                if (contador >= temp)
+                if (contador > temp)
                 {
                     temp = contador;
-                    GoToSleepHour = temp;
+                    GoToSleepHour = listSleepWakeDiaries.ElementAt(i).CreatedDate.Hour;
                 }
             }
-            answer1.Text = GoToSleepHour.ToString();
+            TimeSpan resultCD = TimeSpan.FromHours(GoToSleepHour);
+            Debug.WriteLine("Answer1: " + resultCD);
+            string fromTimeStringCD = resultCD.ToString("hh':'mm");
+            answer1.Text = fromTimeStringCD;
 
             //Answer2
+            //Sacando el promedio de los minutos en lo diarios de sueño de cuanto toma el paciente en dormir
             sum = 0;
             foreach (var SWDiary in listSleepWakeDiaries)
             {
                 sum = sum + SWDiary.GoToSleepTime;
             }
             GoToSleepTime = sum / listSleepWakeDiaries.Count;
+            Debug.WriteLine("Answer2: " + GoToSleepTime);
             answer2.Text = GoToSleepTime.ToString();
 
             //Answer3
+            //Hallando la hora a la que se despierta el paciente, en específico la hora que más se repite del WakeUpTime
             temp = 0;
+
             for (int i = 0; i < listSleepWakeDiaries.Count; i++)
             {
                 contador = 0;
@@ -169,13 +179,16 @@ namespace SleepyTeddy.Views.PatientViews
                         contador++;
                     }
                 }
-                if (contador >= temp)
+                if (contador > temp)
                 {
                     temp = contador;
-                    WakeUpHour = temp;
+                    WakeUpHour = listSleepWakeDiaries.ElementAt(i).WakeUpTime.Hour;
                 }
             }
-            answer3.Text = WakeUpHour.ToString();
+            TimeSpan resultWUH = TimeSpan.FromHours(WakeUpHour);
+            Debug.WriteLine("Answer3: " + resultWUH);
+            string fromTimeStringWUH = resultWUH.ToString("hh':'mm");
+            answer3.Text = fromTimeStringWUH;
 
             //Asnwer4
             sum = 0;
@@ -185,19 +198,11 @@ namespace SleepyTeddy.Views.PatientViews
                 sum = sum + SWDiary.HoursSlept;
             }
             HoursSlept = sum / listSleepWakeDiaries.Count;
+            Debug.WriteLine("Answer4: " + HoursSlept);
             answer4.Text = HoursSlept.ToString();
-            /*sum = 0;
-            foreach (var SWDiary in listSleepWakeDiaries)
-            {
-                sum = sum + SWDiary.HoursTotal;
-            }
-            HoursTotal = sum / listSleepWakeDiaries.Count;
-            sum = 0;
-            SleepEfficiency = Math.Round(HoursSlept / HoursTotal * 100, 2);
-            answer4.Text = HoursSlept.ToString();*/
 
             //Calcular eficiencia del sueño en el último mes
-            HoursTotal = Math.Abs(WakeUpHour - GoToSleepHour);
+            HoursTotal = (resultWUH-resultCD).TotalHours;
             SleepEfficiency = Math.Round(HoursSlept / HoursTotal * 100, 2);
             
 
@@ -279,19 +284,19 @@ namespace SleepyTeddy.Views.PatientViews
                 //Componente 1
                 Component1 = answer6.Number;
                 //Componente 2
-                if (int.Parse(answer2.Text) <=15)
+                if (float.Parse(answer2.Text) <=15)
                 {
                     Component2 = 0;
                 }
-                else if (int.Parse(answer2.Text) >= 16 && int.Parse(answer2.Text) <= 30)
+                else if (float.Parse(answer2.Text) >= 16 && float.Parse(answer2.Text) <= 30)
                 {
                     Component2 = 1;
                 }
-                else if (int.Parse(answer2.Text) >= 31 && int.Parse(answer2.Text) <= 60)
+                else if (float.Parse(answer2.Text) >= 31 && float.Parse(answer2.Text) <= 60)
                 {
                     Component2 = 2;
                 }
-                else if (int.Parse(answer2.Text) > 60)
+                else if (float.Parse(answer2.Text) > 60)
                 {
                     Component2 = 3;
                 }
@@ -313,19 +318,19 @@ namespace SleepyTeddy.Views.PatientViews
                     Component2 = 3;
                 }
                 //Componente 3
-                if (int.Parse(answer4.Text) > 7)
+                if (float.Parse(answer4.Text) > 7)
                 {
                     Component3 = 0;
                 }
-                else if (int.Parse(answer4.Text) >=6 && int.Parse(answer4.Text) <= 7)
+                else if (float.Parse(answer4.Text) >=6 && float.Parse(answer4.Text) <= 7)
                 {
                     Component3 = 1;
                 }
-                else if (int.Parse(answer4.Text) >= 5 && int.Parse(answer4.Text) <= 6)
+                else if (float.Parse(answer4.Text) >= 5 && float.Parse(answer4.Text) <= 6)
                 {
                     Component3 = 2;
                 }
-                else if (int.Parse(answer4.Text) < 5)
+                else if (float.Parse(answer4.Text) < 5)
                 {
                     Component3 = 3;
                 }
