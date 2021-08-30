@@ -19,6 +19,7 @@ namespace SleepyTeddy.Views.PatientViews
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
+            LoadItems();
         }
 
         protected override void OnAppearing()

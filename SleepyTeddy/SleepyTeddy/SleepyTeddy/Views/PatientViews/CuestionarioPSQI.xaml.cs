@@ -124,7 +124,7 @@ namespace SleepyTeddy.Views.PatientViews
 
             foreach(var SWDiary in objData.ListSleepWakeDiaries)
             {
-                if(SWDiary.CreatedDate.Month == DateTime.Today.AddMonths(-1).Month)
+                if(SWDiary.CreatedDate.Month == DateTime.Today.AddMonths(-1).Month && SWDiary.CreatedDate.Year == DateTime.Today.Year)
                 {
                     listSleepWakeDiaries.Add(SWDiary);
                 }

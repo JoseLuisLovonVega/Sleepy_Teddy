@@ -17,6 +17,7 @@ namespace SleepyTeddy.Views.TherapistViews
     public partial class VisualizarInformacionPaciente : ContentPage
     {
         string id_patient;
+        int count;
         Patient patient = new Patient();
         List<ChartEntry> DataLineGraph;
         List<QuestionnairesView> listData;
@@ -32,6 +33,13 @@ namespace SleepyTeddy.Views.TherapistViews
             id_patient = key_patient;
             InitializeComponent();
             getPatient();
+            listColorResults.Add("#50A0F0");
+            listColorResults.Add("#EBF038");
+            listColorResults.Add("#B455B6");
+            listColorResults.Add("#3498DB");
+            listColorResults.Add("#AA0CA5");
+            listColorResults.Add("#21EF30");
+            listColorResults.Add("#F20A0A");
             /*PatientInfo.Text = "Paciente: " + patient.Names + " " + patient.Last_Names;*/
         }
         private async void getPatient()
@@ -72,6 +80,9 @@ namespace SleepyTeddy.Views.TherapistViews
             {
                 if (cbxPatientInfo.SelectedItem.ToString() == "Diario de Sueño-Vigilia")
                 {
+                    lineGraphView.IsVisible = false;
+                    btnFiltrar.Text = "Filtrar Según: 5 Recientes Diarios Registrados";
+                    btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
                     btnFiltrar2.IsVisible = false;
                     list_questionnaireResults.IsVisible = false;
                     listSleepWakeDiariesPatientSearched = new List<SleepWakeDiariesView>();
@@ -89,22 +100,25 @@ namespace SleepyTeddy.Views.TherapistViews
                         cbxResultsSleepWakeDiary.SelectedIndex = 0; //.SelectedItem = "Hora a la que durmió";
                         cbxResultsSleepWakeDiary.IsVisible = true;
                         btnBuscar2.IsVisible = true;
+
                         for (int i = 0; i < objSearch.ListSleepWakeDiaries.Count; i++)
                         {
                             listSleepWakeDiariesPatientSearched.Add(objSearch.ListSleepWakeDiaries.ElementAt(i));
                         }
                         list_sleepWakeDiariesSleepTime.ItemsSource = listSleepWakeDiariesPatientSearched;
                         list_sleepWakeDiariesSleepTime.IsVisible = true;
-                        if ((list_sleepWakeDiariesSleepTime.ItemsSource as List<SleepWakeDiariesView>).Count >= 7)
+                        if ((list_sleepWakeDiariesSleepTime.ItemsSource as List<SleepWakeDiariesView>).Count >= 5)
                         {
                             btnFiltrar.IsVisible = true;
                         }
-                        list_sleepWakeDiariesSleepTime.IsVisible = true;
                     }
                 }
                 else if (cbxPatientInfo.SelectedItem.ToString() == "PHQ-9" || cbxPatientInfo.SelectedItem.ToString() == "ISI"
                   || cbxPatientInfo.SelectedItem.ToString() == "PSQI")
                 {
+                    lineGraphView.IsVisible = false;
+                    btnFiltrar.Text = "Filtrar Según: 5 Recientes Diarios Registrados";
+                    btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
                     btnFiltrar.IsVisible = false;
                     cbxResultsSleepWakeDiary.IsVisible = false;
                     btnBuscar2.IsVisible = false;
@@ -148,6 +162,8 @@ namespace SleepyTeddy.Views.TherapistViews
 
         private void btnBuscar2_clicked(object sender, EventArgs e)
         {
+            btnFiltrar.Text = "Filtrar Según: 5 Recientes Diarios Registrados";
+            lineGraphView.IsVisible = false;
             if (cbxResultsSleepWakeDiary.SelectedItem.ToString() == "Hora a la que durmió")
             {
                 btnFiltrar.IsVisible = false;
@@ -189,31 +205,25 @@ namespace SleepyTeddy.Views.TherapistViews
 
         private void btnFiltrar_clicked(object sender, EventArgs e)
         {
-            int count = -1;
-            if (btnFiltrar.Text == "Filtrar Según: 7 Recientes Diarios Registrados")
+            //count = -1;
+            if (btnFiltrar.Text == "Filtrar Según: 5 Recientes Diarios Registrados")
             {
                 btnFiltrar.Text = "Retirar el Filtrado";
                 lineGraphView.IsVisible = true;
-                listColorResults.Add("#50A0F0");
-                listColorResults.Add("#EBF038");
-                listColorResults.Add("#B455B6");
-                listColorResults.Add("#3498DB");
-                listColorResults.Add("#AA0CA5");
-                listColorResults.Add("#21EF30");
-                listColorResults.Add("#F3352C");
                 list_questionnaireResults.IsVisible = false;
                 DataLineGraph = new List<ChartEntry>();
                 listDataSWDiary = new List<SleepWakeDiariesView>();
-                listDataSWDiary = listSleepWakeDiariesPatientSearched.OrderBy(o => o.CreatedDate).ToList();
-                listDataSWDiary = listDataSWDiary.GetRange(0, 7);
-                listDataSWDiary = listDataSWDiary.OrderByDescending(o => o.CreatedDate).ToList();
+                listDataSWDiary = listSleepWakeDiariesPatientSearched.OrderByDescending(o => o.CreatedDate).ToList();
+                listDataSWDiary = listDataSWDiary.GetRange(0, 5);
+                listDataSWDiary = listDataSWDiary.OrderBy(o => o.CreatedDate).ToList();
                 if (list_sleepWakeDiariesSleepTime.IsVisible == true)
                 {
                     count = 0;
                     list_sleepWakeDiariesSleepTime.IsVisible = false;
                     for (int i = 0; i < listDataSWDiary.Count; i++)
                     {
-                        DataLineGraph.Add(new ChartEntry(i)
+                        DataLineGraph.Add(new ChartEntry( listDataSWDiary.ElementAt(i).SleepTime.Hour * 60 + listDataSWDiary.ElementAt(i).SleepTime.Minute
+                            + listDataSWDiary.ElementAt(i).SleepTime.Second / 60)
                         {
                             Label = listDataSWDiary.ElementAt(i).CreatedDate_S,
                             ValueLabel = listDataSWDiary.ElementAt(i).SleepTime_S,
@@ -227,7 +237,8 @@ namespace SleepyTeddy.Views.TherapistViews
                     list_sleepWakeDiariesWakeUpTime.IsVisible = false;
                     for (int i = 0; i < listDataSWDiary.Count; i++)
                     {
-                        DataLineGraph.Add(new ChartEntry(i)
+                        DataLineGraph.Add(new ChartEntry(listDataSWDiary.ElementAt(i).WakeUpTime.Hour * 60 + listDataSWDiary.ElementAt(i).WakeUpTime.Minute
+                        + listDataSWDiary.ElementAt(i).WakeUpTime.Second / 60)
                         {
                             Label = listDataSWDiary.ElementAt(i).CreatedDate_S,
                             ValueLabel = listDataSWDiary.ElementAt(i).WakeUpTime_S,
@@ -241,7 +252,7 @@ namespace SleepyTeddy.Views.TherapistViews
                     list_sleepWakeDiariesHoursSlept.IsVisible = false;
                     for (int i = 0; i < listDataSWDiary.Count; i++)
                     {
-                        DataLineGraph.Add(new ChartEntry(i)
+                        DataLineGraph.Add(new ChartEntry( (float) listDataSWDiary.ElementAt(i).HoursSlept)
                         {
                             Label = listDataSWDiary.ElementAt(i).CreatedDate_S,
                             ValueLabel = listDataSWDiary.ElementAt(i).HoursSlept.ToString(),
@@ -256,7 +267,7 @@ namespace SleepyTeddy.Views.TherapistViews
             }
             else
             {
-                btnFiltrar.Text = "Filtrar Según: 7 Recientes Diarios Registrados";
+                btnFiltrar.Text = "Filtrar Según: 5 Recientes Diarios Registrados";
                 lineGraphView.IsVisible = false;
                 if (count == 0)
                 {
@@ -275,28 +286,21 @@ namespace SleepyTeddy.Views.TherapistViews
 
         private void btnFiltrar2_clicked(object sender, EventArgs e)
         {
-            if (btnFiltrar2.Text == "Filtrar Según: 7 Recientes Cuestionarios Realizados")
+            if (btnFiltrar2.Text == "Filtrar Según: 7 Recientes Cuestionarios Registrados")
             {
                 btnFiltrar2.Text = "Retirar el Filtrado";
                 lineGraphView.IsVisible = true;
                 list_questionnaireResults.IsVisible = false;
-                listColorResults.Add("#50A0F0");
-                listColorResults.Add("#EBF038");
-                listColorResults.Add("#B455B6");
-                listColorResults.Add("#3498DB");
-                listColorResults.Add("#AA0CA5");
-                listColorResults.Add("#21EF30");
-                listColorResults.Add("#F3352C");
                 DataLineGraph = new List<ChartEntry>();
                 listData = new List<QuestionnairesView>();
                 //Ordenar de la más reciente a la más antigua
-                listData = listresultsQuestionnairePatientSearched.OrderBy(o => o.D_Completed_Date).ToList();
+                listData = listresultsQuestionnairePatientSearched.OrderByDescending(o => o.D_Assigned_Date).ToList();
                 listData = listData.GetRange(0, 7);
                 //Ordenar de la más antigua a la más reciente
-                listData = listData.OrderByDescending(o => o.D_Completed_Date).ToList();
+                listData = listData.OrderBy(o => o.D_Assigned_Date).ToList();
                 for (int i = 0; i < listData.Count; i++)
                 {
-                    DataLineGraph.Add(new ChartEntry(i)
+                    DataLineGraph.Add(new ChartEntry(listData.ElementAt(i).N_Result)
                     {
                         Label = listData.ElementAt(i).D_Completed_Date_S,
                         ValueLabel = listData.ElementAt(i).N_Result.ToString(),
@@ -309,7 +313,7 @@ namespace SleepyTeddy.Views.TherapistViews
             }
             else
             {
-                btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Realizados";
+                btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
                 lineGraphView.IsVisible = false;
                 list_questionnaireResults.IsVisible = true;
             }
