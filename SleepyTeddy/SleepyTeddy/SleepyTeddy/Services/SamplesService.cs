@@ -77,7 +77,7 @@ namespace SleepyTeddy.Services
             }
             Globals.Database.Instance.Commit();
             //Método para registrar sleep records en el firebase AQUÍ:
-            Globals.SleepPageViewModel.CreateSleepRecords2();
+            Globals.SleepPageViewModel.CreateSleepRecords();
             //await Globals.SleepPageViewModel.TransferToFirebaseSleepRecords();
             await Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
             Debug.WriteLine("DB filled with samples");
@@ -115,7 +115,11 @@ namespace SleepyTeddy.Services
                     sleep = new Sleep(datetime, SleepType.Light);
                     break;
                 case 121:
+                    sleep = new Sleep(datetime, SleepType.Deep);
+                    break;
                 case 122:
+                    sleep = new Sleep(datetime, SleepType.Deep);
+                    break;
                 case 123:
                     sleep = new Sleep(datetime, SleepType.Deep);
                     break;
