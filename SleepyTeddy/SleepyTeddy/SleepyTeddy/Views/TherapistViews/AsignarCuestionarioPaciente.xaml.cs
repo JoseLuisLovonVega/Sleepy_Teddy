@@ -3,6 +3,7 @@ using SleepyTeddy.Models;
 using SleepyTeddy.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using static SleepyTeddy.ViewModel.GetDataFromLoginUser;
@@ -67,11 +68,12 @@ namespace SleepyTeddy.Views.TherapistViews
                 listSleepWakeDiaries = new List<SleepWakeDiariesView>();
                 foreach (var SWDiary in objSearch.ListSleepWakeDiaries)
                 {
-                    if (SWDiary.CreatedDate.Month == DateTime.Today.Month-1 && SWDiary.CreatedDate.Year == DateTime.Today.Year)
+                    if (SWDiary.CreatedDate.Month == DateTime.Now.AddHours(-5).Month-1 && SWDiary.CreatedDate.Year == DateTime.Now.AddHours(-5).Year)
                     {
                         listSleepWakeDiaries.Add(SWDiary);
                     }
                 }
+                Debug.WriteLine("listSleepWakeDiaries.Count: "+ listSleepWakeDiaries.Count);
                 if (listSleepWakeDiaries.Count > 0)
                 {
                     await CrossCloudFirestore.Current
@@ -93,7 +95,7 @@ namespace SleepyTeddy.Views.TherapistViews
                 }
                 else
                 {
-                    Acr.UserDialogs.UserDialogs.Instance.Toast("No existen diarios de sueño-vigilia del último mes del paciente ingresado para incorporar al cuestionario.", new TimeSpan(6));
+                    Acr.UserDialogs.UserDialogs.Instance.Toast("No existen diarios de sueño-vigilia del último mes del paciente ingresado para incorporar al cuestionario.", new TimeSpan(15));
                     lista_cuestionarios.SelectedItem = null;
                 }
             } else {

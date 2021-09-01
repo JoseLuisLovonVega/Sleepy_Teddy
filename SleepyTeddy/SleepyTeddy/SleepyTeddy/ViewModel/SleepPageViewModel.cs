@@ -42,7 +42,6 @@ namespace SleepyTeddy.ViewModel
         double amountMinutes = 0;
         double sum = 0;
         int verificacion = 0;
-        int verificacion2 = 0;
 
         int dia;
 
@@ -53,7 +52,15 @@ namespace SleepyTeddy.ViewModel
         public SleepPageViewModel(ISleepRepository sleepRepository)
         {
             _sleepRepository = sleepRepository;
-            StartDate = DateTime.Today;
+            if (DateTime.Now.AddHours(-5).Hour < 18)
+            {
+                StartDate = DateTime.Today;
+            }
+            else
+            {
+                StartDate = DateTime.Today.AddDays(-1);
+            }
+            Debug.WriteLine("La fecha de hoy es: " + StartDate);
             //SelectedDate = StartDate;
 
             SleepInfo2 = new List<Sleep>();
@@ -79,7 +86,7 @@ namespace SleepyTeddy.ViewModel
             return SleepInfo.Where(s => s.DateTime.Year == SelectedDate.Year &&
             s.DateTime.Month == SelectedDate.Month &&
             s.DateTime > SelectedDate.AddHours(-4) &&
-            s.DateTime < SelectedDate.AddHours(12)).
+            s.DateTime < SelectedDate.AddHours(13)).
             OrderBy(x => x.DateTime).ToList();
         }
 
@@ -94,7 +101,7 @@ namespace SleepyTeddy.ViewModel
 
                 if (sleepData.Count() > 0)
                 {
-                    Debug.WriteLine("Se analiza el Día: " + k);
+                    Debug.WriteLine("Se analiza el Día: " + StartDate.AddDays(k));
                     //For each hour
                     for (int i = 20; i < 37; i++)
                     {
@@ -181,7 +188,7 @@ namespace SleepyTeddy.ViewModel
                     {
                         foreach (var SWDiary in objData.ListSleepWakeDiaries)
                         {
-                            if (DateTime.Today.AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
+                            if (DateTime.Now.AddHours(-5).AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
                             {
                                 verificacion = 1;
                             }
@@ -216,7 +223,7 @@ namespace SleepyTeddy.ViewModel
                         dia = contador-1;
 
                         //await objData.GetSleepRecordsViewAsync();
-                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Today.AddDays(contador-1));
+                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddHours(-5).AddDays(contador-1));
                         //Ordenar de la más antigua a la más reciente
                         listSleepRecordsObjData = listSleepRecordsLocalDB.OrderBy(o => o.DateTimeHour).ToList();
                         Debug.WriteLine("Cantidad de sleep records de la lista es: " + listSleepRecordsObjData.Count);
@@ -224,7 +231,7 @@ namespace SleepyTeddy.ViewModel
 
                         foreach (var sleepRecord in listSleepRecordsObjData)
                         {
-                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador - 1).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour >= 20)
+                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddHours(-5).AddDays(contador - 1).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour >= 20)
                             {
                                 listSleepRecords1.Add(sleepRecord);
                             }
@@ -232,7 +239,7 @@ namespace SleepyTeddy.ViewModel
 
                         foreach (var sleepRecord in listSleepRecordsObjData)
                         {
-                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 13)
+                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddHours(-5).AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 13)
                             {
                                 listSleepRecords2.Add(sleepRecord);
                             }
