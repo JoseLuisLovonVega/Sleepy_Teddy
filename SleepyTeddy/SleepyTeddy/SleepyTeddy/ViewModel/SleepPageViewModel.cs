@@ -21,19 +21,17 @@ namespace SleepyTeddy.ViewModel
         public List<Sleep> SleepInfo2;
         public DateTime StartDate { get; }
         public DateTime SelectedDate;
+        public DateTime GoToSleepTime;
 
         SleepWakeDiary sleepWakeDiary;
         GetDataFromLoginUser objData { get; set; }
 
         List<SleepRecordsView> listSleepRecordsLocalDB;
-        List<SleepRecordsView> listSleepRecordsObjData;
         List<SleepRecordsView> listSleepRecords1;
         List<SleepRecordsView> listSleepRecords2;
         List<SleepRecordsView> listSleepRecords3;
-        List<SleepRecordsView> listSleepRecordsSleepKinds;
 
         SleepRecordsView sleepRecord;
-        //leepRecordsView sleepRecords2;
 
         List<SleepRecordsView> listSleepRecords12;
         List<SleepRecordsView> listSleepRecords22;
@@ -52,6 +50,7 @@ namespace SleepyTeddy.ViewModel
         public SleepPageViewModel(ISleepRepository sleepRepository)
         {
             _sleepRepository = sleepRepository;
+            //Si la hora actual es menor a 6 el DateTime.Today no se bugeará y no mandará como si ya estuviera mañana
             if (DateTime.Now.AddHours(-5).Hour < 18)
             {
                 StartDate = DateTime.Today;
@@ -69,13 +68,10 @@ namespace SleepyTeddy.ViewModel
             sleepWakeDiary = new SleepWakeDiary();
 
             listSleepRecordsLocalDB = new List<SleepRecordsView>();
-            listSleepRecordsObjData = new List<SleepRecordsView>();
             listSleepRecords1 = new List<SleepRecordsView>();
             listSleepRecords2 = new List<SleepRecordsView>();
-            listSleepRecordsSleepKinds = new List<SleepRecordsView>();
 
             sleepRecord = new SleepRecordsView();
-            //sleepRecords2 = new SleepRecordsView();
 
             listSleepRecords12 = new List<SleepRecordsView>();
             listSleepRecords22 = new List<SleepRecordsView>();
@@ -217,19 +213,17 @@ namespace SleepyTeddy.ViewModel
                         listSleepRecords12 = new List<SleepRecordsView>();
                         listSleepRecords22 = new List<SleepRecordsView>();
 
-                        listSleepRecordsObjData = new List<SleepRecordsView>();
-                        listSleepRecordsSleepKinds = new List<SleepRecordsView>();
+                        GoToSleepTime = new DateTime();
 
                         dia = contador-1;
 
                         //await objData.GetSleepRecordsViewAsync();
                         Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddHours(-5).AddDays(contador-1));
                         //Ordenar de la más antigua a la más reciente
-                        listSleepRecordsObjData = listSleepRecordsLocalDB.OrderBy(o => o.DateTimeHour).ToList();
-                        Debug.WriteLine("Cantidad de sleep records de la lista es: " + listSleepRecordsObjData.Count);
+                        listSleepRecordsLocalDB = listSleepRecordsLocalDB.OrderBy(o => o.DateTimeHour).ToList();
                         Debug.WriteLine("Se logró ordenar ascendentemente todos los sleep records del paciente.");
 
-                        foreach (var sleepRecord in listSleepRecordsObjData)
+                        foreach (var sleepRecord in listSleepRecordsLocalDB)
                         {
                             if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddHours(-5).AddDays(contador - 1).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour >= 20)
                             {
@@ -237,7 +231,7 @@ namespace SleepyTeddy.ViewModel
                             }
                         }
 
-                        foreach (var sleepRecord in listSleepRecordsObjData)
+                        foreach (var sleepRecord in listSleepRecordsLocalDB)
                         {
                             if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddHours(-5).AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 13)
                             {
@@ -257,23 +251,6 @@ namespace SleepyTeddy.ViewModel
                             listSleepRecords2 = listSleepRecords2.OrderBy(o => o.DateTimeHour).ToList();
                             Debug.WriteLine("El primer sleeprecord de la lista sleeprecords2: " + listSleepRecords2.First().DateTimeHour);
                             Debug.WriteLine("El último sleeprecord de la lista sleeprecords2: " + listSleepRecords2.Last().DateTimeHour);
-
-                            foreach (var sleepRecord in listSleepRecords1)
-                            {
-                                listSleepRecords3.Add(sleepRecord);
-                            }
-
-                            foreach (var sleepRecord in listSleepRecords2)
-                            {
-                                listSleepRecords3.Add(sleepRecord);
-                            }
-
-                            //Ordenar de la más antigua a la más reciente
-                            Debug.WriteLine("Cantidad de sleeprecords3: " + listSleepRecords3.Count);
-                            listSleepRecords3 = listSleepRecords3.OrderBy(o => o.DateTimeHour).ToList();
-                            Debug.WriteLine("El primer sleeprecord de la lista sleeprecords3: " + listSleepRecords3.First().DateTimeHour);
-                            Debug.WriteLine("El último sleeprecord de la lista sleeprecords3: " + listSleepRecords3.Last().DateTimeHour);
-                            Debug.WriteLine("Se logró registrar la lista de sleeprecords 3 del paciente de 8 pm del dia anterior a 13 pm del dia a evaluar");
 
                             foreach (var sleepRecord in listSleepRecords1)
                             {
@@ -306,46 +283,77 @@ namespace SleepyTeddy.ViewModel
                                 Debug.WriteLine("El último sleeprecord de la lista sleeprecords22: " + listSleepRecords22.Last().DateTimeHour);
 
                                 //Se define la fecha de creación del diario de sueño como un día antes del día a evaluar
-                                sleepWakeDiary.CreatedDate = listSleepRecords1.First().DateTimeHour;
+                                if (DateTime.Now.AddHours(-5).Hour < 18)
+                                {
+                                    sleepWakeDiary.CreatedDate = DateTime.Today.AddDays(contador);
+                                }
+                                else
+                                {
+                                    sleepWakeDiary.CreatedDate = DateTime.Today.AddDays(contador-1);
+                                }
                                 Debug.WriteLine("Se registro la fecha de creación del diario de sueño-vigilia");
 
-                                //Calcular a qué hora se durmió el paciente el día anterior al día a evaluar
+                                //Calcular a qué hora se fue a su cama el paciente el día anterior al día a evaluar
                                 count = 0;
                                 for (int i = 1; i < listSleepRecords1.Count; i++)
                                 {
-                                    if (listSleepRecords1.ElementAt(i).Kind == 2 && listSleepRecords1.ElementAt(i - 1).Kind == 1 && count == 0)
+                                    if (listSleepRecords1.ElementAt(i).Kind == 0 && listSleepRecords1.ElementAt(i-1).Kind == 0 && count == 0)
                                     {
-                                        sleepWakeDiary.SleepTime = listSleepRecords1.ElementAt(i - 1).DateTimeHour;
+                                        GoToSleepTime = listSleepRecords1.ElementAt(i).DateTimeHour;
+                                        count = 1;
+                                    }
+                                }
+                                count = 0;
+                                for (int i = 1; i < listSleepRecords1.Count; i++)
+                                {
+                                    if (listSleepRecords1.ElementAt(i).Kind > 0 && listSleepRecords1.ElementAt(i-1).Kind > 0 && count == 0)
+                                    {
+                                        sleepWakeDiary.SleepTime = listSleepRecords1.ElementAt(i).DateTimeHour;
                                         count = 1;
                                     }
                                 }
                                 Debug.WriteLine("Se calculó la hora a la que se durmió del diario de sueño-vigilia");
                                 //Calcular cuántos minutos le tomó dormirse al paciente
-                                sleepWakeDiary.GoToSleepTime = (sleepWakeDiary.SleepTime - sleepWakeDiary.CreatedDate).TotalMinutes;
+                                sleepWakeDiary.GoToSleepTime = (sleepWakeDiary.SleepTime - GoToSleepTime).TotalMinutes;
                                 Debug.WriteLine("Se calculó cuántos minutos le tomó dormirse al paciente para el diario de sueño-vigilia");
-
-                                //Calcular las horas en la cama restando las fechas del primer con el último elemento de la lista
-                                sleepWakeDiary.HoursTotal = (listSleepRecords2.Last().DateTimeHour - sleepWakeDiary.CreatedDate).TotalMinutes;
-                                sleepWakeDiary.HoursTotal = sleepWakeDiary.HoursTotal / 60;
-                                Debug.WriteLine("Se calcularon las horas totales del diario de sueño-vigilia");
 
                                 //Calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
                                 //el sleep record registrado antes de éste es 1 o 2
-                                for (int i = 3; i < listSleepRecords2.Count; i++)
+                                for (int i = 2; i < listSleepRecords2.Count; i++)
                                 {
-                                    if (listSleepRecords2.ElementAt(i).Kind == 0 && listSleepRecords2.ElementAt(i - 1).Kind == 0
-                                        && listSleepRecords2.ElementAt(i - 2).Kind == 1 && listSleepRecords2.ElementAt(i - 3).Kind == 2)
+                                    if (listSleepRecords2.ElementAt(i-2).Kind>0 && listSleepRecords2.ElementAt(i-1).Kind == 0 && listSleepRecords2.ElementAt(i).Kind > 0)
                                     {
-                                        sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i - 1).DateTimeHour;
+                                        sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i-1).DateTimeHour;
                                     }
                                 }
                                 Debug.WriteLine("Se calculó la hora a la que se despertó del diario de sueño-vigilia");
 
+                                foreach (var sleepRecord in listSleepRecordsLocalDB)
+                                {
+                                    if (sleepRecord.DateTimeHour >= sleepWakeDiary.SleepTime && sleepRecord.DateTimeHour <= sleepWakeDiary.WakeUpTime)
+                                    {
+                                        listSleepRecords3.Add(sleepRecord);
+                                    }
+                                }
+
+                                //Ordenar de la más antigua a la más reciente
+                                Debug.WriteLine("Cantidad de sleeprecords3: " + listSleepRecords3.Count);
+                                listSleepRecords3 = listSleepRecords3.OrderBy(o => o.DateTimeHour).ToList();
+                                Debug.WriteLine("El primer sleeprecord de la lista sleeprecords3: " + listSleepRecords3.First().DateTimeHour);
+                                Debug.WriteLine("El último sleeprecord de la lista sleeprecords3: " + listSleepRecords3.Last().DateTimeHour);
+                                Debug.WriteLine("Se logró registrar la lista de sleeprecords 3 del paciente desde la hora que durmió hasta la hora que despertó el día siguiente.");
+
+
+                                //Calcular las horas en la cama restando las fechas del primer con el último elemento de la lista
+                                sleepWakeDiary.HoursTotal = (sleepWakeDiary.WakeUpTime - GoToSleepTime).TotalMinutes;
+                                sleepWakeDiary.HoursTotal = Math.Round(sleepWakeDiary.HoursTotal / 60, 2);
+                                Debug.WriteLine("Se calcularon las horas totales del diario de sueño-vigilia");
+
                                 count = 0;
                                 //Se calcula los minutos que el paciente estuvo dormido
-                                for (int i = 1; i < listSleepRecords3.Count; i++)
+                                for (int i = 0; i < listSleepRecords3.Count; i++)
                                 {
-                                    if (listSleepRecords3.ElementAt(i - 1).Kind > 0 && listSleepRecords3.ElementAt(i).Kind > 0)
+                                    if (listSleepRecords3.ElementAt(i).Kind > 0)
                                     {
                                         for (int j = i + 1; j < listSleepRecords3.Count; j++)
                                         {
@@ -361,18 +369,14 @@ namespace SleepyTeddy.ViewModel
                                         count = 0;
                                     }
                                 }
-                                //Los minutos se pasan a horas
-                                sum = sum / 60;
-
                                 //Se calculan las horas dormidas
-                                sleepWakeDiary.HoursSlept = sum;
-                                Debug.WriteLine("Se calculó las horas horas dormidas del diario de sueño-vigilia");
+                                sum = sum / 60;
+                                sleepWakeDiary.HoursSlept = Math.Round(sum, 2);
+                                Debug.WriteLine("Se calcularon las horas horas dormidas del diario de sueño-vigilia");
 
                                 //Y con ello se calcula la eficiencia del sueño del diario de sueño-vigilia
                                 sleepWakeDiary.SleepEfficiency = sleepWakeDiary.HoursSlept / sleepWakeDiary.HoursTotal * 100;
                                 Debug.WriteLine("Se calculó la eficiencia del sueño del diario de sueño-vigilia");
-                                sleepWakeDiary.HoursSlept = Math.Round(sleepWakeDiary.HoursSlept, 2);
-                                sleepWakeDiary.HoursTotal = Math.Round(sleepWakeDiary.HoursTotal, 2);
                                 sleepWakeDiary.SleepEfficiency = Math.Round(sleepWakeDiary.SleepEfficiency, 2);
 
                                 //Se crea el diario de sueño-vigilia
