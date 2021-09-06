@@ -123,7 +123,9 @@ namespace SleepyTeddy.Services
                 case 123:
                     sleep = new Sleep(datetime, SleepType.Deep);
                     break;
-
+                case 80:
+                    sleep = new Sleep(datetime, SleepType.Empty);
+                    break;
                 default:
                     sleep = new Sleep(datetime, SleepType.Awake);
                     break;
