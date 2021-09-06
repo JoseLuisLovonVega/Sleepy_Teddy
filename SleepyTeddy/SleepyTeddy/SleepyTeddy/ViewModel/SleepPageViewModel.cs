@@ -353,6 +353,7 @@ namespace SleepyTeddy.ViewModel
                                 //Se calcula los minutos que el paciente estuvo dormido
                                 for (int i = 0; i < listSleepRecords3.Count; i++)
                                 {
+                                    count = 0;
                                     if (listSleepRecords3.ElementAt(i).Kind > 0)
                                     {
                                         for (int j = i + 1; j < listSleepRecords3.Count; j++)
@@ -361,12 +362,10 @@ namespace SleepyTeddy.ViewModel
                                             {
                                                 amountMinutes = (listSleepRecords3.ElementAt(j).DateTimeHour - listSleepRecords3.ElementAt(i).DateTimeHour).TotalMinutes;
                                                 sum = sum + amountMinutes;
-
                                                 count = 1;
                                                 i = j;
                                             }
                                         }
-                                        count = 0;
                                     }
                                 }
                                 //Se calculan las horas dormidas
