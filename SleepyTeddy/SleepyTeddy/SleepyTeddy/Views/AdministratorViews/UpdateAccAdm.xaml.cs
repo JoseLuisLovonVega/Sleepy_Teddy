@@ -46,6 +46,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             nmInstitucion.Text = admin.Institution;
             txEmail.Text = admin.Email;
             txPsw.Text = admin.Password;
+            txPsw2.Text = admin.Password;
         }
 
         private async void btnAceptar_clicked(object sender, EventArgs e)
@@ -87,6 +88,10 @@ namespace SleepyTeddy.Views.AdministratorViews
             else if (!txPsw.Text.Any(char.IsDigit))
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+            }
+            else if (txPsw.Text != txPsw2.Text)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Las contraseñas no coinciden.", new TimeSpan(3));
             }
             else
             {

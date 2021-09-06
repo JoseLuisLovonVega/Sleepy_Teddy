@@ -47,6 +47,7 @@ namespace SleepyTeddy.Views.TherapistViews
             espTpt.Text = therapist.Especiality;
             txEmail.Text = therapist.Email;
             txPsw.Text = therapist.Password;
+            txPsw2.Text = therapist.Password;
         }
 
         private async void btnAceptar_clicked(object sender, EventArgs e)
@@ -62,6 +63,10 @@ namespace SleepyTeddy.Views.TherapistViews
             else if (!txPsw.Text.Any(char.IsDigit))
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
+            }
+            else if (txPsw.Text != txPsw2.Text)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Las contraseñas no coinciden.", new TimeSpan(3));
             }
             else
             {

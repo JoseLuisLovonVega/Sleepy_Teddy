@@ -72,6 +72,14 @@
                     WidthRequest="300"
                    HorizontalOptions="Center"/>
 
+            <Entry Grid.Row="5"
+                   Grid.Column="0"
+                   Margin="5"                 
+                   x:Name="txPsw2"
+                   IsPassword="True"
+                   Placeholder="Confirmar Contraseña"
+                   WidthRequest="300"
+                   HorizontalOptions="Center"/>
 
             <Button Grid.Row="7"
                     Grid.Column="0"

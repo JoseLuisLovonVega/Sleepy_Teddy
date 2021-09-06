@@ -18,7 +18,6 @@ namespace SleepyTeddy.Views.AdministratorViews
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegAdministrador : ContentPage
     {
-        //public string WebAPIkey = "AIzaSyCn23mEfbZVvw9Y7RTuCqmhpI5fcwQRL5o";
         String REGEX_EMAIL = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
         public RegAdministrador()
         {
@@ -105,6 +104,11 @@ namespace SleepyTeddy.Views.AdministratorViews
             else if (!txPsw.Text.Any(char.IsDigit))
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+                return Task.FromResult(false);
+            }
+            else if (txPsw.Text!=txPsw2.Text)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Las contraseñas no coinciden.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
             return Task.FromResult(true);

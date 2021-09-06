@@ -44,6 +44,7 @@ namespace SleepyTeddy.Views.PatientViews
             dtNacimiento.Date = patient.Birthday;
             txEmail.Text = patient.Email;
             txPsw.Text = patient.Password;
+            txPsw2.Text = patient.Password;
         }
 
         private async void btnAceptar_clicked(object sender, EventArgs e)
@@ -81,6 +82,10 @@ namespace SleepyTeddy.Views.PatientViews
             else if (!txPsw.Text.Any(char.IsDigit))
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
+            }
+            else if (txPsw.Text != txPsw2.Text)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Las contraseñas no coinciden.", new TimeSpan(3));
             }
             else
             {

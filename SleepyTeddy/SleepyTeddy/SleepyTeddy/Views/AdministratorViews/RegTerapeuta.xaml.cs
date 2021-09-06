@@ -112,6 +112,11 @@ namespace SleepyTeddy.Views.AdministratorViews
                 Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
+            else if (txPsw.Text != txPsw2.Text)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Las contraseñas no coinciden.", new TimeSpan(3));
+                return Task.FromResult(false);
+            }
             return Task.FromResult(true);
         }
 
