@@ -32,7 +32,6 @@
                    Margin="5"
                    x:Name="nmTpt"
                    Placeholder="Nombres"
-                   TextChanged="nmTpt_TextChanged"
                    IsEnabled="false"
                    WidthRequest="300"
                    VerticalOptions="Center"/>
@@ -41,7 +40,6 @@
                    Grid.Column="0"
                    Margin="5"
                    x:Name="apTpt"
-                   TextChanged="apTpt_TextChanged"
                    Placeholder="Apellidos"
                    IsEnabled="false"
                    WidthRequest="300"
@@ -51,7 +49,6 @@
                    Grid.Column="0"
                    Margin="5"
                    x:Name="espTpt"
-                   TextChanged="espTpt_TextChanged"
                    Placeholder="Especialidad"
                    WidthRequest="300"
                    IsEnabled="false"

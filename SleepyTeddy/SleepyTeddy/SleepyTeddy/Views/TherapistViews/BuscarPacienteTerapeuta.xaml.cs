@@ -22,6 +22,7 @@ namespace SleepyTeddy.Views.TherapistViews
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
+            LoadItems();
         }
 
         protected override void OnAppearing()
@@ -54,6 +55,7 @@ namespace SleepyTeddy.Views.TherapistViews
             string id_therapist = LoginViewModel.Therapist_ID;
             if (string.IsNullOrWhiteSpace(apPatient.Text))
             {
+                list_patients.ItemsSource = objPatientsTherapist.ListPatientsTherapist;
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Complete el campo de búsqueda", new TimeSpan(3));
             }
             else

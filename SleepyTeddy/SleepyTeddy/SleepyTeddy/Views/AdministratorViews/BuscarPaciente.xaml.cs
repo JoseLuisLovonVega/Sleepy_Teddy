@@ -19,6 +19,7 @@ namespace SleepyTeddy.Views.AdministratorViews
         {
             InitializeComponent();
             NavigationPage.SetHasBackButton(this, false);
+            LoadItems();
         }
 
         protected override void OnAppearing()
@@ -40,6 +41,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             string id_admin = LoginViewModel.Administrator_ID;
             if (string.IsNullOrWhiteSpace(apPatient.Text))
             {
+                list_patients.ItemsSource = objPatients.ListPatientsAdministrator;
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Complete el campo de búsqueda", new TimeSpan(3));
             }
             else

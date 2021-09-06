@@ -350,6 +350,8 @@ namespace SleepyTeddy.ViewModel
                                 Debug.WriteLine("Se logró registrar la lista de sleeprecords 3 del paciente desde la hora que durmió hasta la hora que despertó el día siguiente.");
 
                                 count = 0;
+                                sum = 0;
+                                amountMinutes = 0;
                                 //Se calcula los minutos que el paciente estuvo dormido
                                 for (int i = 0; i < listSleepRecords3.Count; i++)
                                 {

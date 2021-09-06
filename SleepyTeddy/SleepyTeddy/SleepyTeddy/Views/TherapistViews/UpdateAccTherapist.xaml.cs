@@ -18,7 +18,6 @@ namespace SleepyTeddy.Views.TherapistViews
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UpdateAccTherapist : ContentPage
     {
-        String REGEX_EMAIL = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
         String Therapist_ID;
         String documentID;
         Therapist therapist;
@@ -62,14 +61,10 @@ namespace SleepyTeddy.Views.TherapistViews
             }
             else if (!txPsw.Text.Any(char.IsDigit))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
             }
             else
             {
-                /*therapist.Names = nmTpt.Text;
-                therapist.Last_Names = apTpt.Text;
-                therapist.Especiality = espTpt.Text;
-                therapist.Email = txEmail.Text;*/
                 therapist.Password = txPsw.Text;
                 await CrossCloudFirestore.Current
                      .Instance
@@ -78,14 +73,13 @@ namespace SleepyTeddy.Views.TherapistViews
                      .UpdateAsync(therapist);
                 await DisplayAlert("Actualización Exitosa", "Cuenta actualizada correctamente", "OK");
                 await Navigation.PushAsync(new PaginaPrincipalTerapeuta());
-                //await Navigation.PopAsync();
             }
         }
         private async void btnCancelar_clicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
         }
-
+        /*
         private void nmTpt_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(nmTpt.Text) == false)
@@ -118,18 +112,6 @@ namespace SleepyTeddy.Views.TherapistViews
                 }
             }
         }
-
-        /*bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }*/
+    */
     }
  }

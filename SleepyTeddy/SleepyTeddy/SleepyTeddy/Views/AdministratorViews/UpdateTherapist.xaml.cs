@@ -55,25 +55,13 @@ namespace SleepyTeddy.Views.AdministratorViews
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar los nombres.", new TimeSpan(3));
             }
-            else if (!nmTpt.Text.ToCharArray().All(Char.IsLetter))
-            {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Los nombres no puede contener números.", new TimeSpan(3));
-            }
             else if (string.IsNullOrWhiteSpace(apTpt.Text))
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar los apellidos.", new TimeSpan(3));
             }
-            else if (!apTpt.Text.ToCharArray().All(Char.IsLetter))
-            {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Los apellidos no puede contener números.", new TimeSpan(3));
-            }
             else if (string.IsNullOrWhiteSpace(espTpt.Text))
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la especialidad del terapeuta.", new TimeSpan(3));
-            }
-            else if (!espTpt.Text.ToCharArray().All(Char.IsLetter))
-            {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("El nombre de la especialidad no puede contener números.", new TimeSpan(3));
             }
             else if (string.IsNullOrWhiteSpace(txEmail.Text))
             {
@@ -97,7 +85,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (!txPsw.Text.Any(char.IsDigit))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
             }
             else
             {

@@ -102,6 +102,11 @@ namespace SleepyTeddy.Views.AdministratorViews
                 Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
+            else if (!txPsw.Text.Any(char.IsDigit))
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+                return Task.FromResult(false);
+            }
             return Task.FromResult(true);
         }
         private async void btnCancelar_clicked(object sender, EventArgs e)

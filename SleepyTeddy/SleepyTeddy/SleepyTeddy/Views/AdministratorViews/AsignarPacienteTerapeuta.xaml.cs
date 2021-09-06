@@ -23,7 +23,7 @@ namespace SleepyTeddy.Views.AdministratorViews
         public AsignarPacienteTerapeuta()
         {
             InitializeComponent();
-            
+            LoadItems();
         }
 
         protected override bool OnBackButtonPressed()
