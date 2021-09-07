@@ -110,6 +110,9 @@ namespace SleepyTeddy.Services
             Sleep sleep;
             switch (sample.Category)
             {
+                case 80:
+                    sleep = new Sleep(datetime, SleepType.Empty);
+                    break;
                 case 112:
                     sleep = new Sleep(datetime, SleepType.Light);
                     break;
@@ -117,9 +120,6 @@ namespace SleepyTeddy.Services
                 case 122:
                 case 123:
                     sleep = new Sleep(datetime, SleepType.Deep);
-                    break;
-                case 80:
-                    sleep = new Sleep(datetime, SleepType.Empty);
                     break;
                 default:
                     sleep = new Sleep(datetime, SleepType.Awake);
