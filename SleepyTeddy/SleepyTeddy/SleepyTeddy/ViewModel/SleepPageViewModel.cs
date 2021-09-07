@@ -129,7 +129,7 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se completó la carga de sleep records a la lista asignada.");
         }
 
-        public void CreateSleepRecords2()
+        /*public void CreateSleepRecords2()
         {
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll().ToList();
@@ -149,9 +149,9 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
-        }
+        }*/
 
-        public async Task TransferToFirebaseSleepRecords()
+        /*public async Task TransferToFirebaseSleepRecords()
         {
             Debug.WriteLine("Iniciando la subida de elementos de la lista de sleeprecords al Firebase");
             foreach (var sleepRecord in listSleepRecordsLocalDB)
@@ -170,7 +170,7 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se completó la subida de sleeprecords al Firebase");
             Debug.WriteLine("Iniciando el registro de diarios de sueño-vigilia");
             await CreateCompletedSleepWakeDiaries();
-        }
+        }*/
 
         public async Task CreateCompletedSleepWakeDiaries()
         {
