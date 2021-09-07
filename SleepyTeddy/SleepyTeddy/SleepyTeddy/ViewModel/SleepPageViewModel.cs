@@ -110,15 +110,12 @@ namespace SleepyTeddy.ViewModel
                         {
                             if (data.ElementAtOrDefault(j) != null)
                             {
-                                if (data[j].SleepType != SleepType.Empty)
-                                {
                                     sleepRecord = new SleepRecordsView();
                                     sleepRecord.Key = data[j].Id;
                                     sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
                                     sleepRecord.DateTimeHour = data[j].DateTime;
                                     sleepRecord.Kind = (int)data[j].SleepType;
                                     listSleepRecordsLocalDB.Add(sleepRecord);
-                                }
                             }
                         }
                         Debug.WriteLine("Día "+ k + ": Se registraron sleep records de la hora: " + i);
