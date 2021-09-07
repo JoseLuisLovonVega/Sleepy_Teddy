@@ -21,7 +21,7 @@ namespace SleepyTeddy
             InitializeComponent();
             var database = new Database();
             Globals.BuildGlobals(new HeartrateRepository(database), new SleepRepository(database), new StepsRepository(database), database);
-            //database.EmptyDatabase();
+            database.EmptyDatabase();
             MainPage = new NavigationPage(new MainPageLogin());
         }
 
