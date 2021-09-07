@@ -47,8 +47,8 @@ namespace SleepyTeddy.Services
                     Windesheart.PairedDevice.SetActivateOnLiftWrist(DeviceSettings.WristRaiseDisplay);
                     Windesheart.PairedDevice.SetStepGoal(DeviceSettings.DailyStepsGoal);
                     Windesheart.PairedDevice.EnableFitnessGoalNotification(true);
-                    Windesheart.PairedDevice.EnableSleepTracking(false);
-                    //Windesheart.PairedDevice.EnableSleepTracking(true);
+                    //Windesheart.PairedDevice.EnableSleepTracking(false);
+                    Windesheart.PairedDevice.EnableSleepTracking(true);
                     Windesheart.PairedDevice.SetHeartrateMeasurementInterval(1);
 
                     //Callbacks
