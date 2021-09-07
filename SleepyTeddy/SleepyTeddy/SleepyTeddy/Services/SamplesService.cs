@@ -77,11 +77,9 @@ namespace SleepyTeddy.Services
                 AddSleep(datetime, sample);
             }
             Globals.Database.Instance.Commit();
-            //Método para registrar sleep records en el firebase AQUÍ:
-            Globals.SleepPageViewModel.CreateSleepRecords();
-            //await Globals.SleepPageViewModel.TransferToFirebaseSleepRecords();
-            await Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
             Debug.WriteLine("DB filled with samples");
+            Globals.SleepPageViewModel.CreateSleepRecords();
+            await Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
             Device.BeginInvokeOnMainThread(delegate
             {
                 Globals.MiCuentaPacienteViewModel.IsLoading = false;
@@ -116,11 +114,7 @@ namespace SleepyTeddy.Services
                     sleep = new Sleep(datetime, SleepType.Light);
                     break;
                 case 121:
-                    sleep = new Sleep(datetime, SleepType.Deep);
-                    break;
                 case 122:
-                    sleep = new Sleep(datetime, SleepType.Deep);
-                    break;
                 case 123:
                     sleep = new Sleep(datetime, SleepType.Deep);
                     break;
@@ -130,6 +124,24 @@ namespace SleepyTeddy.Services
                 default:
                     sleep = new Sleep(datetime, SleepType.Awake);
                     break;
+
+                    /* Sleep sleep;
+                     switch (sample.Category)
+                     {
+                         case 112:
+                             sleep = new Sleep(datetime, SleepType.Light);
+                             break;
+                         case 121:
+                         case 122:
+                         case 123:
+                             sleep = new Sleep(datetime, SleepType.Deep);
+                             break;
+
+                         default:
+                             sleep = new Sleep(datetime, SleepType.Awake);
+                             break;
+
+                     }*/
             }
             _sleepRepository.Add(sleep);
         }
