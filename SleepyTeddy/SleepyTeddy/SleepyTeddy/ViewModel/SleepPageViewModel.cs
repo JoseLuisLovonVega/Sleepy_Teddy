@@ -108,14 +108,17 @@ namespace SleepyTeddy.ViewModel
                         List<Sleep> data = sleepData.Where(x => x.DateTime.Hour == hour).ToList();
                         for (int j = 0; j < 60; j++)
                         {
-                            if (data.ElementAt(j).SleepType != SleepType.Empty)
+                            if (data.ElementAtOrDefault(j) != null)
                             {
-                                sleepRecord = new SleepRecordsView();
-                                sleepRecord.Key = data[j].Id;
-                                sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
-                                sleepRecord.DateTimeHour = data[j].DateTime;
-                                sleepRecord.Kind = (int)data[j].SleepType;
-                                listSleepRecordsLocalDB.Add(sleepRecord);
+                                if (data[j].SleepType != SleepType.Empty)
+                                {
+                                    sleepRecord = new SleepRecordsView();
+                                    sleepRecord.Key = data[j].Id;
+                                    sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
+                                    sleepRecord.DateTimeHour = data[j].DateTime;
+                                    sleepRecord.Kind = (int)data[j].SleepType;
+                                    listSleepRecordsLocalDB.Add(sleepRecord);
+                                }
                             }
                         }
                         Debug.WriteLine("Día "+ k + ": Se registraron sleep records de la hora: " + i);

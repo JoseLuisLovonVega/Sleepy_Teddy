@@ -39,6 +39,7 @@ namespace SleepyTeddy.Services
                 Globals.MiCuentaPacienteViewModel.IsLoading = true;
             });
             _fetchingStartDate = GetLastAddedDateTime();
+            Debug.WriteLine("Iniciando Fetching...");
             Windesheart.PairedDevice.GetSamples(_fetchingStartDate, FillDatabase, ProgressCalculator);
         }
 
