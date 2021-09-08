@@ -40,14 +40,13 @@ namespace SleepyTeddy.Services
                 {
 
                     //Sync settings
-                    Windesheart.PairedDevice.SetTime(DateTime.Now);
+                    Windesheart.PairedDevice.SetTime(DateTime.Now.AddHours(-5));
                     Windesheart.PairedDevice.SetDateDisplayFormat(DeviceSettings.DateFormatDMY);
                     Windesheart.PairedDevice.SetLanguage(DeviceSettings.DeviceLanguage);
                     Windesheart.PairedDevice.SetTimeDisplayFormat(DeviceSettings.TimeFormat24Hour);
                     Windesheart.PairedDevice.SetActivateOnLiftWrist(DeviceSettings.WristRaiseDisplay);
                     Windesheart.PairedDevice.SetStepGoal(DeviceSettings.DailyStepsGoal);
                     Windesheart.PairedDevice.EnableFitnessGoalNotification(true);
-                    //Windesheart.PairedDevice.EnableSleepTracking(false);
                     Windesheart.PairedDevice.EnableSleepTracking(true);
                     Windesheart.PairedDevice.SetHeartrateMeasurementInterval(1);
 

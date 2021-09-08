@@ -36,7 +36,7 @@ namespace SleepyTeddy.Data.Repository
                 return steps.Last().DateTime.AddMinutes(1);
             }
 
-            return DateTime.Now.AddYears(-2);
+            return DateTime.Now.AddHours(-5).AddYears(-2);
         }
 
         public void RemoveAll()
