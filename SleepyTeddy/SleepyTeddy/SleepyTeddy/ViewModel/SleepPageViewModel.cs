@@ -178,7 +178,7 @@ namespace SleepyTeddy.ViewModel
             {
                 await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
                 //CreateSleepRecords();
-                for (int contador = 0; contador > -6; contador--)
+                for (int contador = 0; contador > -7; contador--)
                 {
                     verificacion = 0;
 
@@ -221,10 +221,13 @@ namespace SleepyTeddy.ViewModel
                         dia = contador-1;
 
                         //await objData.GetSleepRecordsViewAsync();
-                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddHours(-5).AddDays(contador-1));
+                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddHours(-5).AddDays(contador-1).ToString("dd/MM/yy"));
                         //Ordenar de la más antigua a la más reciente
-                        listSleepRecordsLocalDB = listSleepRecordsLocalDB.OrderBy(o => o.DateTimeHour).ToList();
-                        Debug.WriteLine("Se logró ordenar ascendentemente todos los sleep records del paciente.");
+                        if (listSleepRecordsLocalDB.Count > 0)
+                        {
+                            listSleepRecordsLocalDB = listSleepRecordsLocalDB.OrderBy(o => o.DateTimeHour).ToList();
+                            Debug.WriteLine("Se logró ordenar ascendentemente todos los sleep records del paciente.");
+                        }
 
                         foreach (var sleepRecord in listSleepRecordsLocalDB)
                         {
@@ -411,7 +414,7 @@ namespace SleepyTeddy.ViewModel
                             Debug.WriteLine("No existe data de sleep records de los días en cuestión.: Día: " + (contador - 1) + "y Día " + contador);
                         }
                     }
-                    if (contador == -5)
+                    if (contador == -6)
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.", new TimeSpan(4));
                         Debug.WriteLine("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.");
