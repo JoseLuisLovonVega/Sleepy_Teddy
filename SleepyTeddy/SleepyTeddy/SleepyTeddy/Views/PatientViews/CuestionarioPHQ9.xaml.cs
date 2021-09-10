@@ -32,7 +32,8 @@ namespace SleepyTeddy.Views.PatientViews
             //InitApp();
             NavigationPage.SetHasBackButton(this, false);
             getQuestionnaire();
-            LoadItems();
+            OnAppearing();
+            //LoadItems();
         }
 
         private async void getQuestionnaire()

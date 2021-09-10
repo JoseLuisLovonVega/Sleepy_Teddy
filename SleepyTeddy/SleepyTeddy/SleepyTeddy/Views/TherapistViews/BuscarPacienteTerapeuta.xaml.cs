@@ -21,15 +21,14 @@ namespace SleepyTeddy.Views.TherapistViews
         public BuscarPacienteTerapeuta()
         {
             InitializeComponent();
-            NavigationPage.SetHasBackButton(this, false);
             LoadItems();
         }
 
-        protected override void OnAppearing()
+        /*protected async override void OnAppearing()
         {
             base.OnAppearing();
             LoadItems();
-        }
+        }*/
 
         private async void LoadItems()
         {

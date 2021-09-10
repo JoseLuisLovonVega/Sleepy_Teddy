@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SleepyTeddy.Views.AdministratorViews.UpdatePatient" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <Grid  HorizontalOptions="Center" VerticalOptions="Center" >
+        <Grid  Margin="15" HorizontalOptions="Center" VerticalOptions="Center" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -44,17 +44,16 @@
 
             <Label Grid.Row="3"
                    Grid.Column="0" 
-                   Text="Fecha de Nacimiento" 
-                        HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
+                   Text="   Fecha de Nacimiento" />
 
-            <DatePicker Grid.Row="4"
+            <DatePicker Grid.Row="3"
                    Grid.Column="0"
+                   Margin="5"
                    x:Name="dtNacimiento"                   
               WidthRequest="300"            
                    HorizontalOptions="Center"/>
 
-            <Entry Grid.Row="5"
+            <Entry Grid.Row="4"
                    Grid.Column="0"
                    Margin="5"
                    x:Name="txEmail"
@@ -63,7 +62,7 @@
                    HorizontalOptions="Center"            
                    Keyboard="Email"/>
 
-            <Entry Grid.Row="6"
+            <Entry Grid.Row="5"
                    Grid.Column="0"
                    Margin="5"                 
                    x:Name="txPsw"
@@ -72,7 +71,7 @@
                     WidthRequest="300"
                    HorizontalOptions="Center"/>
 
-            <Entry Grid.Row="5"
+            <Entry Grid.Row="6"
                    Grid.Column="0"
                    Margin="5"                 
                    x:Name="txPsw2"
@@ -93,8 +92,6 @@
                     CornerRadius="10"
                     Clicked="btnAceptar_clicked"/>
 
-
-
             <Button Grid.Row="8"
                     Grid.Column="0"
                     Margin="5"
@@ -106,8 +103,6 @@
                     HorizontalOptions="Center"
                     CornerRadius="10"
                     Clicked="btnCancelar_clicked" />
-
-
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -4,7 +4,7 @@
              x:Class="SleepyTeddy.Views.PatientViews.UpdateAccPatient" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid Margin="15" HorizontalOptions="Center" VerticalOptions="Center" >
-            <!--<Grid.RowDefinitions>
+            <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -12,7 +12,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>-->
+            </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0"
                    Grid.Column="0"
@@ -43,10 +43,11 @@
 
             <Label Grid.Row="3"
                    Grid.Column="0" 
-                    
-                   Text="Fecha de Nacimiento" />
+                   Text="   Fecha de Nacimiento" />
+            
             <DatePicker Grid.Row="3"
                    Grid.Column="0"
+                   Margin="5"
                    x:Name="dtNacimiento"                   
                    WidthRequest="300"                   
                    HorizontalOptions="Center"/>
@@ -69,7 +70,7 @@
                    WidthRequest="300"
                    HorizontalOptions="Center"/>
 
-            <Entry Grid.Row="5"
+            <Entry Grid.Row="6"
                    Grid.Column="0"
                    Margin="5"                 
                    x:Name="txPsw2"
@@ -78,7 +79,7 @@
                    WidthRequest="300"
                    HorizontalOptions="Center"/>
 
-            <Button Grid.Row="6"
+            <Button Grid.Row="7"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnAceptar"
@@ -90,7 +91,7 @@
                     CornerRadius="10"
                     Clicked="btnAceptar_clicked"/>
 
-            <Button Grid.Row="7"
+            <Button Grid.Row="8"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnCancelar"

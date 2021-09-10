@@ -42,7 +42,8 @@ namespace SleepyTeddy.Views.PatientViews
             id_questionnaire= key_questionnaire;
             InitializeComponent();
             getQuestionnaire();
-            LoadItems();
+            OnAppearing();
+            //LoadItems();
         }
 
         private async void getQuestionnaire()

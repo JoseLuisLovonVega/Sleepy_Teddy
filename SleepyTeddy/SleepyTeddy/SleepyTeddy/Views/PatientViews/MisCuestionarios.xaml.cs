@@ -18,15 +18,14 @@ namespace SleepyTeddy.Views.PatientViews
         public MisCuestionarios()
         {
             InitializeComponent();
-            NavigationPage.SetHasBackButton(this, false);
             LoadItems();
         }
 
-        protected override void OnAppearing()
+        /*protected override void OnAppearing()
         {
             base.OnAppearing();
             LoadItems();
-        }
+        }*/
 
         private async void LoadItems()
         {

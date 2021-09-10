@@ -4,6 +4,7 @@ using SleepyTeddy.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using static SleepyTeddy.ViewModel.GetDataFromLoginUser;
@@ -22,6 +23,20 @@ namespace SleepyTeddy.Views.TherapistViews
             InitializeComponent();
             LoadItems();
         }
+        /*protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadItems();
+        }*/
+
+        private async void LoadItems()
+        {
+            objSearch = new GetDataFromLoginUser();
+            await objSearch.GetPatientsTherapistViewAsync();
+            lista_cuestionarios.ItemsSource = objSearch.ListQuestionnaires;
+            lista_pacientes.ItemsSource = objSearch.ListPatientsTherapist;
+        }
+
         //Método para bloquear boton retroceder
         protected override bool OnBackButtonPressed()
         {
@@ -36,19 +51,7 @@ namespace SleepyTeddy.Views.TherapistViews
         {
             await Navigation.PushAsync(new MiCuenta());
         }
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();          
-            LoadItems();            
-        }
-
-        private async void LoadItems()
-        {
-            objSearch = new GetDataFromLoginUser();
-            await objSearch.GetPatientsTherapistViewAsync();
-            BindingContext = objSearch;
-        }
-     
+    
 
         private async void btnAceptar_clicked(object sender, EventArgs e)
         {

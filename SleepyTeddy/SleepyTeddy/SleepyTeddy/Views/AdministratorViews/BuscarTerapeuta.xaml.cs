@@ -19,16 +19,14 @@ namespace SleepyTeddy.Views.AdministratorViews
         public BuscarTerapeuta()
         {
             InitializeComponent();
-            NavigationPage.SetHasBackButton(this, false);
             LoadItems();
         }
 
-        protected override void OnAppearing()
+        /*protected async override void OnAppearing()
         {
             base.OnAppearing();
-            LoadItems();
-        }
-
+            await LoadItems();
+        }*/
         private async void LoadItems()
         {
             objTherapists = new GetDataFromLoginUser();

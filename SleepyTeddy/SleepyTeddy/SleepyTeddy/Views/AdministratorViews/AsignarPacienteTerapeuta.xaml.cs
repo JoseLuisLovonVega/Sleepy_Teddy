@@ -35,18 +35,17 @@ namespace SleepyTeddy.Views.AdministratorViews
             return true;
         }
 
-        protected override void OnAppearing()
+        /*protected override void OnAppearing()
         {
             base.OnAppearing();
             LoadItems();
-        }
-        
+        }*/
         private async void LoadItems()
         {
             objTableBinding = new GetDataFromLoginUser();
             await objTableBinding.GetTherapistsAdministratorViewAsync();
-            cbxTherapists.ItemsSource = objTableBinding.ListTherapistsAdministrator;
             await objTableBinding.GetPatientsAdministratorViewAsync();
+            cbxTherapists.ItemsSource = objTableBinding.ListTherapistsAdministrator;
             cbxPacients.ItemsSource = objTableBinding.ListPatientsAdministrator;
         }
 

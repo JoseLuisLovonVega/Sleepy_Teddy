@@ -4,7 +4,7 @@
              x:Class="SleepyTeddy.Views.AdministratorViews.RegAdministrador" NavigationPage.HasBackButton="False" 
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <Grid Margin="15" HorizontalOptions="Center" VerticalOptions="Center" >
+        <Grid  Margin="15" HorizontalOptions="Center" VerticalOptions="Center" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -18,8 +18,8 @@
 
             <Label Grid.Row="0"
                    Grid.Column="0"
-                   Margin="5"
                    Text="Registrarme"
+                   Margin="5"
                    FontSize="25"
                    TextColor="#2c3e50"
                    HorizontalOptions="Center"
@@ -27,8 +27,8 @@
 
             <Entry Grid.Row="1"
                    Grid.Column="0"
-                   Margin="5"
                    x:Name="nmAdmin"
+                   Margin="5"
                    Placeholder="Nombres"
                    TextChanged="nmAdmin_TextChanged"
                    WidthRequest="300"
@@ -62,24 +62,24 @@
                    Keyboard="Email"/>
 
             <Entry Grid.Row="5"
-                   Grid.Column="0"
-                   Margin="5"                 
+                   Grid.Column="0" 
+                   Margin="5"
                    x:Name="txPsw"
                    IsPassword="True"
                    Placeholder="Contraseña (8 a 16 caracteres)"
                    WidthRequest="300"
                    HorizontalOptions="Center"/>
 
-            <Entry Grid.Row="5"
-                   Grid.Column="0"
-                   Margin="5"                 
+            <Entry Grid.Row="6"
+                   Grid.Column="0" 
+                   Margin="5"
                    x:Name="txPsw2"
                    IsPassword="True"
                    Placeholder="Confirmar Contraseña"
                    WidthRequest="300"
                    HorizontalOptions="Center"/>
 
-            <Button Grid.Row="6"
+            <Button Grid.Row="7"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnAceptar"
@@ -90,8 +90,8 @@
                     HorizontalOptions="Center"
                     CornerRadius="10"
                     Clicked="btnAceptar_clicked"/>
-            
-            <Button Grid.Row="7"
+
+            <Button Grid.Row="8"
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnCancelar"
@@ -102,7 +102,6 @@
                     HorizontalOptions="Center"
                     CornerRadius="10"
                     Clicked="btnCancelar_clicked"/>
-
         </Grid>
     </ContentPage.Content>
 </ContentPage>
