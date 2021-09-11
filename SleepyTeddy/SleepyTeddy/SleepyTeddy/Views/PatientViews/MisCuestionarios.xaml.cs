@@ -63,6 +63,8 @@ namespace SleepyTeddy.Views.PatientViews
         }
         protected override bool OnBackButtonPressed()
         {
+            //Deselect Item
+            list_questionnaires.SelectedItem = null;
             Device.BeginInvokeOnMainThread(async () =>
             {
                 await Navigation.PushAsync(new MisCuestionarios());
