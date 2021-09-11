@@ -30,8 +30,7 @@ namespace SleepyTeddy.Views.PatientViews
 
         int GoToSleepHour = 0;
         int WakeUpHour = 0;
-        double TimeToSleep = 0;
-        double GoToSleepTime = 0;
+        double TimeToFallSleep = 0;
 
         double HoursSlept=0;
         double HoursTotal=0;
@@ -60,8 +59,7 @@ namespace SleepyTeddy.Views.PatientViews
             id_questionnaire = key_questionnaire;
             InitializeComponent();
             getQuestionnaire();
-            OnAppearing();
-            //LoadItems();
+            LoadItems();
             LoadResultsSWDiary();
         }
         private async void getQuestionnaire()
@@ -75,12 +73,12 @@ namespace SleepyTeddy.Views.PatientViews
             documentID = document.Documents.ElementAt(0).Id;
         }
 
-        protected override void OnAppearing()
+        /*protected override void OnAppearing()
         {
             base.OnAppearing();
             LoadItems();
             LoadResultsSWDiary();
-        }
+        }*/
 
         private void LoadItems()
         {
@@ -132,14 +130,16 @@ namespace SleepyTeddy.Views.PatientViews
                     listSleepWakeDiaries.Add(SWDiary);
                 }
             }
+            Debug.WriteLine("Cantidad de diarios de sueño-vigilia: " + listSleepWakeDiaries.Count);
             //Answer1
             //Hallando la hora a la que se acuesta el paciente, en específico la hora que más se repite del CreatedDate
-            for(int i=0; i<listSleepWakeDiaries.Count;i++)
+            temp = 0;
+            for (int i=0; i<listSleepWakeDiaries.Count;i++)
             {
                 contador = 0;
-                for (int j = 1; j < listSleepWakeDiaries.Count; j++)
+                for (int j = 0; j < listSleepWakeDiaries.Count; j++)
                 {  
-                    if (listSleepWakeDiaries.ElementAt(i).CreatedDate.Hour== listSleepWakeDiaries.ElementAt(j).CreatedDate.Hour)
+                    if (listSleepWakeDiaries.ElementAt(i).GoToSleepTime.Hour == listSleepWakeDiaries.ElementAt(j).GoToSleepTime.Hour)
                     {
                         contador++;
                     }
@@ -147,7 +147,7 @@ namespace SleepyTeddy.Views.PatientViews
                 if (contador > temp)
                 {
                     temp = contador;
-                    GoToSleepHour = listSleepWakeDiaries.ElementAt(i).CreatedDate.Hour;
+                    GoToSleepHour = listSleepWakeDiaries.ElementAt(i).GoToSleepTime.Hour;
                 }
             }
             TimeSpan resultCD = TimeSpan.FromHours(GoToSleepHour);
@@ -156,20 +156,21 @@ namespace SleepyTeddy.Views.PatientViews
             answer1.Text = fromTimeStringCD;
 
             //Answer2
-            //Sacando el promedio de los minutos en lo diarios de sueño de cuanto toma el paciente en dormir
+            //Sacando el promedio de los minutos en los diarios de sueño de cuanto toma el paciente en dormir
             sum = 0;
             foreach (var SWDiary in listSleepWakeDiaries)
             {
-                sum = sum + SWDiary.GoToSleepTime;
+                sum = sum + SWDiary.TimeToFallSleep;
             }
-            GoToSleepTime = sum / listSleepWakeDiaries.Count;
-            Debug.WriteLine("Answer2: " + GoToSleepTime);
-            answer2.Text = GoToSleepTime.ToString();
+            TimeToFallSleep = sum / listSleepWakeDiaries.Count;
+            TimeToFallSleep = Math.Round(TimeToFallSleep, 2);
+            Debug.WriteLine("Answer2: " + TimeToFallSleep);
+            answer2.Text = TimeToFallSleep.ToString();
 
             //Answer3
             //Hallando la hora a la que se despierta el paciente, en específico la hora que más se repite del WakeUpTime
+            contador = 0;
             temp = 0;
-
             for (int i = 0; i < listSleepWakeDiaries.Count; i++)
             {
                 contador = 0;
@@ -193,20 +194,19 @@ namespace SleepyTeddy.Views.PatientViews
 
             //Asnwer4
             sum = 0;
-            
             foreach (var SWDiary in listSleepWakeDiaries)
             {
                 sum = sum + SWDiary.HoursSlept;
             }
             HoursSlept = sum / listSleepWakeDiaries.Count;
+            HoursSlept =  Math.Round(HoursSlept, 2);
             Debug.WriteLine("Answer4: " + HoursSlept);
             answer4.Text = HoursSlept.ToString();
 
             //Calcular eficiencia del sueño en el último mes
             HoursTotal = (resultWUH-resultCD).TotalHours;
             SleepEfficiency = Math.Round(HoursSlept / HoursTotal * 100, 2);
-            
-
+            Debug.WriteLine("Answer4: " + SleepEfficiency);
         }
         private async void btnAceptar_clicked(object sender, EventArgs e)
         {

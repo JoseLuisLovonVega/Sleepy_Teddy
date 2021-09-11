@@ -204,7 +204,7 @@ namespace SleepyTeddy.ViewModel
             return;
         }
 
-        //Obtener los diarios de sueño del paciente seleccionado por el terapeuta que inició sesión
+        //Obtener los diarios de sueño del paciente que inició sesión o fue seleccionado por el terapeuta que inició sesión
         public async Task GetSleepWakeDiariesViewAsync(string patientId)
         {
             ListSleepWakeDiaries = new List<SleepWakeDiariesView>();
@@ -224,9 +224,10 @@ namespace SleepyTeddy.ViewModel
                 .ForMember(d => d.SleepTime, o => o.MapFrom(c => c.SleepTime))
                 .ForMember(d => d.SleepTime_S, o => o.MapFrom(c => c.SleepTime.ToString("HH:mm")))
                 .ForMember(d => d.WakeUpTime, o => o.MapFrom(c => c.WakeUpTime))
+                .ForMember(d => d.GoToSleepTime, o => o.MapFrom(c => c.GoToSleepTime))
                 .ForMember(d => d.WakeUpTime_S, o => o.MapFrom(c => c.WakeUpTime.ToString("HH:mm")))
                 .ForMember(d => d.HoursTotal, o => o.MapFrom(c => Math.Round(c.HoursTotal)))
-                .ForMember(d => d.GoToSleepTime, o => o.MapFrom(c => Math.Round(c.GoToSleepTime)))
+                .ForMember(d => d.TimeToFallSleep, o => o.MapFrom(c => Math.Round(c.TimeToFallSleep)))
                 .ForMember(d => d.HoursSlept, o => o.MapFrom(c => Math.Round(c.HoursSlept)))
                 .ForMember(d => d.SleepEfficiency, o => o.MapFrom(c => c.SleepEfficiency));
             });
@@ -277,9 +278,10 @@ namespace SleepyTeddy.ViewModel
         public DateTime SleepTime { get; set; }
         public string SleepTime_S { get; set; }
         public DateTime WakeUpTime { get; set; }
+        public DateTime GoToSleepTime { get; set; }
         public string WakeUpTime_S { get; set; }
         public double HoursSlept { get; set; }
-        public double GoToSleepTime { get; set; }
+        public double TimeToFallSleep { get; set; }
         public double HoursTotal { get; set; }
         public double SleepEfficiency { get; set; }
     }

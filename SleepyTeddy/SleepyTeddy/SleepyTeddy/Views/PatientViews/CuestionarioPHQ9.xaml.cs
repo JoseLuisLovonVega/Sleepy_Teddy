@@ -29,11 +29,8 @@ namespace SleepyTeddy.Views.PatientViews
         {
             id_questionnaire = key_questionnaire;
             InitializeComponent();
-            //InitApp();
-            NavigationPage.SetHasBackButton(this, false);
             getQuestionnaire();
-            OnAppearing();
-            //LoadItems();
+            LoadItems();
         }
 
         private async void getQuestionnaire()
@@ -47,11 +44,11 @@ namespace SleepyTeddy.Views.PatientViews
             documentID = document.Documents.ElementAt(0).Id;
         }
 
-        protected override void OnAppearing()
+        /*protected override void OnAppearing()
         {
             base.OnAppearing();
             LoadItems();
-        }
+        }*/
 
         private void LoadItems()
         {

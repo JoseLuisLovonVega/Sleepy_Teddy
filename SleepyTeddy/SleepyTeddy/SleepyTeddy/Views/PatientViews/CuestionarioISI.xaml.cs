@@ -42,8 +42,7 @@ namespace SleepyTeddy.Views.PatientViews
             id_questionnaire= key_questionnaire;
             InitializeComponent();
             getQuestionnaire();
-            OnAppearing();
-            //LoadItems();
+            LoadItems();
         }
 
         private async void getQuestionnaire()
@@ -56,11 +55,11 @@ namespace SleepyTeddy.Views.PatientViews
             questionnaire = document.Documents.ElementAt(0).ToObject<Questionnaire>();
             documentID = document.Documents.ElementAt(0).Id;
         }
-        protected override void OnAppearing()
+        /*protected override void OnAppearing()
         {
             base.OnAppearing();
             LoadItems();
-        }
+        }*/
 
         private void LoadItems()
         {

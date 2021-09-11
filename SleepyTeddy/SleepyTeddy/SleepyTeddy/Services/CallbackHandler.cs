@@ -78,7 +78,7 @@ namespace SleepyTeddy.Services
             else if (result == ConnectionResult.Failed)
             {
                 Debug.WriteLine("ERROR");
-                Application.Current.MainPage.DisplayAlert("ERROR","Sincronización fallida con el wearable", "OK");
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización fallida con el wearable.", new TimeSpan(4));
                 return;
             }
         }
