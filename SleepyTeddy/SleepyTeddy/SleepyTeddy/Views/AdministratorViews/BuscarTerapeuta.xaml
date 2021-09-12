@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SleepyTeddy.Views.AdministratorViews.BuscarTerapeuta" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-
         <ScrollView>
             <Grid Margin="5, 15, 5, 15">
                 <Grid.RowDefinitions>
@@ -16,8 +15,6 @@
                     <ColumnDefinition Width="2.5*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-
 
                 <Entry Grid.Row="0"
                    Grid.Column="0"
@@ -39,7 +36,7 @@
                     HorizontalOptions="Center"
                     CornerRadius="10"
                     Clicked="btnBuscar_clicked" />
-                
+
                 <Button Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
@@ -52,7 +49,6 @@
                     HorizontalOptions="Center"
                     CornerRadius="10"
                     Clicked="btnRegisterTherapist_clicked" />
-
 
                 <ListView x:Name="list_therapist" 
                       Margin="10" 
@@ -79,17 +75,15 @@
                                 <StackLayout Padding="15,0">
                                     <Label x:Name="nameTerapeuta" 
                                        Text="{Binding nombre_completo}" 
-                                       FontSize="17" 
                                        HorizontalOptions="Center"
+                                       FontSize="17" 
                                        Margin="10"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
             </Grid>
         </ScrollView>
     </ContentPage.Content>
-
 </ContentPage>

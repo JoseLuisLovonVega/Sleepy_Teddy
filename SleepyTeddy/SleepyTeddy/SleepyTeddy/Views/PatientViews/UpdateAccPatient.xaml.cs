@@ -100,7 +100,7 @@ namespace SleepyTeddy.Views.PatientViews
                      .Document(documentId)
                      .UpdateAsync(patient);
                 await DisplayAlert("Actualización Exitosa", "Cuenta actualizada correctamente", "OK");
-                await Navigation.PushAsync(new PaginaPrincipalPaciente());
+                //await Navigation.PushAsync(new PaginaPrincipalPaciente());
             }  
         }
 

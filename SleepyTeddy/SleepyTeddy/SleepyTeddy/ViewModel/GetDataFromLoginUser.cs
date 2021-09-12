@@ -94,6 +94,7 @@ namespace SleepyTeddy.ViewModel
             {
                 cfg.CreateMap<Patient, PatientsView>()
                 .ForMember(d => d.Key, o => o.MapFrom(c => c.Patient_ID))
+                .ForMember(d => d.TherapistID, o => o.MapFrom(c => c.Therapist_ID))
                 .ForMember(d => d.nombre_completo, o => o.MapFrom(c => c.Names + " " + c.Last_Names));
             });
 
@@ -239,6 +240,7 @@ namespace SleepyTeddy.ViewModel
     public class PatientsView
     {
         public string Key { get; set; }
+        public string TherapistID { get; set; }
         public string Names { get; set; }
         public string LastNames { get; set; }
         public string nombre_completo { get; set; }

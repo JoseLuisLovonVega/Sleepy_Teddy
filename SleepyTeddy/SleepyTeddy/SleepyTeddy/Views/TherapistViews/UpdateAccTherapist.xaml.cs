@@ -77,7 +77,7 @@ namespace SleepyTeddy.Views.TherapistViews
                      .Document(documentID)
                      .UpdateAsync(therapist);
                 await DisplayAlert("Actualización Exitosa", "Cuenta actualizada correctamente", "OK");
-                await Navigation.PushAsync(new PaginaPrincipalTerapeuta());
+                //await Navigation.PushAsync(new PaginaPrincipalTerapeuta());
             }
         }
         private async void btnCancelar_clicked(object sender, EventArgs e)

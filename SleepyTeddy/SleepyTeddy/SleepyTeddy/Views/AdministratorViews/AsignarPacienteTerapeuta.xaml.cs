@@ -62,6 +62,10 @@ namespace SleepyTeddy.Views.AdministratorViews
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar un paciente.", new TimeSpan(3));
             }
+            else if (ObjPatientSel.TherapistID != null && ObjPatientSel.TherapistID == ObjTherapistSel.Key)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("El terapeuta ingresado ya se encuentra asignado al paciente.", new TimeSpan(3));
+            }
             else
             {
                 Patient_ID = ObjPatientSel.Key;

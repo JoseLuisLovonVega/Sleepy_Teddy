@@ -120,6 +120,7 @@ namespace SleepyTeddy.Views.TherapistViews
                     btnFiltrar.Text = "Filtrar Según: 5 Recientes Diarios Registrados";
                     btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
                     btnFiltrar.IsVisible = false;
+                    btnFiltrar2.IsVisible = false;
                     cbxResultsSleepWakeDiary.IsVisible = false;
                     btnBuscar2.IsVisible = false;
                     list_sleepWakeDiariesHoursSlept.IsVisible = false;
