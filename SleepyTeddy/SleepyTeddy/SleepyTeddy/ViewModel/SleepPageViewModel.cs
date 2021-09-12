@@ -38,6 +38,7 @@ namespace SleepyTeddy.ViewModel
         double amountMinutes = 0;
         double sum = 0;
         int verificacion = 0;
+        int verificacion2 = 0;
 
         int dia;
 
@@ -48,15 +49,7 @@ namespace SleepyTeddy.ViewModel
         public SleepPageViewModel(ISleepRepository sleepRepository)
         {
             _sleepRepository = sleepRepository;
-            //Si la hora actual es menor a 6 el DateTime.Today no se bugeará y no mandará como si ya estuviera mañana
-            if (DateTime.Now.AddHours(-5).Hour < 18)
-            {
-                StartDate = DateTime.Today;
-            }
-            else
-            {
-                StartDate = DateTime.Today.AddDays(-1);
-            }
+            StartDate = DateTime.Today;
             Debug.WriteLine("La fecha de hoy es: " + StartDate);
             //SelectedDate = StartDate;
 
@@ -170,6 +163,7 @@ namespace SleepyTeddy.ViewModel
 
         public async Task CreateCompletedSleepWakeDiaries()
         {
+            verificacion2 = 0;
             try
             {
                 await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
@@ -182,7 +176,7 @@ namespace SleepyTeddy.ViewModel
                     {
                         foreach (var SWDiary in objData.ListSleepWakeDiaries)
                         {
-                            if (DateTime.Now.AddHours(-5).AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
+                            if (DateTime.Now.AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
                             {
                                 verificacion = 1;
                             }
@@ -215,7 +209,7 @@ namespace SleepyTeddy.ViewModel
                         dia = contador - 1;
 
                         //await objData.GetSleepRecordsViewAsync();
-                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddHours(-5).AddDays(contador - 1).ToString("dd/MM/yy"));
+                        Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddDays(contador - 1).ToString("dd/MM/yy"));
                         //Ordenar de la más antigua a la más reciente
                         if (listSleepRecordsLocalDB.Count > 0)
                         {
@@ -225,7 +219,7 @@ namespace SleepyTeddy.ViewModel
 
                         foreach (var sleepRecord in listSleepRecordsLocalDB)
                         {
-                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddHours(-5).AddDays(contador - 1).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour >= 20)
+                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddDays(contador - 1).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour >= 20)
                             {
                                 listSleepRecords1.Add(sleepRecord);
                             }
@@ -233,7 +227,7 @@ namespace SleepyTeddy.ViewModel
 
                         foreach (var sleepRecord in listSleepRecordsLocalDB)
                         {
-                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddHours(-5).AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 14)
+                            if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Now.AddDays(contador).ToString("dd/MM/yy") && sleepRecord.DateTimeHour.Hour < 14)
                             {
                                 listSleepRecords2.Add(sleepRecord);
                             }
@@ -291,14 +285,7 @@ namespace SleepyTeddy.ViewModel
                                 Debug.WriteLine("El último sleeprecord de la lista sleeprecords22: " + listSleepRecords22.Last().DateTimeHour);
 
                                 //Se define la fecha de creación del diario de sueño como un día antes del día a evaluar
-                                if (DateTime.Now.AddHours(-5).Hour < 18)
-                                {
-                                    sleepWakeDiary.CreatedDate = DateTime.Today.AddDays(contador - 1);
-                                }
-                                else
-                                {
-                                    sleepWakeDiary.CreatedDate = DateTime.Today.AddDays(contador - 2);
-                                }
+                                sleepWakeDiary.CreatedDate = DateTime.Today.AddDays(contador - 1);
                                 Debug.WriteLine("Se registro la fecha de creación del diario de sueño-vigilia");
 
                                 //Calcular a qué hora se fue a su cama el paciente el día anterior al día a evaluar
@@ -464,6 +451,7 @@ namespace SleepyTeddy.ViewModel
                                               SleepEfficiency = sleepWakeDiary.SleepEfficiency
                                           });
                                 Debug.WriteLine("Se registró el diario de sueño-vigilia del día a evaluar: Día: " + (contador - 1));
+                                verificacion2++;
                             }
                             else
                             {
@@ -475,7 +463,7 @@ namespace SleepyTeddy.ViewModel
                             Debug.WriteLine("No existe data de sleep records de los días en cuestión => Día: " + (contador - 1) + "y Día " + contador);
                         }
                     }
-                    if (contador == -6)
+                    if (contador == -6 && verificacion2 > 0)
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.", new TimeSpan(4));
                         Debug.WriteLine("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.");
@@ -486,8 +474,8 @@ namespace SleepyTeddy.ViewModel
             {
 
                 Debug.WriteLine(e.Message);
-                Debug.WriteLine("ERROR al completar los diarios de sueño-vigilia. Día: " + dia);
-                Acr.UserDialogs.UserDialogs.Instance.Toast("ERROR al completar los diarios de sueño-vigilia.", new TimeSpan(3));
+                Debug.WriteLine("No existen datos de sueño para crear diarios de sueño-vigilia");
+                Acr.UserDialogs.UserDialogs.Instance.Toast("No existen datos de sueño para crear diarios de sueño-vigilia.", new TimeSpan(4));
                 return;
             }
         }
