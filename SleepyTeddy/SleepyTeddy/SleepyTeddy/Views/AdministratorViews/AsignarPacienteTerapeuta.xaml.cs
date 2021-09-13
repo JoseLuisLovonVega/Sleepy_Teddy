@@ -24,6 +24,8 @@ namespace SleepyTeddy.Views.AdministratorViews
         {
             InitializeComponent();
             LoadItems();
+            cbxPacients.SelectedItem = null;
+            cbxTherapists.SelectedItem = null;
         }
 
         protected override bool OnBackButtonPressed()

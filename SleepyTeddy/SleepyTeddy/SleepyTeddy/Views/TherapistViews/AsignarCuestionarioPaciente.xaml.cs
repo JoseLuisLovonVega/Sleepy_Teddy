@@ -22,6 +22,9 @@ namespace SleepyTeddy.Views.TherapistViews
         {
             InitializeComponent();
             LoadItems();
+            lista_pacientes.SelectedItem = null;
+            lista_cuestionarios.SelectedItem = null;
+
         }
         /*protected async override void OnAppearing()
         {
@@ -99,8 +102,7 @@ namespace SleepyTeddy.Views.TherapistViews
                 }
                 else
                 {
-                    Acr.UserDialogs.UserDialogs.Instance.Toast("No existen diarios de sueño-vigilia del último mes del paciente ingresado para incorporar al cuestionario.", new TimeSpan(15));
-                    lista_cuestionarios.SelectedItem = null;
+                    Acr.UserDialogs.UserDialogs.Instance.Toast("No existen diarios de sueño-vigilia del último mes del paciente ingresado para incorporar al cuestionario.", new TimeSpan(20));
                 }
             } else {
                 await CrossCloudFirestore.Current
