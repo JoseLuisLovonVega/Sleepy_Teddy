@@ -227,9 +227,9 @@ namespace SleepyTeddy.ViewModel
                 .ForMember(d => d.WakeUpTime, o => o.MapFrom(c => c.WakeUpTime))
                 .ForMember(d => d.GoToSleepTime, o => o.MapFrom(c => c.GoToSleepTime))
                 .ForMember(d => d.WakeUpTime_S, o => o.MapFrom(c => c.WakeUpTime.ToString("HH:mm")))
-                .ForMember(d => d.HoursTotal, o => o.MapFrom(c => Math.Round(c.HoursTotal)))
-                .ForMember(d => d.TimeToFallSleep, o => o.MapFrom(c => Math.Round(c.TimeToFallSleep)))
-                .ForMember(d => d.HoursSlept, o => o.MapFrom(c => Math.Round(c.HoursSlept)))
+                .ForMember(d => d.HoursTotal, o => o.MapFrom(c => c.HoursTotal))
+                .ForMember(d => d.TimeToFallSleep, o => o.MapFrom(c => c.TimeToFallSleep))
+                .ForMember(d => d.HoursSlept, o => o.MapFrom(c => c.HoursSlept))
                 .ForMember(d => d.SleepEfficiency, o => o.MapFrom(c => c.SleepEfficiency));
             });
 

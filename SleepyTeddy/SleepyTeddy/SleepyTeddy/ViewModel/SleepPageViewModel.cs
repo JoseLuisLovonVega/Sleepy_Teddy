@@ -467,15 +467,18 @@ namespace SleepyTeddy.ViewModel
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.", new TimeSpan(4));
                         Debug.WriteLine("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.");
+                    } else if (contador == -6 && verificacion2 == 0)
+                    {
+                        Debug.WriteLine("No existen datos de sueño para crear diarios de sueño-vigilia");
+                        Acr.UserDialogs.UserDialogs.Instance.Toast("No existen datos de sueño para crear diarios de sueño-vigilia.", new TimeSpan(4));
                     }
                 }
             }
             catch (Exception e)
             {
-
                 Debug.WriteLine(e.Message);
-                Debug.WriteLine("No existen datos de sueño para crear diarios de sueño-vigilia");
-                Acr.UserDialogs.UserDialogs.Instance.Toast("No existen datos de sueño para crear diarios de sueño-vigilia.", new TimeSpan(4));
+                Debug.WriteLine("Error - Sincronización fallida con el wearable.");
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Error - Sincronización fallida con el wearable.", new TimeSpan(4));
                 return;
             }
         }
