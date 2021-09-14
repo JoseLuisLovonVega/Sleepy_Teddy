@@ -9,8 +9,8 @@ namespace SleepyTeddy.Models
     {
         Awake,
         Light,
-        Deep,
-        Empty
+        Deep
+        //Empty
     }
 
     [Table("Sleep")]

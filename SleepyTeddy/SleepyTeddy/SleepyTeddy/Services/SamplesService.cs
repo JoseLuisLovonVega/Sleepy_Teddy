@@ -78,7 +78,7 @@ namespace SleepyTeddy.Services
             Globals.Database.Instance.Commit();
             Debug.WriteLine("DB filled with samples");
             Globals.SleepPageViewModel.CreateSleepRecords();
-            await Globals.SleepPageViewModel.CreateCompletedSleepWakeDiaries();
+            await Globals.SleepPageViewModel.CreateSleepWakeDiaries();
             Device.BeginInvokeOnMainThread(delegate
             {
                 Globals.MiCuentaPacienteViewModel.IsLoading = false;
@@ -109,9 +109,9 @@ namespace SleepyTeddy.Services
             Sleep sleep;
             switch (sample.Category)
             {
-                case 80:
+                /*case 80:
                     sleep = new Sleep(datetime, SleepType.Empty);
-                    break;
+                    break;*/
                 case 112:
                     sleep = new Sleep(datetime, SleepType.Light);
                     break;
