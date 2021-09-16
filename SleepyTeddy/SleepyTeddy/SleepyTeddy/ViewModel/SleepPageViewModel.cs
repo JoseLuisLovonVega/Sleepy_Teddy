@@ -419,7 +419,7 @@ namespace SleepyTeddy.ViewModel
                                 //sleepWakeDiary.HoursSlept = (sleepWakeDiary.WakeUpTime - sleepWakeDiary.SleepTime).TotalMinutes;
                                 //sleepWakeDiary.HoursSlept = Math.Round(sleepWakeDiary.HoursSlept / 60, 2);
 
-                                for (int i = 0; i < listSleepRecords3.Count; i++)
+                                /*for (int i = 0; i < listSleepRecords3.Count; i++)
                                 {
                                     count = 0;
                                     amountMinutes = 0;
@@ -436,10 +436,18 @@ namespace SleepyTeddy.ViewModel
                                             }
                                         }
                                     }
+                                }*/
+                                for (int i = 0; i < listSleepRecords3.Count; i++)
+                                {
+                                    if (listSleepRecords3.ElementAt(i).Kind > 0)
+                                    {
+                                        amountMinutes++;
+                                    }      
                                 }
+                                Debug.WriteLine("Cantida de minutos dormido: " + amountMinutes);
                                 //Se calculan las horas dormidas
-                                sleepWakeDiary.HoursSlept = sum;
-                                sleepWakeDiary.HoursSlept = Math.Round(sleepWakeDiary.HoursSlept / 60, 2);
+                                sleepWakeDiary.HoursSlept = amountMinutes / 60;
+                                sleepWakeDiary.HoursSlept = Math.Round(sleepWakeDiary.HoursSlept, 2);
                                 Debug.WriteLine("Se calcularon las horas horas dormidas del diario de sueño-vigilia");
                                 Debug.WriteLine("HoursSlept: " + sleepWakeDiary.HoursSlept);
 
