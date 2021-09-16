@@ -40,7 +40,7 @@ namespace SleepyTeddy.ViewModel
         int verificacion = 0;
         int verificacion2 = 0;
 
-        int dia;
+        int dia=0;
 
         private ISleepRepository _sleepRepository;
 
@@ -59,11 +59,12 @@ namespace SleepyTeddy.ViewModel
             listSleepRecordsLocalDB = new List<SleepRecordsView>();
             listSleepRecords1 = new List<SleepRecordsView>();
             listSleepRecords2 = new List<SleepRecordsView>();
-
-            sleepRecord = new SleepRecordsView();
+            listSleepRecords3 = new List<SleepRecordsView>();
 
             listSleepRecords12 = new List<SleepRecordsView>();
             listSleepRecords22 = new List<SleepRecordsView>();
+
+            sleepRecord = new SleepRecordsView();
         }
 
         private List<Sleep> GetCurrentSleep()
@@ -79,7 +80,7 @@ namespace SleepyTeddy.ViewModel
         {
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo = _sleepRepository.GetAll();
-            listSleepRecordsLocalDB.Clear();
+            listSleepRecordsLocalDB= new List<SleepRecordsView>();
             for (int k = 0; k > -7; k--)
             {
                 SelectedDate = StartDate.AddDays(k);
@@ -100,15 +101,12 @@ namespace SleepyTeddy.ViewModel
                         {
                             if (data.ElementAt(j) != null) //ElementAtOrDefault
                             {
-                                //if (data[j].SleepType != SleepType.Empty)
-                                //{
                                     sleepRecord = new SleepRecordsView();
                                     sleepRecord.Key = data[j].Id;
                                     sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
                                     sleepRecord.DateTimeHour = data[j].DateTime;
                                     sleepRecord.Kind = (int) data[j].SleepType;
                                     listSleepRecordsLocalDB.Add(sleepRecord);
-                                //}
                             }
                         }
                     }
@@ -188,6 +186,7 @@ namespace SleepyTeddy.ViewModel
                     {
                         sleepWakeDiary = new SleepWakeDiary();
                         sleepWakeDiary.SleepTime = DateTime.MinValue;
+                        sleepWakeDiary.CreatedDate = DateTime.MinValue;
                         sleepWakeDiary.GoToSleepTime = DateTime.MinValue;
                         sleepWakeDiary.WakeUpTime = DateTime.MinValue;
                         sleepWakeDiary.TimeToFallSleep = 0;
@@ -199,12 +198,12 @@ namespace SleepyTeddy.ViewModel
                         sum = 0;
                         count = 0;
 
-                        listSleepRecords1.Clear();
-                        listSleepRecords2.Clear();
-                        listSleepRecords3.Clear();
+                        listSleepRecords1 = new List<SleepRecordsView>();
+                        listSleepRecords2 = new List<SleepRecordsView>();
+                        listSleepRecords3 = new List<SleepRecordsView>();
 
-                        listSleepRecords12.Clear();
-                        listSleepRecords22.Clear();
+                        listSleepRecords12 = new List<SleepRecordsView>();
+                        listSleepRecords22 = new List<SleepRecordsView>();
 
                         dia = contador - 1;
 
