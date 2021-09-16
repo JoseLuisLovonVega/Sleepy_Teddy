@@ -362,9 +362,9 @@ namespace SleepyTeddy.ViewModel
                                 Debug.WriteLine("TimeToFallSleep: " + sleepWakeDiary.TimeToFallSleep);
                                 //Calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
                                 //el sleep record registrado antes de éste es 1 o 2
-                                for (int i = 0; i < listSleepRecords2.Count; i++)
+                                for (int i = 1; i < listSleepRecords2.Count; i++)
                                 {
-                                    if (listSleepRecords2.ElementAt(i).Kind == 0)
+                                    if (listSleepRecords2.ElementAt(i-1).Kind > 0 && listSleepRecords2.ElementAt(i).Kind == 0)
                                     {
                                         sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i).DateTimeHour;
                                     }

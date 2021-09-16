@@ -65,7 +65,7 @@ namespace SleepyTeddy.Views.PatientViews
             }
             else if (!rgxEMAIL.IsMatch(txEmail.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("El email es incorrecto", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("El email es incorrecto.", new TimeSpan(3));
             }
             else if (string.IsNullOrWhiteSpace(txPsw.Text))
             {

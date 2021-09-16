@@ -68,22 +68,22 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (string.IsNullOrWhiteSpace(apInstitucion.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar el nombre de la institución", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar el nombre de la institución.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
             else if (string.IsNullOrWhiteSpace(txEmail.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar el email", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar el email.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
             else if (!rgxEMAIL.IsMatch(txEmail.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("El email es incorrecto", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("El email es incorrecto.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
             else if (string.IsNullOrWhiteSpace(txPsw.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la contraseña", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la contraseña.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
             else if (txPsw.Text.Length < 8 || txPsw.Text.Length > 16)
@@ -98,12 +98,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (!txPsw.Text.Any(char.IsDigit))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
-                return Task.FromResult(false);
-            }
-            else if (!txPsw.Text.Any(char.IsDigit))
-            {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
                 return Task.FromResult(false);
             }
             else if (txPsw.Text!=txPsw2.Text)

@@ -52,7 +52,11 @@ namespace SleepyTeddy.Views.TherapistViews
 
         private async void btnAceptar_clicked(object sender, EventArgs e)
         {
-            if (txPsw.Text.Length < 8 || txPsw.Text.Length > 16)
+            if (string.IsNullOrWhiteSpace(txPsw.Text))
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la contraseña.", new TimeSpan(3));
+            }
+            else if (txPsw.Text.Length < 8 || txPsw.Text.Length > 16)
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener entre 8 y 16 caracteres.", new TimeSpan(3));
             }

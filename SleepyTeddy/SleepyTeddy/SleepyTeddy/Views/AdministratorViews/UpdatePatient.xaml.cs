@@ -67,7 +67,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (!rgxEMAIL.IsMatch(txEmail.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("El email es incorrecto", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("El email es incorrecto.", new TimeSpan(3));
             }
             else if (string.IsNullOrWhiteSpace(txPsw.Text))
             {
@@ -83,7 +83,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (!txPsw.Text.Any(char.IsDigit))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
             }
             else if (txPsw.Text != txPsw2.Text)
             {

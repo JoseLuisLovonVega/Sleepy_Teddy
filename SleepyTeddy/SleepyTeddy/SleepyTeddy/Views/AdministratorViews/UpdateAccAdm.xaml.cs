@@ -75,7 +75,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (string.IsNullOrWhiteSpace(txPsw.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la contraseña", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la contraseña.", new TimeSpan(3));
             }
             else if (txPsw.Text.Length < 8 || txPsw.Text.Length > 16)
             {
@@ -87,7 +87,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (!txPsw.Text.Any(char.IsDigit))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un dígito.", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("La contraseña debe tener al menos un número.", new TimeSpan(3));
             }
             else if (txPsw.Text != txPsw2.Text)
             {

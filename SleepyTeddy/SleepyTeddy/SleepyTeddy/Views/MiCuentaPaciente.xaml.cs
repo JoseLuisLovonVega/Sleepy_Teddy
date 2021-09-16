@@ -131,9 +131,9 @@ namespace SleepyTeddy.Views
 
             PageBuilder.AddActivityIndicator(absoluteLayout, "IsLoading", 0.50, 0.42, 80, 80, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#999999"));
 
-            UpdatePatientButton = PageBuilder.AddButton(absoluteLayout, "Mi Cuenta", Globals.MiCuentaPacienteViewModel.MicuentaPaciente, 0.50, 0.60, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
-            WearableButton = PageBuilder.AddButton(absoluteLayout, "Wearable", Globals.MiCuentaPacienteViewModel.Weareable, 0.50, 0.75, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
-            CerrarSesionButton = PageBuilder.AddButton(absoluteLayout, "Cerrar Sesión", Globals.MiCuentaPacienteViewModel.CerrarSesion, 0.50, 0.90, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#F7F9F9"));
+            UpdatePatientButton = PageBuilder.AddButton(absoluteLayout, "Mi Cuenta", Globals.MiCuentaPacienteViewModel.MicuentaPaciente, 0.50, 0.60, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#E0DADA"));
+            WearableButton = PageBuilder.AddButton(absoluteLayout, "Wearable", Globals.MiCuentaPacienteViewModel.Weareable, 0.50, 0.75, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#E0DADA"));
+            CerrarSesionButton = PageBuilder.AddButton(absoluteLayout, "Cerrar Sesión", Globals.MiCuentaPacienteViewModel.CerrarSesion, 0.50, 0.90, 180, 50, 12, 20, AbsoluteLayoutFlags.PositionProportional, Color.FromHex("#E0DADA"));
 
         }
 

@@ -74,7 +74,7 @@ namespace SleepyTeddy.Views.AdministratorViews
             }
             else if (string.IsNullOrWhiteSpace(txPsw.Text))
             {
-                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la contraseña", new TimeSpan(3));
+                Acr.UserDialogs.UserDialogs.Instance.Toast("Debe ingresar la contraseña.", new TimeSpan(3));
             }
             else if (txPsw.Text.Length < 8 || txPsw.Text.Length > 16)
             {
