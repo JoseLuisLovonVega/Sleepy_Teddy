@@ -60,6 +60,7 @@ namespace SleepyTeddy.Services
                 {
                     Debug.WriteLine(e.Message);
                     Debug.WriteLine("Algo salió mal mientras se conectaba el wearable, desconectando...");
+                    Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización fallida con el wearable.", new TimeSpan(4));
                     Windesheart.PairedDevice.Disconnect();
                     Globals.DevicePageViewModel.IsLoading = false;
                 }

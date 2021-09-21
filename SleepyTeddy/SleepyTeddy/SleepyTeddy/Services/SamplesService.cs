@@ -95,6 +95,7 @@ namespace SleepyTeddy.Services
         private void AddHeartrate(DateTime datetime, ActivitySample sample)
         {
             var heartRate = new SleepyTeddy.Models.Heartrate(datetime, sample.HeartRate != 255 ? sample.HeartRate : 0);
+
             _heartrateRepository.Add(heartRate);
         }
 
@@ -106,23 +107,63 @@ namespace SleepyTeddy.Services
 
         private void AddSleep(DateTime datetime, ActivitySample sample)
         {
+            //var heartRate = new SleepyTeddy.Models.Heartrate(datetime, sample.HeartRate != 255 ? sample.HeartRate : 0);
             Sleep sleep;
             switch (sample.Category)
             {
-                /*case 80:
-                    sleep = new Sleep(datetime, SleepType.Empty);
-                    break;*/
-                case 112:
-                    sleep = new Sleep(datetime, SleepType.Light);
+                //Categories cuando se despierta el paciente
+                //7: El usuario está en su cama; 28, 105: El usuario está despierto; 80, 96, 99: El usuario está sentado; 96: El usuario está parado
+                //; 89: El usuario se despierta 
+                case 7:
+                case 28: 
+                case 80:
+                case 96:
+                case 89:
+                case 99:
+                case 105:
+                    if (sample.HeartRate != 255)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Awake);
+                    }
+                    else
+                    {
+                        sleep = new Sleep(datetime, SleepType.Empty);
+                    }
                     break;
+
+                //3,6, 83, 115: no lleva puesto el wearable
+                case 3:
+                case 6:
+                case 83:
+                case 115:
+                        sleep = new Sleep(datetime, SleepType.Empty);
+                    break;
+
+                //4, 12: Sueño profundo
+                case 4:
+                case 112:
+                        sleep = new Sleep(datetime, SleepType.Deep);
+                    break;
+
+                //5, 9, 106, 121, 122, 123: Sueño ligero
+                case 5:
+                case 9:
+                case 106:
                 case 121:
                 case 122:
                 case 123:
-                    sleep = new Sleep(datetime, SleepType.Deep);
+                    sleep = new Sleep(datetime, SleepType.Light);
                     break;
 
                 default:
-                    sleep = new Sleep(datetime, SleepType.Awake);
+                    if (sample.HeartRate != 255)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Awake);
+                    }
+                    else
+                    {
+                        sleep = new Sleep(datetime, SleepType.Empty);
+                    }
                     break;
             }
             _sleepRepository.Add(sleep);
