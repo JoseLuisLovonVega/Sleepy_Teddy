@@ -308,7 +308,7 @@ namespace SleepyTeddy.ViewModel
                                 {
                                     for (int i = 2; i < listSleepRecords2.Count; i++)
                                     {
-                                        if (listSleepRecords1.ElementAt(i - 2).Kind == 0 && listSleepRecords2.ElementAt(i - 1).Kind == 0 && listSleepRecords2.ElementAt(i).Kind == 0 && count == 0)
+                                        if (listSleepRecords2.ElementAt(i - 2).Kind == 0 && listSleepRecords2.ElementAt(i - 1).Kind == 0 && listSleepRecords2.ElementAt(i).Kind == 0 && count == 0)
                                         {
                                             sleepWakeDiary.GoToSleepTime = listSleepRecords2.ElementAt(i - 1).DateTimeHour;
                                             count = 1;
