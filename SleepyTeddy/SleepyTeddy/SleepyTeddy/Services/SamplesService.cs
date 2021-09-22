@@ -116,7 +116,7 @@ namespace SleepyTeddy.Services
                 //; 89: El usuario se despierta 
                 case 7:
                 case 28: 
-                case 80:
+                
                 case 96:
                 case 89:
                 case 99:
@@ -130,6 +130,10 @@ namespace SleepyTeddy.Services
                         sleep = new Sleep(datetime, SleepType.Empty);
                     }
                     break;
+                case 80:
+
+                        sleep = new Sleep(datetime, SleepType.Empty);
+                    break;
 
                 //3,6, 83, 115: no lleva puesto el wearable
                 case 3:
@@ -139,7 +143,7 @@ namespace SleepyTeddy.Services
                         sleep = new Sleep(datetime, SleepType.Empty);
                     break;
 
-                //4, 12: Sueño profundo
+                //4, 112: Sueño profundo
                 case 4:
                 case 112:
                         sleep = new Sleep(datetime, SleepType.Deep);
@@ -156,12 +160,13 @@ namespace SleepyTeddy.Services
                     break;
 
                 default:
-                    if (sample.HeartRate != 255)
+                    if (sample.HeartRate > 80 && sample.HeartRate < 90)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
                     }
-                    else
-                    {
+                    else if (sample.HeartRate > 50 && sample.HeartRate < 70) {
+                        sleep = new Sleep(datetime, SleepType.Deep);
+                    } else {
                         sleep = new Sleep(datetime, SleepType.Empty);
                     }
                     break;
