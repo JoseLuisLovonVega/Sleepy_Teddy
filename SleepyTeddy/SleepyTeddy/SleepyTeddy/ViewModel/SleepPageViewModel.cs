@@ -82,7 +82,7 @@ namespace SleepyTeddy.ViewModel
             SleepInfo = _sleepRepository.GetAll();
             listSleepRecordsLocalDB.Clear();
             //listSleepRecordsLocalDB = new List<SleepRecordsView>();
-            for (int k = 0; k > -7; k--)
+            for (int k = -2; k >= -7; k--)
             {
                 SelectedDate = StartDate.AddDays(k);
                 List<Sleep> sleepData = GetCurrentSleep();
@@ -169,7 +169,7 @@ namespace SleepyTeddy.ViewModel
             try
             {
                 await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
-                for (int contador = 0; contador > -7; contador--)
+                for (int contador = -2; contador > -7; contador--)
                 {
                     verificacion = 0;
 
