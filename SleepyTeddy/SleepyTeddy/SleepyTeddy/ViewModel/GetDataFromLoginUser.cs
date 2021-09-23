@@ -21,8 +21,9 @@ namespace SleepyTeddy.ViewModel
         public List<PatientsView> ListPatientsAdministrator { get; set; }
         public List<string> ListQuestionnaires { get; set; }
         public List<string> ListPatientInfo { get; set; }
-        public List<string> ListResultsSleepWakeDiary { get; set; }
+        //public List<string> ListResultsSleepWakeDiary { get; set; }
         public List<QuestionnairesView> ListQuestionnairesPatient { get; set; }
+        public List<QuestionnairesView> ListAllQuestionnairesPatient { get; set; }
         public List<QuestionnairesView> ListQuestionnaireData { get; set; }
         public List<SleepRecordsView> ListSleepRecords { get; set; }
         public List<SleepWakeDiariesView> ListSleepWakeDiaries { get; set; }
@@ -35,14 +36,13 @@ namespace SleepyTeddy.ViewModel
             ListQuestionnaires.Add("ISI");
             ListQuestionnaires.Add("PSQI");
             ListPatientInfo = new List<string>();
-            ListPatientInfo.Add("Diario de Sueño-Vigilia");
             ListPatientInfo.Add("PHQ-9");
             ListPatientInfo.Add("ISI");
             ListPatientInfo.Add("PSQI");
-            ListResultsSleepWakeDiary = new List<string>();
+            /*ListResultsSleepWakeDiary = new List<string>();
             ListResultsSleepWakeDiary.Add("Hora a la que durmió");
             ListResultsSleepWakeDiary.Add("Hora a la que despertó el día siguiente");
-            ListResultsSleepWakeDiary.Add("Cantidad de horas que durmió");
+            ListResultsSleepWakeDiary.Add("Cantidad de horas que durmió");*/
         }
 
 
@@ -128,7 +128,7 @@ namespace SleepyTeddy.ViewModel
             return;
         }
 
-        //Obtener los cuestionarios del paciente que inicio sesión
+        //Obtener los cuestionarios no completados del paciente que inicio sesión
         public async Task GetQuestionnairesViewAsync()
         {
             ListQuestionnairesPatient = new List<QuestionnairesView>();
@@ -150,6 +150,28 @@ namespace SleepyTeddy.ViewModel
             });
 
             resModel.ForEach(a => ListQuestionnairesPatient.Add(config.CreateMapper().Map<Questionnaire, QuestionnairesView>(a)));
+            return;
+        }
+        //Obtener todos los cuestionarios del paciente que inicio sesión
+        public async Task GetAllQuestionnairesViewAsync(string patient_ID)
+        {
+            ListAllQuestionnairesPatient = new List<QuestionnairesView>();
+            var document = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("Questionnaires")
+                                       .WhereEqualsTo("Patient_ID", patient_ID)
+                                       .GetAsync();
+
+            var resModel = document.ToObjects<Questionnaire>().ToList();
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Questionnaire, QuestionnairesView>()
+                .ForMember(d => d.Key, o => o.MapFrom(c => c.Questionnaire_ID))
+                .ForMember(d => d.Type, o => o.MapFrom(c => c.Type));
+            });
+
+            resModel.ForEach(a => ListAllQuestionnairesPatient.Add(config.CreateMapper().Map<Questionnaire, QuestionnairesView>(a)));
             return;
         }
         //Obtener datos de los cuestionarios del paciente seleccionado por el terapeuta que inició sesión
@@ -182,14 +204,13 @@ namespace SleepyTeddy.ViewModel
             return;
         }
         //Obtener los sleep records del paciente que inició sesión
-        public async Task GetSleepRecordsViewAsync()
+        public async Task GetSleepRecordsViewAsync(string patient_ID)
         {
             ListSleepRecords = new List<SleepRecordsView>();
-            string patientId = LoginViewModel.Patient_ID;
             var document = await CrossCloudFirestore.Current
                                        .Instance
                                        .Collection("SleepRecords")
-                                       .WhereEqualsTo("Patient_ID", patientId)
+                                       .WhereEqualsTo("Patient_ID", patient_ID)
                                        .GetAsync();
 
             var resModel = document.ToObjects<SleepRecord>().ToList();

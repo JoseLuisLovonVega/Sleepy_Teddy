@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SleepyTeddy.Resources;
+using System;
 //using WindesHeartApp.Resources;
 using Xamarin.Forms;
 
@@ -23,7 +24,16 @@ namespace SleepyTeddy.Services
             layout.Children.Add(accountOnlyImage);
         }
 
-        /*public static void AddReturnButton(AbsoluteLayout layout, object sender)
+        public static void AddHeaderImages(AbsoluteLayout layout)
+        {
+            Image teddyImage = new Image { Source = "Teddy.png" };
+            AbsoluteLayout.SetLayoutFlags(teddyImage, AbsoluteLayoutFlags.PositionProportional);
+            AbsoluteLayout.SetLayoutBounds(teddyImage, new Rectangle(0.05, 0, Globals.ScreenWidth / 100 * 20, Globals.ScreenHeight / 100 * 10));
+
+            layout.Children.Add(teddyImage);
+        }
+
+        public static void AddReturnButton(AbsoluteLayout layout, object sender)
         {
             //added extra grid behind imagebutton to make it clickable easier.
             Grid returnGrid = new Grid();
@@ -47,7 +57,7 @@ namespace SleepyTeddy.Services
         private static void ReturnButton_Clicked(object sender, EventArgs e)
         {
             Application.Current.MainPage.Navigation.PopAsync();
-        }*/
+        }
 
         public static ActivityIndicator AddActivityIndicator(AbsoluteLayout layout, string bindingPath, double x, double y, double width, double height, AbsoluteLayoutFlags flags, Color color)
         {

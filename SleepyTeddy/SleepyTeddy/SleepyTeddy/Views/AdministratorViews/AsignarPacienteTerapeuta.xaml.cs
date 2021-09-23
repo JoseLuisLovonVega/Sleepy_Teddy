@@ -16,9 +16,11 @@ namespace SleepyTeddy.Views.AdministratorViews
     public partial class AsignarPacienteTerapeuta : ContentPage
     {
         string documentID;
+        string documentID2;
         string Therapist_ID;
         string Patient_ID;
         Patient patient;
+        Questionnaire questionnaire;
         public GetDataFromLoginUser objTableBinding { get; set; }
         public AsignarPacienteTerapeuta()
         {
@@ -72,6 +74,31 @@ namespace SleepyTeddy.Views.AdministratorViews
             {
                 Patient_ID = ObjPatientSel.Key;
                 Therapist_ID = ObjTherapistSel.Key;
+
+                if (ObjPatientSel.TherapistID != Therapist_ID)
+                {
+                    await objTableBinding.GetAllQuestionnairesViewAsync(Patient_ID);
+                    if (objTableBinding.ListAllQuestionnairesPatient.Count > 0)
+                    {
+                        for(int k=0; k < objTableBinding.ListAllQuestionnairesPatient.Count; k++)
+                        {
+                            var document2 = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("Questionnaires")
+                                       .WhereEqualsTo("Questionnaire_ID", objTableBinding.ListAllQuestionnairesPatient.ElementAt(k).Key)
+                                       .GetAsync();
+                            questionnaire = document2.Documents.ElementAt(0).ToObject<Questionnaire>();
+                            documentID2 = document2.Documents.ElementAt(0).Id;
+                            questionnaire.Therapist_ID = Therapist_ID;
+
+                            await CrossCloudFirestore.Current
+                            .Instance
+                            .Collection("Questionnaires")
+                            .Document(documentID2)
+                            .UpdateAsync(questionnaire);
+                        }
+                    }
+                }
                 //Obtener el documento del paciente seleccionado
                 var document = await CrossCloudFirestore.Current
                                        .Instance
@@ -92,9 +119,7 @@ namespace SleepyTeddy.Views.AdministratorViews
                 //await Navigation.PopAsync();
                 cbxPacients.SelectedItem = null;
                 cbxTherapists.SelectedItem = null;
-
             }
-
         }
     }
 }

@@ -6,6 +6,7 @@ using Android.Runtime;
 using Firebase;
 using Firebase.Firestore;
 using SleepyTeddy.Droid.Services;
+using SleepyTeddy.Resources;
 
 namespace SleepyTeddy.Droid
 {
@@ -24,7 +25,10 @@ namespace SleepyTeddy.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            FirebaseApp.InitializeApp(Application.Context);       
+            FirebaseApp.InitializeApp(Application.Context);
+
+            Globals.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
+            Globals.ScreenWidth = (int)(Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
             LoadApplication(new App());
             FirestoreService.Init(this);
         }

@@ -53,8 +53,11 @@
     <Compile Update="Views\PatientViews\Wearable.xaml.cs">
       <DependentUpon>Wearable.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\TherapistViews\VisualizarInformacionPaciente.xaml.cs">
-      <DependentUpon>VisualizarInformacionPaciente.xaml</DependentUpon>
+    <Compile Update="Views\TherapistViews\VisualizarResultadosCuestionariosPaciente.xaml.cs">
+      <DependentUpon>VisualizarResultadosCuestionariosPaciente.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\VisualizarInformacionSueñoPaciente.xaml.cs">
+      <DependentUpon>VisualizarInformacionSueñoPaciente.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\TherapistViews\BuscarPacienteTerapeuta.xaml.cs">
       <DependentUpon>BuscarPacienteTerapeuta.xaml</DependentUpon>

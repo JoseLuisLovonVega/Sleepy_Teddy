@@ -21,7 +21,6 @@ namespace SleepyTeddy
         {
             InitializeComponent();
             var database = new Database();
-            Debug.WriteLine("Fecha actual: " + DateTime.Now);
             Globals.BuildGlobals(new HeartrateRepository(database), new SleepRepository(database), new StepsRepository(database), database);
             //database.EmptyDatabase();
             MainPage = new NavigationPage(new MainPageLogin());
