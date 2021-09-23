@@ -218,22 +218,26 @@ namespace SleepyTeddy.ViewModel
                         {
                             if (data.ElementAt(j) != null) //ElementAtOrDefault
                             {
+                                if (data.ElementAt(j).SleepType != SleepType.Empty)
+                                {
                                     sleepRecord = new SleepRecordsView();
                                     sleepRecord.Key = data[j].Id;
                                     sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
                                     sleepRecord.DateTimeHour = data[j].DateTime;
-                                    sleepRecord.Kind = (int) data[j].SleepType;
+                                    sleepRecord.Kind = (int)data[j].SleepType;
                                     listSleepRecordsLocalDB.Add(sleepRecord);
-                                await CrossCloudFirestore.Current
-                                     .Instance
-                                     .Collection("SleepRecords")
-                                     .AddAsync(new SleepRecord
-                                     {
-                                         SleepRecord_ID = data[j].Id,
-                                         Patient_ID = LoginViewModel.Patient_ID,
-                                         DateTimeHour = data[j].DateTime.AddHours(-5),
-                                         Kind = (int) data[j].SleepType
-                                     });
+                                }
+                                    await CrossCloudFirestore.Current
+                                         .Instance
+                                         .Collection("SleepRecords")
+                                         .AddAsync(new SleepRecord
+                                         {
+                                             SleepRecord_ID = data[j].Id,
+                                             Patient_ID = LoginViewModel.Patient_ID,
+                                             DateTimeHour = data[j].DateTime.AddHours(-5),
+                                             Kind = (int)data[j].SleepType
+                                         });
+                                
                             }
                         }
                     }
@@ -608,6 +612,11 @@ namespace SleepyTeddy.ViewModel
                                 Entry deepEntry = new Entry(1);
                                 deepEntry.Color = SKColor.Parse(DeepColor);
                                 entries.Add(deepEntry);
+                                break;
+                            case 3:
+                                Entry emptyEntry = new Entry(1);
+                                emptyEntry.Color = SKColor.Parse(AwakeColor);
+                                entries.Add(emptyEntry);
                                 break;
                         }
                     }
