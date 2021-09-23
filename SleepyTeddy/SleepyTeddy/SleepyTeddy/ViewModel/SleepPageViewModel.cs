@@ -90,7 +90,7 @@ namespace SleepyTeddy.ViewModel
             {
                 Device.BeginInvokeOnMainThread(async delegate
                 {
-                    await Application.Current.MainPage.DisplayAlert("No existen datos", "Desafortunadamente, no se encuentran datos de sueño.", "OK");
+                    await Application.Current.MainPage.DisplayAlert("No existen datos", "Desafortunadamente, el paciente no tiene datos de sueño registrados.", "OK");
                 });
             }
 
@@ -562,13 +562,13 @@ namespace SleepyTeddy.ViewModel
                     }
                     if (contador == -6 && verificacion2 > 0)
                     {
-                        Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.", new TimeSpan(8));
-                        Debug.WriteLine("Sincronización Exitosa. Registros de diarios de sueño-vigilia completados.");
+                        Acr.UserDialogs.UserDialogs.Instance.Toast("Sincronización Exitosa. Registro de datos de sueño finalizado.", new TimeSpan(8));
+                        Debug.WriteLine("Sincronización Exitosa. Registro de datos de sueño finalizado.");
                     }
                     else if (contador == -6 && verificacion2 == 0)
                     {
-                        Debug.WriteLine("No existen datos de sueño para crear diarios de sueño-vigilia");
-                        Acr.UserDialogs.UserDialogs.Instance.Toast("No existen datos de sueño para crear diarios de sueño-vigilia.", new TimeSpan(8));
+                        Debug.WriteLine("No existen datos de sueño en el wearable");
+                        Acr.UserDialogs.UserDialogs.Instance.Toast("No existen datos de sueño en el wearable.", new TimeSpan(8));
                     }
                 }
             }
