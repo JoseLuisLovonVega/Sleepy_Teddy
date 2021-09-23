@@ -122,7 +122,7 @@ namespace SleepyTeddy.Views.TherapistViews
 
             }
             AddDayButtons(absoluteLayout);
-
+            /*
             #region refreshbutton
             Grid grid = new Grid
             {
@@ -167,7 +167,7 @@ namespace SleepyTeddy.Views.TherapistViews
                 Command = new Command(execute: () => { RefreshButtonClicked(this, EventArgs.Empty); }),
             });
             absoluteLayout.Children.Add(grid);
-            #endregion
+            #endregion*/
         }
 
         private void AddDayButtons(AbsoluteLayout absoluteLayout)

@@ -196,6 +196,7 @@ namespace SleepyTeddy.ViewModel
         {
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
+            await objData.GetSleepRecordsViewAsync(Globals.patientID);
             listSleepRecordsLocalDB.Clear();
             //listSleepRecordsLocalDB = new List<SleepRecordsView>();
             for (int k = -2; k >= -7; k--)
@@ -227,6 +228,8 @@ namespace SleepyTeddy.ViewModel
                                     sleepRecord.Kind = (int)data[j].SleepType;
                                     listSleepRecordsLocalDB.Add(sleepRecord);
                                 }
+                                if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == sleepRecord.DateTimeHour) == false)
+                                {
                                     await CrossCloudFirestore.Current
                                          .Instance
                                          .Collection("SleepRecords")
@@ -237,7 +240,7 @@ namespace SleepyTeddy.ViewModel
                                              DateTimeHour = data[j].DateTime.AddHours(-5),
                                              Kind = (int)data[j].SleepType
                                          });
-                                
+                                }
                             }
                         }
                     }
@@ -455,7 +458,7 @@ namespace SleepyTeddy.ViewModel
                                 {
                                     if (listSleepRecords2.ElementAt(i - 3).Kind > 0 && listSleepRecords2.ElementAt(i - 2).Kind > 0 && listSleepRecords2.ElementAt(i - 1).Kind == 0 && listSleepRecords2.ElementAt(i).Kind == 0)
                                     {
-                                        sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i).DateTimeHour;
+                                        sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i-1).DateTimeHour;
                                     }
                                 }
                                 Debug.WriteLine("Se calculó la hora a la que se despertó del diario de sueño-vigilia");
