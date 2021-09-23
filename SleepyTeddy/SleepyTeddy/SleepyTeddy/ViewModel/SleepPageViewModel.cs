@@ -224,6 +224,16 @@ namespace SleepyTeddy.ViewModel
                                     sleepRecord.DateTimeHour = data[j].DateTime;
                                     sleepRecord.Kind = (int) data[j].SleepType;
                                     listSleepRecordsLocalDB.Add(sleepRecord);
+                                await CrossCloudFirestore.Current
+                                     .Instance
+                                     .Collection("SleepRecords")
+                                     .AddAsync(new SleepRecord
+                                     {
+                                         SleepRecord_ID = data[j].Id,
+                                         Patient_ID = LoginViewModel.Patient_ID,
+                                         DateTimeHour = data[j].DateTime.AddHours(-5),
+                                         Kind = (int) data[j].SleepType
+                                     });
                             }
                         }
                     }
@@ -231,7 +241,7 @@ namespace SleepyTeddy.ViewModel
             }
             Debug.WriteLine("Cantidad de sleep records agregados a la lista: " + listSleepRecordsLocalDB.Count);
             Debug.WriteLine("Se completó la carga de sleep records a la lista asignada.");
-            await TransferToFirebaseSleepRecords();
+            //await TransferToFirebaseSleepRecords();
         }
         public async Task TransferToFirebaseSleepRecords()
         {
