@@ -87,7 +87,7 @@ namespace SleepyTeddy.Views.TherapistViews
         if (string.IsNullOrWhiteSpace(apPatient.Text))
         {
             list_patients.ItemsSource = objPatientsTherapist.ListPatientsTherapist;
-            Acr.UserDialogs.UserDialogs.Instance.Toast("Complete el campo de búsqueda", new TimeSpan(3));
+            Acr.UserDialogs.UserDialogs.Instance.Toast("Complete el campo de búsqueda.", new TimeSpan(3));
         }
         else
         {
@@ -99,7 +99,7 @@ namespace SleepyTeddy.Views.TherapistViews
                 if ((list_patients.ItemsSource as ListPatients).Count == 0)
                 {
                     list_patients.ItemsSource = objPatientsTherapist.ListPatientsTherapist;
-                    Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
+                    Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados.", new TimeSpan(3));
                 }
             }
             catch (Exception ex) { }
