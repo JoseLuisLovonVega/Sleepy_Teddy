@@ -75,7 +75,7 @@ namespace SleepyTeddy.Views.TherapistViews
             AbsoluteLayout.SetLayoutBounds(nextBtn, new Rectangle(0.7, 0.175, 0.1, 0.1));
             absoluteLayout.Children.Add(nextBtn);
 
-            CurrentDayLabel = PageBuilder.AddLabel(absoluteLayout, "Today", 0.5, 0.19, Color.Black, "", 14);
+            CurrentDayLabel = PageBuilder.AddLabel(absoluteLayout, "Hoy", 0.5, 0.19, Color.Black, "", 14);
             //CurrentDayLabel.FontSize = 16;
 
             BoxView awakeRectangle = new BoxView();
@@ -84,7 +84,7 @@ namespace SleepyTeddy.Views.TherapistViews
             AbsoluteLayout.SetLayoutBounds(awakeRectangle, new Rectangle(0.1, 0.3, 20, 20));
             absoluteLayout.Children.Add(awakeRectangle);
 
-            PageBuilder.AddLabel(absoluteLayout, "Awake", 0.2, 0.3, Color.Black, "", 14);
+            PageBuilder.AddLabel(absoluteLayout, "Despierto", 0.2, 0.3, Color.Black, "", 14);
 
 
             BoxView lightRectangle = new BoxView();
@@ -93,7 +93,7 @@ namespace SleepyTeddy.Views.TherapistViews
             AbsoluteLayout.SetLayoutBounds(lightRectangle, new Rectangle(0.37, 0.3, 20, 20));
             absoluteLayout.Children.Add(lightRectangle);
 
-            PageBuilder.AddLabel(absoluteLayout, "Light sleep", 0.53, 0.3, Color.Black, "", 14);
+            PageBuilder.AddLabel(absoluteLayout, "Sueño ligero", 0.53, 0.3, Color.Black, "", 14);
 
             BoxView deepRectangle = new BoxView();
             deepRectangle.Color = Color.FromHex(Globals.SleepPageViewModel.DeepColor);
@@ -101,7 +101,7 @@ namespace SleepyTeddy.Views.TherapistViews
             AbsoluteLayout.SetLayoutBounds(deepRectangle, new Rectangle(0.7, 0.3, 20, 20));
             absoluteLayout.Children.Add(deepRectangle);
 
-            PageBuilder.AddLabel(absoluteLayout, "Deep sleep", 0.92, 0.3, Color.Black, "", 14);
+            PageBuilder.AddLabel(absoluteLayout, "Sueño profundo", 0.92, 0.3, Color.Black, "", 14);
 
             ChartView chart = new ChartView();
             chart.SetBinding(ChartView.ChartProperty, "Chart");
