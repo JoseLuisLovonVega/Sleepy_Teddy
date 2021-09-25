@@ -80,7 +80,7 @@ namespace SleepyTeddy.Views.PatientViews
             var answer7 = (Option)picker7.SelectedItem;
             var answer8 = (Option)picker8.SelectedItem;
             var answer9 = (Option)picker9.SelectedItem;
-            if (answer1==null)
+            if (answer1 == null)
             {
                 Acr.UserDialogs.UserDialogs.Instance.Toast("Debe completar la pregunta 1.", new TimeSpan(3));
             }
@@ -118,10 +118,19 @@ namespace SleepyTeddy.Views.PatientViews
             }
             else
             {
-              questionnaire.N_Result = answer1.Number+answer2.Number+ answer3.Number + answer4.Number 
-                    + answer5.Number + answer6.Number + answer7.Number + answer8.Number + answer9.Number;
-              questionnaire.D_Completed_Date = DateTime.Now.AddHours(-5);
-               
+                questionnaire.N_Result = answer1.Number + answer2.Number + answer3.Number + answer4.Number
+                      + answer5.Number + answer6.Number + answer7.Number + answer8.Number + answer9.Number;
+                questionnaire.D_Completed_Date = DateTime.Now.AddHours(-5);
+                questionnaire.PHQ91 = answer1.Name;
+                questionnaire.PHQ92 = answer2.Name;
+                questionnaire.PHQ93 = answer3.Name;
+                questionnaire.PHQ94 = answer4.Name;
+                questionnaire.PHQ95 = answer5.Name;
+                questionnaire.PHQ96 = answer6.Name;
+                questionnaire.PHQ97 = answer7.Name;
+                questionnaire.PHQ98 = answer8.Name;
+                questionnaire.PHQ99 = answer9.Name;
+
                 await CrossCloudFirestore.Current
                     .Instance
                     .Collection("Questionnaires")

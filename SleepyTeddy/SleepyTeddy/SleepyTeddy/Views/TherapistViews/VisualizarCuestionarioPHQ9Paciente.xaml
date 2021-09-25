@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.TherapistViews.VisualizarCuestionarioPHQ9Paciente" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <StackLayout Margin="10, 12">
+            <Label Text="Durante las 2 últimas semanas, ¿con qué frecuencia ha sentido molestias debido a cualquiera de los siguientes problemas?"
+                   FontSize="17" TextColor="Black" FontAttributes="Bold"></Label>
+            <Label Text="1. Poco interés o placer en hacer las cosas" FontSize="16"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer1"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="2. Sentirse desanimado/a, deprimido/a sin esperanzas" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer2"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="3. Dificultades para quedarse dormido/a o mantenerse durmiendo, o dormir demasiado" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer3"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="4. Sentirse cansado/a con poca energía" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer4"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="5. Poco apetito o comer en exceso" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer5"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="6. Sentirse mal acerca de si mismo/a - o sentir que es un fracasado/a o que se ha fallado a sí mismo o a su familia" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer6"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="7. Dificultad para concentrarse en las cosas, tales como leer el periódico o ver televisión" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer7"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="8. ¿Moverse o hablar tan despacio que otras personas lo pueden haber notado? O lo contrario - estar tan inquieto/a oo intraquilo/a que se ha estado moviendo mucho más de lo normal" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer8"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+            <Label Text="9. Pensamientos de que sería mejor estar muerto/a o que quisiera lastimarse a sí mismo de alguna manera" FontSize="16" FontAttributes="Bold"></Label>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer9"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Button Grid.Row="8"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnRegresar"
+                    Text="Regresar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10" 
+                     Clicked="btnRegresar_clicked" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SleepyTeddy.Views.TherapistViews.VisualizarCuestionarioISIPaciente"
+             Title="Cuestionario ISI" NavigationPage.HasBackButton="False" NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <StackLayout Margin="20">
+
+
+            <Label Text="1. Indica la gravedad de tu actual problema(s) de sueño:" FontSize="16" FontAttributes="Bold" />
+
+            <Label Text="a. Dificultad para quedarse dormido/a:" FontSize="16" FontAttributes="Bold"  />
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer1a"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Label Text="b. Dificultad para permanecer dormido/a:" FontSize="16" FontAttributes="Bold" />
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer1b"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Label Text="c. Despertarse muy temprano:" FontSize="16" FontAttributes="Bold" />
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer1c"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Label Text="2. ¿Cómo estás de satisfecho/a en la actualidad con tu sueño?" FontSize="16" FontAttributes="Bold" />
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer2"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Label Text="3. ¿En qué medida consideras que tu problema de sueño interfiere con tu funcionamiento diario (Ej.: fatiga durante el día, capacidad para las tareas cotidianas/trabajo, concentración, memoria, estado de ánimo, etc.)?" FontSize="16" FontAttributes="Bold"/>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer3"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Label Text="4. ¿En qué medida crees que los demás se dan cuenta de tu problema de sueño por lo que afecta a tu calidad de vida?" FontSize="16" FontAttributes="Bold"/>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer4"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Label Text="5. ¿Cómo estás de preocupado/a por tu actual problema de sueño?" FontSize="16" FontAttributes="Bold"/>
+            <Entry Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="answer5"
+                   IsEnabled="False"
+                   WidthRequest="100"
+                   VerticalOptions="Center"/>
+
+            <Button Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5"
+                    x:Name="btnRegresar"
+                    Text="Regresar"
+                    TextColor="White"
+                    BackgroundColor="#2c3e50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    CornerRadius="10"
+                    Clicked="btnRegresar_clicked" />
+
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

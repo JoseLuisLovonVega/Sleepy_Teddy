@@ -394,6 +394,24 @@ namespace SleepyTeddy.Views.PatientViews
                 //Global PSQI Score
                 questionnaire.N_Result = Component1 + Component2 + Component3 + Component4 + Component5 + Component6 + Component7;
                 questionnaire.D_Completed_Date = DateTime.Now.AddHours(-5);
+                questionnaire.PSQI1 = answer1.Text;
+                questionnaire.PSQI2 = answer2.Text;
+                questionnaire.PSQI3 = answer3.Text;
+                questionnaire.PSQI4 = answer4.Text;
+                questionnaire.PSQI5a = answer5a.Name;
+                questionnaire.PSQI5b = answer5b.Name;
+                questionnaire.PSQI5c = answer5c.Name;
+                questionnaire.PSQI5d = answer5d.Name;
+                questionnaire.PSQI5e = answer5e.Name;
+                questionnaire.PSQI5f = answer5f.Name;
+                questionnaire.PSQI5g = answer5g.Name;
+                questionnaire.PSQI5h = answer5h.Name;
+                questionnaire.PSQI5i = answer5i.Name;
+                questionnaire.PSQI5j = answer5j.Name;
+                questionnaire.PSQI6 = answer6.Name;
+                questionnaire.PSQI7 = answer7.Name;
+                questionnaire.PSQI8 = answer8.Name;
+                questionnaire.PSQI9 = answer9.Name;
 
                 await CrossCloudFirestore.Current
                     .Instance

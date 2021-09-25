@@ -136,6 +136,13 @@ namespace SleepyTeddy.Views.PatientViews
                     questionnaire.N_Result = answer1a.Number + answer1b.Number + answer1c.Number + answer2.Number
                           + answer3.Number + answer4.Number + answer5.Number;
                     questionnaire.D_Completed_Date = DateTime.Now.AddHours(-5);
+                    questionnaire.ISI1a = answer1a.Name;
+                    questionnaire.ISI1b = answer1b.Name;
+                    questionnaire.ISI1c = answer1c.Name;
+                    questionnaire.ISI2 = answer2.Name;
+                    questionnaire.ISI3 = answer3.Name;
+                    questionnaire.ISI4 = answer4.Name;
+                    questionnaire.ISI5= answer5.Name;
 
                     await CrossCloudFirestore.Current
                         .Instance

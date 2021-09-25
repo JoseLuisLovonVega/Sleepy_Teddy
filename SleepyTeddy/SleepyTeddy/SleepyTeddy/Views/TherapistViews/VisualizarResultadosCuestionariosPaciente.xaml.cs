@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Microcharts;
 using SkiaSharp;
+using System.Diagnostics;
 
 namespace SleepyTeddy.Views.TherapistViews
 {
@@ -76,43 +77,43 @@ namespace SleepyTeddy.Views.TherapistViews
             }
             else if (cbxPatientInfo.SelectedItem.ToString() == "PHQ-9" || cbxPatientInfo.SelectedItem.ToString() == "ISI"
                   || cbxPatientInfo.SelectedItem.ToString() == "PSQI")
+            {
+                lineGraphView.IsVisible = false;
+                btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
+                btnFiltrar2.IsVisible = false;
+                listresultsQuestionnairePatientSearched = new List<QuestionnairesView>();
+                await objSearch.GetQuestionnaireResultsViewAsync(cbxPatientInfo.SelectedItem.ToString(), id_patient);
+                //Ordenar de la más antigua a la más reciente
+                objSearch.ListQuestionnaireData = objSearch.ListQuestionnaireData.OrderByDescending(o => o.D_Assigned_Date).ToList();
+                if (objSearch.ListQuestionnaireData.Count == 0)
                 {
-                    lineGraphView.IsVisible = false;
-                    btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
-                    btnFiltrar2.IsVisible = false;
-                    listresultsQuestionnairePatientSearched = new List<QuestionnairesView>();
-                    await objSearch.GetQuestionnaireResultsViewAsync(cbxPatientInfo.SelectedItem.ToString(), id_patient);
-                    //Ordenar de la más antigua a la más reciente
-                    objSearch.ListQuestionnaireData = objSearch.ListQuestionnaireData.OrderByDescending(o => o.D_Assigned_Date).ToList();
-                    if (objSearch.ListQuestionnaireData.Count == 0)
+                    Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
+                }
+                else
+                {
+                    for (int i = 0; i < objSearch.ListQuestionnaireData.Count; i++)
+                    {
+                        if (objSearch.ListQuestionnaireData.ElementAt(i).D_Completed_Date.ToString("dd/MM/yyyy") != DateTime.MinValue.ToString("dd/MM/yyyy"))
+                        {
+                            listresultsQuestionnairePatientSearched.Add(objSearch.ListQuestionnaireData.ElementAt(i));
+                        }
+                    }
+                    if (listresultsQuestionnairePatientSearched.Count == 0)
                     {
                         Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
                     }
                     else
                     {
-                        for (int i = 0; i < objSearch.ListQuestionnaireData.Count; i++)
+                        list_questionnaireResults.ItemsSource = listresultsQuestionnairePatientSearched;
+                        list_questionnaireResults.IsVisible = true;
+                        if ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count >= 7)
                         {
-                            if (objSearch.ListQuestionnaireData.ElementAt(i).D_Completed_Date.ToString("dd/MM/yyyy") != DateTime.MinValue.ToString("dd/MM/yyyy"))
-                            {
-                                listresultsQuestionnairePatientSearched.Add(objSearch.ListQuestionnaireData.ElementAt(i));
-                            }
-                        }
-                        if (listresultsQuestionnairePatientSearched.Count == 0)
-                        {
-                            Acr.UserDialogs.UserDialogs.Instance.Toast("No se obtuvieron resultados", new TimeSpan(3));
-                        }
-                        else
-                        {
-                            list_questionnaireResults.ItemsSource = listresultsQuestionnairePatientSearched;
-                            list_questionnaireResults.IsVisible = true;
-                            if ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count >= 7)
-                            {
-                                btnFiltrar2.IsVisible = true;
-                            }
+                            btnFiltrar2.IsVisible = true;
                         }
                     }
                 }
             }
+        }
 
         private void btnFiltrar2_clicked(object sender, EventArgs e)
         {
@@ -148,6 +149,30 @@ namespace SleepyTeddy.Views.TherapistViews
                 list_questionnaireResults.IsVisible = true;
             }
 
+        }
+        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item == null)
+                return;
+
+            var dataItem = e.Item as QuestionnairesView;
+
+            if (dataItem.Type == "ISI")
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new VisualizarCuestionarioISIPaciente(dataItem.Key));
+            }
+            else if (dataItem.Type == "PHQ-9")
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new VisualizarCuestionarioPHQ9Paciente(dataItem.Key));
+            }
+            else if (dataItem.Type == "PSQI")
+            {
+
+                await Application.Current.MainPage.Navigation.PushAsync(new VisualizarCuestionarioPSQIPaciente(dataItem.Key));
+            }
+
+           //Deselect Item
+           ((ListView)sender).SelectedItem = null;
         }
 
         private async void btnCancelar_clicked(object sender, EventArgs e)

@@ -58,6 +58,7 @@
                       Margin="10" 
                       VerticalOptions="Center" 
                       HorizontalOptions="Center"
+                      ItemTapped="Handle_ItemTapped" 
                       HasUnevenRows="True" 
                       Grid.Row="2" 
                       Grid.Column="0">

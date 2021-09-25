@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\TherapistViews\VisualizarResultadosCuestionariosPaciente.xaml.cs~RF2ae3e390.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.514" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="FirebaseAdmin" Version="2.2.0" />
@@ -52,6 +56,15 @@
     </Compile>
     <Compile Update="Views\PatientViews\Wearable.xaml.cs">
       <DependentUpon>Wearable.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\VisualizarCuestionarioISIPaciente.xaml.cs">
+      <DependentUpon>VisualizarCuestionarioISIPaciente.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\VisualizarCuestionarioPHQ9Paciente.xaml.cs">
+      <DependentUpon>VisualizarCuestionarioPHQ9Paciente.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TherapistViews\VisualizarCuestionarioPSQIPaciente.xaml.cs">
+      <DependentUpon>VisualizarCuestionarioPSQIPaciente.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\TherapistViews\VisualizarResultadosCuestionariosPaciente.xaml.cs">
       <DependentUpon>VisualizarResultadosCuestionariosPaciente.xaml</DependentUpon>
