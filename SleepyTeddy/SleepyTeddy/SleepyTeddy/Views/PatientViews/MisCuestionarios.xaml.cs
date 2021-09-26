@@ -1,4 +1,5 @@
-﻿using SleepyTeddy.ViewModel;
+﻿using SleepyTeddy.Models;
+using SleepyTeddy.ViewModel;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -43,23 +44,17 @@ namespace SleepyTeddy.Views.PatientViews
             {
                 await Navigation.PushAsync(new CuestionarioPHQ9(dataItem.Key));
             }
-            else
+            else if (dataItem.Type == "ISI")
             {
-                if (dataItem.Type == "ISI")
-                {
-                    await Navigation.PushAsync(new CuestionarioISI(dataItem.Key));
-                }
-                else
-                {
-                    if (dataItem.Type == "PSQI")
-                    {
-                        await Navigation.PushAsync(new CuestionarioPSQI(dataItem.Key));
-                    }
+                await Navigation.PushAsync(new CuestionarioISI(dataItem.Key));
+            }
+            else if (dataItem.Type == "PSQI")
+            {
+                await Navigation.PushAsync(new CuestionarioPSQI(dataItem.Key));
+            }
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
-                }
-            }
         }
         protected override bool OnBackButtonPressed()
         {

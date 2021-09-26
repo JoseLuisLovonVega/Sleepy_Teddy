@@ -57,8 +57,8 @@ namespace SleepyTeddy.Views.PatientViews
         public CuestionarioPSQI(string key_questionnaire)
         {
             id_questionnaire = key_questionnaire;
+            getQuestionnaire(); 
             InitializeComponent();
-            getQuestionnaire();
             LoadItems();
             LoadResultsSWDiary();
         }
@@ -72,14 +72,6 @@ namespace SleepyTeddy.Views.PatientViews
             questionnaire = document.Documents.ElementAt(0).ToObject<Questionnaire>();
             documentID = document.Documents.ElementAt(0).Id;
         }
-
-        /*protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            LoadItems();
-            LoadResultsSWDiary();
-        }*/
-
         private void LoadItems()
         {
             opts = new List<Option>();

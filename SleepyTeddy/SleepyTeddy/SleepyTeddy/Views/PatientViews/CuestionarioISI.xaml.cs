@@ -2,6 +2,7 @@
 using SleepyTeddy.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,11 +41,10 @@ namespace SleepyTeddy.Views.PatientViews
         public CuestionarioISI(string key_questionnaire)
         {
             id_questionnaire= key_questionnaire;
-            InitializeComponent();
             getQuestionnaire();
+            InitializeComponent();
             LoadItems();
         }
-
         private async void getQuestionnaire()
         {
             var document = await CrossCloudFirestore.Current
@@ -55,12 +55,6 @@ namespace SleepyTeddy.Views.PatientViews
             questionnaire = document.Documents.ElementAt(0).ToObject<Questionnaire>();
             documentID = document.Documents.ElementAt(0).Id;
         }
-        /*protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            LoadItems();
-        }*/
-
         private void LoadItems()
         {
             opts = new List<Option>();
