@@ -43,7 +43,7 @@ namespace SleepyTeddy.Views
 
         protected override void OnAppearing()
         {
-            App.RequestLocationPermission();
+            //App.RequestLocationPermission();
             if (Windesheart.PairedDevice == null)
                 return;
         }

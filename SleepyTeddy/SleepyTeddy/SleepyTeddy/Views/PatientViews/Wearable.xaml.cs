@@ -37,6 +37,10 @@ namespace SleepyTeddy.Views.PatientViews
             BuildPage();
         }
 
+        protected override void OnAppearing()
+        {
+            App.RequestLocationPermission();
+        }
         private async void getPatient()
         {
             String role_id = "2";
