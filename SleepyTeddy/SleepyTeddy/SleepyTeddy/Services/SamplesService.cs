@@ -120,18 +120,24 @@ namespace SleepyTeddy.Services
                 case 89:
                 case 99:
                 case 105:
-                    if (sample.HeartRate != 255)
+                case 107:
+                    if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Sleep);
+                    }
+                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate > 70)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
+                    }
+                    else if((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate <= 70)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Sleep);
                     }
                     else
                     {
                         sleep = new Sleep(datetime, SleepType.Empty);
                     }
-                    if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
-                    {
-                        sleep = new Sleep(datetime, SleepType.Sleep);
-                    } 
+                    
                     break;
 
                 //3,6, 83, 115: no lleva puesto el wearable
@@ -143,10 +149,19 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
+                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate > 70)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Awake);
+                    }
+                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate <= 70)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Sleep);
+                    }
                     else
                     {
                         sleep = new Sleep(datetime, SleepType.Empty);
                     }
+
                     break;
 
                 //4, 12: Sueño profundo
@@ -166,14 +181,23 @@ namespace SleepyTeddy.Services
                     break;
 
                 default:
-                    if (sample.HeartRate != 255)
+                    if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Sleep);
+                    }
+                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate > 70)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
+                    }
+                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate <= 70)
+                    {
+                        sleep = new Sleep(datetime, SleepType.Sleep);
                     }
                     else
                     {
                         sleep = new Sleep(datetime, SleepType.Empty);
                     }
+
                     break;
             }
             _sleepRepository.Add(sleep);
