@@ -8,8 +8,7 @@ namespace SleepyTeddy.Models
     public enum SleepType
     {
         Awake,
-        Light,
-        Deep,
+        Sleep,
         Empty
     }
 

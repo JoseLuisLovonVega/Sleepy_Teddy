@@ -199,7 +199,7 @@ namespace SleepyTeddy.ViewModel
             await objData.GetSleepRecordsViewAsync(Globals.patientID);
             listSleepRecordsLocalDB.Clear();
             //listSleepRecordsLocalDB = new List<SleepRecordsView>();
-            for (int k = -2; k >= -7; k--)
+            for (int k = 0; k > -7; k--)
             {
                 SelectedDate2 = StartDate2.AddDays(k);
                 List<Sleep> sleepData = GetCurrentSleep2();
@@ -275,7 +275,7 @@ namespace SleepyTeddy.ViewModel
             try
             {
                 await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
-                for (int contador = -2; contador > -7; contador--)
+                for (int contador = 0; contador > -7; contador--)
                 {
                     verificacion = 0;
 
@@ -364,14 +364,14 @@ namespace SleepyTeddy.ViewModel
 
                             foreach (var sleepRecord in listSleepRecords1)
                             {
-                                if (sleepRecord.Kind == 1 || sleepRecord.Kind == 2)
+                                if (sleepRecord.Kind == 1)
                                 {
                                     listSleepRecords12.Add(sleepRecord);
                                 }
                             }
                             foreach (var sleepRecord in listSleepRecords2)
                             {
-                                if (sleepRecord.Kind == 1 || sleepRecord.Kind == 2)
+                                if (sleepRecord.Kind == 1)
                                 {
                                     listSleepRecords22.Add(sleepRecord);
                                 }
@@ -428,7 +428,7 @@ namespace SleepyTeddy.ViewModel
                                 {
                                     for (int i = 2; i < listSleepRecords1.Count; i++)
                                     {
-                                        if (listSleepRecords1.ElementAt(i - 2).Kind == 0 && listSleepRecords1.ElementAt(i - 1).Kind > 0 && listSleepRecords1.ElementAt(i).Kind > 0 && count == 0)
+                                        if (listSleepRecords1.ElementAt(i - 2).Kind == 0 && listSleepRecords1.ElementAt(i - 1).Kind == 1 && listSleepRecords1.ElementAt(i).Kind == 1 && count == 0)
                                         {
                                             sleepWakeDiary.SleepTime = listSleepRecords1.ElementAt(i - 1).DateTimeHour;
                                             count = 1;
@@ -439,7 +439,7 @@ namespace SleepyTeddy.ViewModel
                                 {
                                     for (int i = 2; i < listSleepRecords2.Count; i++)
                                     {
-                                        if (listSleepRecords2.ElementAt(i - 2).Kind == 0 && listSleepRecords2.ElementAt(i - 1).Kind > 0 && listSleepRecords2.ElementAt(i).Kind > 0 && count == 0)
+                                        if (listSleepRecords2.ElementAt(i - 2).Kind == 0 && listSleepRecords2.ElementAt(i - 1).Kind == 1 && listSleepRecords2.ElementAt(i).Kind == 1 && count == 0)
                                         {
                                             sleepWakeDiary.SleepTime = listSleepRecords2.ElementAt(i - 1).DateTimeHour;
                                             count = 1;
@@ -454,11 +454,11 @@ namespace SleepyTeddy.ViewModel
                                 Debug.WriteLine("TimeToFallSleep: " + sleepWakeDiary.TimeToFallSleep);
                                 //Calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
                                 //el sleep record registrado antes de éste es 1 o 2
-                                for (int i = 3; i < listSleepRecords2.Count; i++)
+                                for (int i = 2; i < listSleepRecords2.Count; i++)
                                 {
-                                    if (listSleepRecords2.ElementAt(i - 3).Kind > 0 && listSleepRecords2.ElementAt(i - 2).Kind > 0 && listSleepRecords2.ElementAt(i - 1).Kind == 0 && listSleepRecords2.ElementAt(i).Kind == 0)
+                                    if (listSleepRecords2.ElementAt(i - 2).Kind == 1 && listSleepRecords2.ElementAt(i - 1).Kind == 1 && listSleepRecords2.ElementAt(i).Kind == 0)
                                     {
-                                        sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i-1).DateTimeHour;
+                                        sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i).DateTimeHour;
                                     }
                                 }
                                 Debug.WriteLine("Se calculó la hora a la que se despertó del diario de sueño-vigilia");
@@ -512,7 +512,7 @@ namespace SleepyTeddy.ViewModel
                                 }*/
                                 for (int i = 0; i < listSleepRecords3.Count; i++)
                                 {
-                                    if (listSleepRecords3.ElementAt(i).Kind > 0)
+                                    if (listSleepRecords3.ElementAt(i).Kind == 1)
                                     {
                                         amountMinutes++;
                                     }
@@ -606,17 +606,17 @@ namespace SleepyTeddy.ViewModel
                                 awakeEntry.Color = SKColor.Parse(AwakeColor);
                                 entries.Add(awakeEntry);
                                 break;
+                            /*case 1:
+                                Entry sleeptEntry = new Entry(1);
+                                sleepEntry.Color = SKColor.Parse(LightColor);
+                                entries.Add(sleepEntry);
+                                break;*/
                             case 1:
-                                Entry lightEntry = new Entry(1);
-                                lightEntry.Color = SKColor.Parse(LightColor);
-                                entries.Add(lightEntry);
+                                Entry sleepEntry = new Entry(1);
+                                sleepEntry.Color = SKColor.Parse(DeepColor);
+                                entries.Add(sleepEntry);
                                 break;
                             case 2:
-                                Entry deepEntry = new Entry(1);
-                                deepEntry.Color = SKColor.Parse(DeepColor);
-                                entries.Add(deepEntry);
-                                break;
-                            case 3:
                                 Entry emptyEntry = new Entry(1);
                                 emptyEntry.Color = SKColor.Parse(AwakeColor);
                                 entries.Add(emptyEntry);

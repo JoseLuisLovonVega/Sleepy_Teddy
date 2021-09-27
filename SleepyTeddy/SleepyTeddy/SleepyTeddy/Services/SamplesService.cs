@@ -130,7 +130,7 @@ namespace SleepyTeddy.Services
                     }
                     if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
                     {
-                        sleep = new Sleep(datetime, SleepType.Deep);
+                        sleep = new Sleep(datetime, SleepType.Sleep);
                     } 
                     break;
 
@@ -141,7 +141,7 @@ namespace SleepyTeddy.Services
                 case 115:
                     if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
                     {
-                        sleep = new Sleep(datetime, SleepType.Deep);
+                        sleep = new Sleep(datetime, SleepType.Sleep);
                     }
                     else
                     {
@@ -152,7 +152,7 @@ namespace SleepyTeddy.Services
                 //4, 12: Sueño profundo
                 case 4:
                 case 112:
-                    sleep = new Sleep(datetime, SleepType.Deep);
+                    sleep = new Sleep(datetime, SleepType.Sleep);
                     break;
 
                 //5, 9, 106, 121, 122, 123: Sueño ligero
@@ -162,7 +162,7 @@ namespace SleepyTeddy.Services
                 case 121:
                 case 122:
                 case 123:
-                    sleep = new Sleep(datetime, SleepType.Light);
+                    sleep = new Sleep(datetime, SleepType.Sleep);
                     break;
 
                 default:

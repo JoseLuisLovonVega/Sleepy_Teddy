@@ -93,15 +93,15 @@ namespace SleepyTeddy.Views.TherapistViews
             AbsoluteLayout.SetLayoutBounds(lightRectangle, new Rectangle(0.37, 0.3, 20, 20));
             absoluteLayout.Children.Add(lightRectangle);
 
-            PageBuilder.AddLabel(absoluteLayout, "Sueño ligero", 0.53, 0.3, Color.Black, "", 14);
+            PageBuilder.AddLabel(absoluteLayout, "Dormido", 0.53, 0.3, Color.Black, "", 14);
 
-            BoxView deepRectangle = new BoxView();
+           /* BoxView deepRectangle = new BoxView();
             deepRectangle.Color = Color.FromHex(Globals.SleepPageViewModel.DeepColor);
             AbsoluteLayout.SetLayoutFlags(deepRectangle, AbsoluteLayoutFlags.PositionProportional);
             AbsoluteLayout.SetLayoutBounds(deepRectangle, new Rectangle(0.7, 0.3, 20, 20));
             absoluteLayout.Children.Add(deepRectangle);
 
-            PageBuilder.AddLabel(absoluteLayout, "Sueño profundo", 0.92, 0.3, Color.Black, "", 14);
+            PageBuilder.AddLabel(absoluteLayout, "Sueño profundo", 0.92, 0.3, Color.Black, "", 14);*/
 
             ChartView chart = new ChartView();
             chart.SetBinding(ChartView.ChartProperty, "Chart");
