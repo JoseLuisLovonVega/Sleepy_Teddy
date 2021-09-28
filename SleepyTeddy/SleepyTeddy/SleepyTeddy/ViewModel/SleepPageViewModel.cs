@@ -250,7 +250,7 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se completó la carga de sleep records a la lista asignada.");
             //await TransferToFirebaseSleepRecords();
         }
-        public async Task TransferToFirebaseSleepRecords()
+        /*public async Task TransferToFirebaseSleepRecords()
         {
             Debug.WriteLine("Iniciando la subida de elementos de la lista de sleeprecords al Firebase");
             foreach (var sleepRecord in listSleepRecordsLocalDB)
@@ -267,7 +267,7 @@ namespace SleepyTeddy.ViewModel
                                      });
             }
             Debug.WriteLine("Se completó la subida de sleeprecords al Firebase");
-        }
+        }*/
 
         public async Task CreateSleepWakeDiaries()
         {
