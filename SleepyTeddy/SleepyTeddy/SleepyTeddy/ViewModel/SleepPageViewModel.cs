@@ -228,7 +228,7 @@ namespace SleepyTeddy.ViewModel
                                     sleepRecord.Kind = (int)data[j].SleepType;
                                     listSleepRecordsLocalDB.Add(sleepRecord);
                                 }
-                                if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == sleepRecord.DateTimeHour) == false)
+                                if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == data[j].DateTime) == false)
                                 {
                                     await CrossCloudFirestore.Current
                                          .Instance
@@ -238,7 +238,7 @@ namespace SleepyTeddy.ViewModel
                                              SleepRecord_ID = data[j].Id,
                                              Patient_ID = LoginViewModel.Patient_ID,
                                              DateTimeHour = data[j].DateTime.AddHours(-5),
-                                             Kind = (int)data[j].SleepType
+                                             Kind = (int) data[j].SleepType
                                          });
                                 }
                             }

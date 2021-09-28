@@ -114,22 +114,30 @@ namespace SleepyTeddy.Services
                 //7: El usuario está en su cama; 28, 105: El usuario está despierto; 80, 96, 99: El usuario está sentado; 96: El usuario está parado
                 //; 89: El usuario se despierta 
                 case 7:
+                case 1:
+                case 17:
+                case 16:
+                case 26:
+                case 33:
                 case 28:
                 case 80:
+                case 82:
+                case 92:
                 case 96:
                 case 89:
-                case 99:
+                case 90:
+                case 91:
                 case 105:
-                case 107:
+                
                     if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
-                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate > 70)
+                    else if (sample.HeartRate > 60)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
                     }
-                    else if((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate <= 70)
+                    else if (sample.HeartRate < 60)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
@@ -139,21 +147,22 @@ namespace SleepyTeddy.Services
                     }
                     
                     break;
-
                 //3,6, 83, 115: no lleva puesto el wearable
+                case 99:
                 case 3:
                 case 6:
                 case 83:
                 case 115:
+                case 107:
                     if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
-                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate > 70)
+                    else if (sample.HeartRate > 60)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
                     }
-                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate <= 70)
+                    else if (sample.HeartRate < 60)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
@@ -185,11 +194,11 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
-                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate > 70)
+                    else if (sample.HeartRate > 60)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
                     }
-                    else if ((sample.Timestamp.Hour < 2 || sample.Timestamp.Hour > 4) && sample.HeartRate <= 70)
+                    else if (sample.HeartRate < 60)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
