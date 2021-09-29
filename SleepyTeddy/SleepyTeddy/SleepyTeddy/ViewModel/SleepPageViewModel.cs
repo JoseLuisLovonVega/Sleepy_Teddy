@@ -48,14 +48,11 @@ namespace SleepyTeddy.ViewModel
         List<SleepRecordsView> listSleepRecords2;
         List<SleepRecordsView> listSleepRecords3;
 
-        SleepRecordsView sleepRecord;
-
         List<SleepRecordsView> listSleepRecords12;
         List<SleepRecordsView> listSleepRecords22;
 
         int count = 0;
         double amountMinutes = 0;
-        double sum = 0;
         int verificacion = 0;
         int verificacion2 = 0;
 
@@ -140,12 +137,9 @@ namespace SleepyTeddy.ViewModel
             listSleepRecordsLocalDB = new List<SleepRecordsView>();
             listSleepRecords1 = new List<SleepRecordsView>();
             listSleepRecords2 = new List<SleepRecordsView>();
-            listSleepRecords3 = new List<SleepRecordsView>();
 
             listSleepRecords12 = new List<SleepRecordsView>();
             listSleepRecords22 = new List<SleepRecordsView>();
-
-            sleepRecord = new SleepRecordsView();
         }
         private async Task UpdateInfo()
         {
@@ -203,7 +197,7 @@ namespace SleepyTeddy.ViewModel
             {
                 SelectedDate2 = StartDate2.AddDays(k);
                 List<Sleep> sleepData = GetCurrentSleep2();
-
+                Debug.WriteLine("Cantidad de sleep records en la BD local: " + sleepData.Count);
                 if (sleepData.Count() > 0)
                 {
                     Debug.WriteLine("Se analiza el Día: " + StartDate2.AddDays(k));
@@ -221,12 +215,13 @@ namespace SleepyTeddy.ViewModel
                             {
                                 if (data.ElementAt(j).SleepType != SleepType.Empty)
                                 {
-                                    sleepRecord = new SleepRecordsView();
-                                    sleepRecord.Key = data[j].Id;
-                                    sleepRecord.Patient_ID = LoginViewModel.Patient_ID;
-                                    sleepRecord.DateTimeHour = data[j].DateTime;
-                                    sleepRecord.Kind = (int)data[j].SleepType;
-                                    listSleepRecordsLocalDB.Add(sleepRecord);
+                                    listSleepRecordsLocalDB.Add(new SleepRecordsView
+                                    {
+                                        Key = data[j].Id,
+                                        Patient_ID = LoginViewModel.Patient_ID,
+                                        DateTimeHour = data[j].DateTime,
+                                        Kind = (int) data[j].SleepType
+                                    });
                                 }
                                 if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == data[j].DateTime) == false)
                                 {
@@ -305,7 +300,6 @@ namespace SleepyTeddy.ViewModel
                         sleepWakeDiary.SleepEfficiency = 0;
 
                         amountMinutes = 0;
-                        sum = 0;
                         count = 0;
 
                         listSleepRecords1.Clear();
@@ -469,7 +463,7 @@ namespace SleepyTeddy.ViewModel
                                 Debug.WriteLine("HoursTotal: " + sleepWakeDiary.HoursTotal);
                                 Debug.WriteLine("Se calcularon las horas totales del diario de sueño-vigilia");
 
-                                foreach (var sleepRecord in listSleepRecords1)
+                                /*foreach (var sleepRecord in listSleepRecords1)
                                 {
                                     listSleepRecords3.Add(sleepRecord);
                                 }
@@ -484,35 +478,13 @@ namespace SleepyTeddy.ViewModel
                                 Debug.WriteLine("El primer sleeprecord de la lista sleeprecords3: " + listSleepRecords3.First().DateTimeHour);
                                 Debug.WriteLine("El último sleeprecord de la lista sleeprecords3: " + listSleepRecords3.Last().DateTimeHour);
                                 Debug.WriteLine("Se logró registrar la lista de sleeprecords 3 del paciente desde la hora que durmió hasta la hora que despertó el día siguiente.");
-
+                                */
                                 count = 0;
-                                sum = 0;
                                 amountMinutes = 0;
                                 //Se calcula los minutos que el paciente estuvo dormido
-                                //sleepWakeDiary.HoursSlept = (sleepWakeDiary.WakeUpTime - sleepWakeDiary.SleepTime).TotalMinutes;
-                                //sleepWakeDiary.HoursSlept = Math.Round(sleepWakeDiary.HoursSlept / 60, 2);
-
-                                /*for (int i = 0; i < listSleepRecords3.Count; i++)
+                                for (int i = 0; i < listSleepRecordsLocalDB.Count; i++)
                                 {
-                                    count = 0;
-                                    amountMinutes = 0;
-                                    if (listSleepRecords3.ElementAt(i).Kind > 0)
-                                    {
-                                        for (int j = i + 1; j < listSleepRecords3.Count; j++)
-                                        {
-                                            if (listSleepRecords3.ElementAt(j).Kind == 0 && count == 0)
-                                            {
-                                                amountMinutes = (listSleepRecords3.ElementAt(j).DateTimeHour - listSleepRecords3.ElementAt(i).DateTimeHour).TotalMinutes;
-                                                sum = sum + amountMinutes;
-                                                count = 1;
-                                                i = j + 1;
-                                            }
-                                        }
-                                    }
-                                }*/
-                                for (int i = 0; i < listSleepRecords3.Count; i++)
-                                {
-                                    if (listSleepRecords3.ElementAt(i).Kind == 1)
+                                    if (listSleepRecordsLocalDB.ElementAt(i).Kind == 1)
                                     {
                                         amountMinutes++;
                                     }
