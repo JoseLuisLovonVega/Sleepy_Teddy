@@ -81,19 +81,19 @@ namespace SleepyTeddy.Views.TherapistViews
             BoxView awakeRectangle = new BoxView();
             awakeRectangle.Color = Color.FromHex(Globals.SleepPageViewModel.AwakeColor);
             AbsoluteLayout.SetLayoutFlags(awakeRectangle, AbsoluteLayoutFlags.PositionProportional);
-            AbsoluteLayout.SetLayoutBounds(awakeRectangle, new Rectangle(0.1, 0.3, 20, 20));
+            AbsoluteLayout.SetLayoutBounds(awakeRectangle, new Rectangle(0.3, 0.3, 20, 20));
             absoluteLayout.Children.Add(awakeRectangle);
 
-            PageBuilder.AddLabel(absoluteLayout, "Despierto", 0.2, 0.3, Color.Black, "", 14);
+            PageBuilder.AddLabel(absoluteLayout, "Despierto", 0.52, 0.3, Color.Black, "", 14);
 
 
             BoxView lightRectangle = new BoxView();
-            lightRectangle.Color = Color.FromHex(Globals.SleepPageViewModel.LightColor);
+            lightRectangle.Color = Color.FromHex(Globals.SleepPageViewModel.DeepColor);
             AbsoluteLayout.SetLayoutFlags(lightRectangle, AbsoluteLayoutFlags.PositionProportional);
-            AbsoluteLayout.SetLayoutBounds(lightRectangle, new Rectangle(0.37, 0.3, 20, 20));
+            AbsoluteLayout.SetLayoutBounds(lightRectangle, new Rectangle(0.7, 0.3, 20, 20));
             absoluteLayout.Children.Add(lightRectangle);
 
-            PageBuilder.AddLabel(absoluteLayout, "Dormido", 0.53, 0.3, Color.Black, "", 14);
+            PageBuilder.AddLabel(absoluteLayout, "Dormido", 0.92, 0.3, Color.Black, "", 14);
 
            /* BoxView deepRectangle = new BoxView();
             deepRectangle.Color = Color.FromHex(Globals.SleepPageViewModel.DeepColor);
