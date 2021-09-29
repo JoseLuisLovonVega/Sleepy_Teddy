@@ -208,18 +208,6 @@ namespace SleepyTeddy.Views.TherapistViews
             TodayButton.BorderColor = Color.Black;
             TodayButton.BorderWidth = 2;
         }
-        private async void RefreshButtonClicked(object sender, EventArgs e)
-        {
-            if (Windesheart.PairedDevice == null)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error al refrescar los datos",
-                    "Sólo se puede refrescar mientras se está conectado a un wearable.", "OK");
-                return;
-            }
-            Application.Current.MainPage.Navigation.PopAsync();
-            Globals.SamplesService.StartFetching();
-        }
-
         public IPageAnimation PageAnimation { get; } = new SlidePageAnimation { Duration = AnimationDuration.Short, Subtype = AnimationSubtype.FromTop };
 
         public void OnAnimationStarted(bool isPopAnimation)

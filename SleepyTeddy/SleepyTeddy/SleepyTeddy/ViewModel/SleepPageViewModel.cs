@@ -602,25 +602,21 @@ namespace SleepyTeddy.ViewModel
                         switch (data[j].Kind)
                         {
                             case 0:
+                            case 2:
                                 Entry awakeEntry = new Entry(1);
                                 awakeEntry.Color = SKColor.Parse(AwakeColor);
                                 entries.Add(awakeEntry);
                                 break;
-                            /*case 1:
-                                Entry sleeptEntry = new Entry(1);
-                                sleepEntry.Color = SKColor.Parse(LightColor);
-                                entries.Add(sleepEntry);
-                                break;*/
                             case 1:
                                 Entry sleepEntry = new Entry(1);
                                 sleepEntry.Color = SKColor.Parse(DeepColor);
                                 entries.Add(sleepEntry);
                                 break;
-                            case 2:
+                            /*case 2:
                                 Entry emptyEntry = new Entry(1);
                                 emptyEntry.Color = SKColor.Parse(AwakeColor);
                                 entries.Add(emptyEntry);
-                                break;
+                                break;*/
                         }
                     }
                     else
