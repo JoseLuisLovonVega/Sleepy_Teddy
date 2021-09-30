@@ -245,7 +245,6 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
-            CreateSleepWakeDiaries();
         }
 
         public async void CreateSleepWakeDiaries()
@@ -260,7 +259,7 @@ namespace SleepyTeddy.ViewModel
                     //Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + listSleepRecordsLocalDB.Count);
                     verificacion2 = 0;
                     await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
-                    await objData.GetSleepRecordsViewAsync(Globals.patientID);
+                    //await objData.GetSleepRecordsViewAsync(Globals.patientID);
                     for (int contador = 0; contador > -7; contador--)
                     {
                         verificacion = 0;
