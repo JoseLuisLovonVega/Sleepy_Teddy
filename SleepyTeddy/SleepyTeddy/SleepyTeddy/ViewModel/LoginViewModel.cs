@@ -26,7 +26,7 @@ namespace SleepyTeddy.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public LoginViewModel()
         {
-
+        
         }
         private string email;
         public string Email

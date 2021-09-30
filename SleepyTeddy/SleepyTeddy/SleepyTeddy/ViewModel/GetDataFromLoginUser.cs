@@ -281,6 +281,7 @@ namespace SleepyTeddy.ViewModel
                                    .Instance
                                    .Collection("SleepRecords")
                                    .WhereEqualsTo("Patient_ID", patient_ID)
+                                   .LimitTo(500)
                                    .GetAsync();
 
         var resModel = document.ToObjects<SleepRecord>().ToList();

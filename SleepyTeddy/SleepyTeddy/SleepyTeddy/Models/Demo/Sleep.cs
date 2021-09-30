@@ -16,10 +16,11 @@ namespace SleepyTeddy.Models
     public class Sleep
     {
         public Sleep() { }
-        public Sleep(DateTime datetime, SleepType sleepType)
+        public Sleep(DateTime datetime, SleepType sleepType, string patient_ID)
         {
             this.DateTime = datetime;
             this.SleepType = sleepType;
+            this.Patient_ID = patient_ID;
         }
 
         [PrimaryKey, AutoIncrement, Column("Id")]
@@ -30,5 +31,8 @@ namespace SleepyTeddy.Models
 
         [Column("SleepType")]
         public SleepType SleepType { get; set; }
+
+        [Column("Patient_ID")]
+        public string Patient_ID { get; set; }
     }
 }

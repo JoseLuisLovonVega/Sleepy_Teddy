@@ -77,7 +77,7 @@ namespace SleepyTeddy.Services
             }
             Globals.Database.Instance.Commit();
             Debug.WriteLine("DB filled with samples");
-            Globals.SleepPageViewModel.CreateSleepRecords();
+            //Globals.SleepPageViewModel.CreateSleepRecords();
             Globals.SleepPageViewModel.CreateSleepWakeDiaries();
             Device.BeginInvokeOnMainThread(delegate
             {
@@ -131,19 +131,19 @@ namespace SleepyTeddy.Services
                 
                     if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
                     {
-                        sleep = new Sleep(datetime, SleepType.Sleep);
+                        sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
                     else if (sample.HeartRate > 60 && sample.HeartRate < 100)
                     {
-                        sleep = new Sleep(datetime, SleepType.Awake);
+                        sleep = new Sleep(datetime, SleepType.Awake, LoginViewModel.Patient_ID);
                     }
                     else if (sample.HeartRate < 60 && sample.HeartRate > 40)
                     {
-                        sleep = new Sleep(datetime, SleepType.Sleep);
+                        sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
                     else
                     {
-                        sleep = new Sleep(datetime, SleepType.Empty);
+                        sleep = new Sleep(datetime, SleepType.Empty, LoginViewModel.Patient_ID);
                     }
                     
                     break;
@@ -156,19 +156,19 @@ namespace SleepyTeddy.Services
                 case 107:
                     if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
                     {
-                        sleep = new Sleep(datetime, SleepType.Sleep);
+                        sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
                     else if (sample.HeartRate > 60 && sample.HeartRate < 100)
                     {
-                        sleep = new Sleep(datetime, SleepType.Awake);
+                        sleep = new Sleep(datetime, SleepType.Awake, LoginViewModel.Patient_ID);
                     }
                     else if (sample.HeartRate < 60 && sample.HeartRate > 40)
                     {
-                        sleep = new Sleep(datetime, SleepType.Sleep);
+                        sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
                     else
                     {
-                        sleep = new Sleep(datetime, SleepType.Empty);
+                        sleep = new Sleep(datetime, SleepType.Empty, LoginViewModel.Patient_ID);
                     }
 
                     break;
@@ -176,7 +176,7 @@ namespace SleepyTeddy.Services
                 //4, 12: Sueño profundo
                 case 4:
                 case 112:
-                    sleep = new Sleep(datetime, SleepType.Sleep);
+                    sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     break;
 
                 //5, 9, 106, 121, 122, 123: Sueño ligero
@@ -186,25 +186,25 @@ namespace SleepyTeddy.Services
                 case 121:
                 case 122:
                 case 123:
-                    sleep = new Sleep(datetime, SleepType.Sleep);
+                    sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     break;
 
                 default:
                     if (sample.Timestamp.Hour >= 2 && sample.Timestamp.Hour <= 4)
                     {
-                        sleep = new Sleep(datetime, SleepType.Sleep);
+                        sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
                     else if (sample.HeartRate > 60 && sample.HeartRate < 100)
                     {
-                        sleep = new Sleep(datetime, SleepType.Awake);
+                        sleep = new Sleep(datetime, SleepType.Awake, LoginViewModel.Patient_ID);
                     }
                     else if (sample.HeartRate < 60 && sample.HeartRate > 40)
                     {
-                        sleep = new Sleep(datetime, SleepType.Sleep);
+                        sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
                     else
                     {
-                        sleep = new Sleep(datetime, SleepType.Empty);
+                        sleep = new Sleep(datetime, SleepType.Empty, LoginViewModel.Patient_ID);
                     }
 
                     break;

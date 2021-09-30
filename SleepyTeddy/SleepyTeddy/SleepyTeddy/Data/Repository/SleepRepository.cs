@@ -15,8 +15,8 @@ namespace SleepyTeddy.Data.Repository
 
         public void Add(Sleep sleep)
         {
-            var query = "INSERT INTO Sleep(DateTime, SleepType) VALUES(?,?)";
-            var command = _database.Instance.CreateCommand(query, new object[] { sleep.DateTime, sleep.SleepType });
+            var query = "INSERT INTO Sleep(DateTime, SleepType, Patient_ID) VALUES(?,?,?)";
+            var command = _database.Instance.CreateCommand(query, new object[] { sleep.DateTime, sleep.SleepType, sleep.Patient_ID });
             command.ExecuteNonQuery();
         }
 
