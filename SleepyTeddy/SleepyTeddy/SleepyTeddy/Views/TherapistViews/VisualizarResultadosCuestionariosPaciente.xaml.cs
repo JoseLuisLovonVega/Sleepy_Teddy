@@ -106,7 +106,7 @@ namespace SleepyTeddy.Views.TherapistViews
                     {
                         list_questionnaireResults.ItemsSource = listresultsQuestionnairePatientSearched;
                         list_questionnaireResults.IsVisible = true;
-                        if (((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count > 1) && ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count < 9))
+                        if (((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count > 1) && ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count < 8))
                         {
                             btnFiltrar2.IsVisible = true;
                         }

@@ -81,6 +81,7 @@ namespace SleepyTeddy.ViewModel
         {
             await objData.GetSleepRecordsViewAsync(Globals.patientID);
             //Get all sleep data of the patient from DB
+            Debug.WriteLine("Cantidad de sleep records: " + objData.ListSleepRecords.Count);
             SleepInfo = objData.ListSleepRecords;
 
             if (SleepInfo.Count() == 0)
