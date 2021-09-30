@@ -310,7 +310,7 @@ namespace SleepyTeddy.ViewModel
 
                             foreach (var sleepRecord in _sleepRepository.GetAll())
                             {
-                                if (sleepRecord.DateTime.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(-4).ToString("dd/MM/yy") && sleepRecord.DateTime > DateTime.Today.AddDays(contador).AddHours(-4))
+                                if (sleepRecord.SleepType != SleepType.Empty && sleepRecord.DateTime.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(-4).ToString("dd/MM/yy") && sleepRecord.DateTime > DateTime.Today.AddDays(contador).AddHours(-4))
                                 {
                                     listSleepRecords1.Add(new SleepRecordsView
                                     {
@@ -320,7 +320,7 @@ namespace SleepyTeddy.ViewModel
                                         Kind = (int) sleepRecord.SleepType
                                     });
                                 }
-                                else if (sleepRecord.DateTime.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(12).ToString("dd/MM/yy") && sleepRecord.DateTime < DateTime.Today.AddDays(contador).AddHours(12))
+                                else if (sleepRecord.SleepType != SleepType.Empty && sleepRecord.DateTime.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(12).ToString("dd/MM/yy") && sleepRecord.DateTime < DateTime.Today.AddDays(contador).AddHours(12))
                                 {
                                     listSleepRecords2.Add(new SleepRecordsView
                                     {
