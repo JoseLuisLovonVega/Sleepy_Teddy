@@ -78,7 +78,7 @@ namespace SleepyTeddy.Services
             Globals.Database.Instance.Commit();
             Debug.WriteLine("DB filled with samples");
             Globals.SleepPageViewModel.CreateSleepRecords();
-            Globals.SleepPageViewModel.CreateSleepWakeDiaries();
+            //Globals.SleepPageViewModel.CreateSleepWakeDiaries();
             Device.BeginInvokeOnMainThread(delegate
             {
                 Globals.MiCuentaPacienteViewModel.IsLoading = false;
