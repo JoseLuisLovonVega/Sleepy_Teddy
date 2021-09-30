@@ -192,7 +192,7 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             await objData.GetSleepRecordsViewAsync(Globals.patientID);
-            listSleepRecordsLocalDB.Clear();
+            listSleepRecordsLocalDB= new List<SleepRecordsView>();
             //listSleepRecordsLocalDB = new List<SleepRecordsView>();
             for (int k = 0; k > -7; k--)
             {
@@ -303,24 +303,18 @@ namespace SleepyTeddy.ViewModel
                         amountMinutes = 0;
                         count = 0;
 
-                        listSleepRecords1.Clear();
-                        //listSleepRecords1 = new List<SleepRecordsView>();
+                        listSleepRecords1 = new List<SleepRecordsView>();
 
-                        listSleepRecords2.Clear();
-                        //listSleepRecords2 = new List<SleepRecordsView>();
+                        listSleepRecords2 = new List<SleepRecordsView>();
 
-                        listSleepRecords3.Clear();
-                        //listSleepRecords3 = new List<SleepRecordsView>();
+                        listSleepRecords3 = new List<SleepRecordsView>();
 
-                        listSleepRecords12.Clear();
-                        //listSleepRecords12 = new List<SleepRecordsView>();
+                        listSleepRecords12 = new List<SleepRecordsView>();
 
-                        listSleepRecords22.Clear();
-                        //listSleepRecords22 = new List<SleepRecordsView>();
+                        listSleepRecords22 = new List<SleepRecordsView>();
 
                         dia = contador - 1;
 
-                        //await objData.GetSleepRecordsViewAsync();
                         Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddDays(contador - 1).ToString("dd/MM/yy"));
                         //Ordenar de la más antigua a la más reciente
                         if (listSleepRecordsLocalDB.Count > 0)
