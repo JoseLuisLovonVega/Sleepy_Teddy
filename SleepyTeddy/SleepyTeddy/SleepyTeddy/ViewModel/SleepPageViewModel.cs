@@ -192,7 +192,6 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             await objData.GetSleepRecordsViewAsync(Globals.patientID);
-            listSleepRecordsLocalDB= new List<SleepRecordsView>();
             //listSleepRecordsLocalDB = new List<SleepRecordsView>();
             for (int k = 0; k > -7; k--)
             {
@@ -214,7 +213,7 @@ namespace SleepyTeddy.ViewModel
                         {
                             if (data.ElementAt(j) != null) //ElementAtOrDefault
                             {
-                                if (data.ElementAt(j).SleepType != SleepType.Empty)
+                                /*if (data[j].SleepType != SleepType.Empty)
                                 {
                                     listSleepRecordsLocalDB.Add(new SleepRecordsView
                                     {
@@ -223,7 +222,7 @@ namespace SleepyTeddy.ViewModel
                                         DateTimeHour = data[j].DateTime,
                                         Kind = (int) data[j].SleepType
                                     });
-                                }
+                                }*/
                                 if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == data[j].DateTime) == false)
                                 {
                                     await CrossCloudFirestore.Current
@@ -242,34 +241,29 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
+            for(int i=0; i < _sleepRepository.GetAll().Count(); i++)
+            {
+                if(_sleepRepository.GetAll().ElementAt(i).SleepType != SleepType.Empty)
+                {
+                    listSleepRecordsLocalDB.Add(new SleepRecordsView
+                    {
+                        Key = _sleepRepository.GetAll().ElementAt(i).Id,
+                        Patient_ID = LoginViewModel.Patient_ID,
+                        DateTimeHour = _sleepRepository.GetAll().ElementAt(i).DateTime,
+                        Kind = (int) _sleepRepository.GetAll().ElementAt(i).SleepType
+                    });
+                }
+            }
             Debug.WriteLine("Cantidad de sleep records agregados a la lista: " + listSleepRecordsLocalDB.Count);
             Debug.WriteLine("Se completó la carga de sleep records a la lista asignada.");
-            //await TransferToFirebaseSleepRecords();
         }
-        /*public async Task TransferToFirebaseSleepRecords()
-        {
-            Debug.WriteLine("Iniciando la subida de elementos de la lista de sleeprecords al Firebase");
-            foreach (var sleepRecord in listSleepRecordsLocalDB)
-            {
-                await CrossCloudFirestore.Current
-                                     .Instance
-                                     .Collection("SleepRecords")
-                                     .AddAsync(new SleepRecord
-                                     {
-                                         SleepRecord_ID = sleepRecord.Key,
-                                         Patient_ID = sleepRecord.Patient_ID,
-                                         DateTimeHour = sleepRecord.DateTimeHour.AddHours(-5),
-                                         Kind = sleepRecord.Kind
-                                     });
-            }
-            Debug.WriteLine("Se completó la subida de sleeprecords al Firebase");
-        }*/
 
         public async Task CreateSleepWakeDiaries()
         {
-            verificacion2 = 0;
+            Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + listSleepRecordsLocalDB.Count);
             try
             {
+                verificacion2 = 0;
                 await objData.GetSleepWakeDiariesViewAsync(LoginViewModel.Patient_ID);
                 for (int contador = 0; contador > -7; contador--)
                 {

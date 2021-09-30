@@ -106,7 +106,7 @@ namespace SleepyTeddy.Views.TherapistViews
                     {
                         list_questionnaireResults.ItemsSource = listresultsQuestionnairePatientSearched;
                         list_questionnaireResults.IsVisible = true;
-                        if (((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count > 1) && ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count < 8))
+                        if ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count > 1)
                         {
                             btnFiltrar2.IsVisible = true;
                         }
@@ -126,7 +126,14 @@ namespace SleepyTeddy.Views.TherapistViews
                 listData = new List<QuestionnairesView>();
                 //Ordenar de la más reciente a la más antigua
                 listData = listresultsQuestionnairePatientSearched.OrderByDescending(o => o.D_Assigned_Date).ToList();
-                listData = listData.GetRange(0, listresultsQuestionnairePatientSearched.Count);
+                if (listData.Count() <= 7)
+                {
+                    listData = listData.GetRange(0, listresultsQuestionnairePatientSearched.Count);
+                }
+                else
+                {
+                    listData = listData.GetRange(0, 7);
+                }
                 //Ordenar de la más antigua a la más reciente
                 listData = listData.OrderBy(o => o.D_Assigned_Date).ToList();
                 for (int i = 0; i < listData.Count; i++)
