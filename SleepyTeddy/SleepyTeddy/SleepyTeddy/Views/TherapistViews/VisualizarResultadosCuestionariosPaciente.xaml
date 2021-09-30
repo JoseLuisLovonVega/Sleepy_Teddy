@@ -44,7 +44,7 @@
                     Grid.Column="0"
                     Margin="5"
                     x:Name="btnFiltrar2"
-                    Text="Filtrar Según: 7 Recientes Cuestionarios Registrados"
+                    Text="Filtrar Según un Gráfico"
                     TextColor="White"
                     IsVisible="false"
                     BackgroundColor="#2c3e50"

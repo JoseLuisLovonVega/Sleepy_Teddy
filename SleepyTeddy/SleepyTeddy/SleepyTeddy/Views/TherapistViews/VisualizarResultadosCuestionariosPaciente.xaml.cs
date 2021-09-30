@@ -79,7 +79,7 @@ namespace SleepyTeddy.Views.TherapistViews
                   || cbxPatientInfo.SelectedItem.ToString() == "PSQI")
             {
                 lineGraphView.IsVisible = false;
-                btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
+                btnFiltrar2.Text = "Filtrar Según un Gráfico";
                 btnFiltrar2.IsVisible = false;
                 listresultsQuestionnairePatientSearched = new List<QuestionnairesView>();
                 await objSearch.GetQuestionnaireResultsViewAsync(cbxPatientInfo.SelectedItem.ToString(), id_patient);
@@ -106,7 +106,7 @@ namespace SleepyTeddy.Views.TherapistViews
                     {
                         list_questionnaireResults.ItemsSource = listresultsQuestionnairePatientSearched;
                         list_questionnaireResults.IsVisible = true;
-                        if ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count >= 7)
+                        if (((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count > 1) && ((list_questionnaireResults.ItemsSource as List<QuestionnairesView>).Count < 9))
                         {
                             btnFiltrar2.IsVisible = true;
                         }
@@ -117,7 +117,7 @@ namespace SleepyTeddy.Views.TherapistViews
 
         private void btnFiltrar2_clicked(object sender, EventArgs e)
         {
-            if (btnFiltrar2.Text == "Filtrar Según: 7 Recientes Cuestionarios Registrados")
+            if (btnFiltrar2.Text == "Filtrar Según un Gráfico")
             {
                 btnFiltrar2.Text = "Retirar el Filtrado";
                 lineGraphView.IsVisible = true;
@@ -126,7 +126,7 @@ namespace SleepyTeddy.Views.TherapistViews
                 listData = new List<QuestionnairesView>();
                 //Ordenar de la más reciente a la más antigua
                 listData = listresultsQuestionnairePatientSearched.OrderByDescending(o => o.D_Assigned_Date).ToList();
-                listData = listData.GetRange(0, 7);
+                listData = listData.GetRange(0, listresultsQuestionnairePatientSearched.Count);
                 //Ordenar de la más antigua a la más reciente
                 listData = listData.OrderBy(o => o.D_Assigned_Date).ToList();
                 for (int i = 0; i < listData.Count; i++)
@@ -144,7 +144,7 @@ namespace SleepyTeddy.Views.TherapistViews
             }
             else
             {
-                btnFiltrar2.Text = "Filtrar Según: 7 Recientes Cuestionarios Registrados";
+                btnFiltrar2.Text = "Filtrar Según un Gráfico";
                 lineGraphView.IsVisible = false;
                 list_questionnaireResults.IsVisible = true;
             }
