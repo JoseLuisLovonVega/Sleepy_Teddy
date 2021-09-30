@@ -63,7 +63,7 @@ namespace SleepyTeddy.Services
                 Globals.MiCuentaPacienteViewModel.ShowFetchProgress(calculatedProgress);
             });
         }
-        private async void FillDatabase(List<ActivitySample> samples)
+        private void FillDatabase(List<ActivitySample> samples)
         {
             Debug.WriteLine("Filling DB with samples: " + samples.Count);
             Globals.Database.Instance.BeginTransaction();
@@ -78,7 +78,7 @@ namespace SleepyTeddy.Services
             Globals.Database.Instance.Commit();
             Debug.WriteLine("DB filled with samples");
             Globals.SleepPageViewModel.CreateSleepRecords();
-            await Globals.SleepPageViewModel.CreateSleepWakeDiaries();
+            Globals.SleepPageViewModel.CreateSleepWakeDiaries();
             Device.BeginInvokeOnMainThread(delegate
             {
                 Globals.MiCuentaPacienteViewModel.IsLoading = false;
@@ -133,11 +133,11 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
-                    else if (sample.HeartRate > 60)
+                    else if (sample.HeartRate > 60 && sample.HeartRate < 100)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
                     }
-                    else if (sample.HeartRate < 60)
+                    else if (sample.HeartRate < 60 && sample.HeartRate > 40)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
@@ -158,11 +158,11 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
-                    else if (sample.HeartRate > 60)
+                    else if (sample.HeartRate > 60 && sample.HeartRate < 100)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
                     }
-                    else if (sample.HeartRate < 60)
+                    else if (sample.HeartRate < 60 && sample.HeartRate > 40)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
@@ -194,11 +194,11 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
-                    else if (sample.HeartRate > 60)
+                    else if (sample.HeartRate > 60 && sample.HeartRate < 100)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake);
                     }
-                    else if (sample.HeartRate < 60)
+                    else if (sample.HeartRate < 60 && sample.HeartRate > 40)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep);
                     }
