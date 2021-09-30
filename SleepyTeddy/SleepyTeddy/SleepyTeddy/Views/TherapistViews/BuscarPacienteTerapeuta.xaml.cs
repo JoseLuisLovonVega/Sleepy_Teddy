@@ -66,6 +66,7 @@ namespace SleepyTeddy.Views.TherapistViews
             {
                 IsLoading = true;
                 Globals.patientID = dataItem.Key;
+                Debug.WriteLine("Patient_ID: " + Globals.patientID);
                 //Dar clic en el paciente y mostrar los detalles del paciente con respecto a su sueño
                 await Application.Current.MainPage.Navigation.PushAsync(new VisualizarInformacionSueñoPaciente()
                 {

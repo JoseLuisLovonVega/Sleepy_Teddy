@@ -34,7 +34,7 @@ namespace SleepyTeddy.Views.TherapistViews
 
         public VisualizarInformacionSueñoPaciente()
         {
-            BindingContext = Globals.SleepPageViewModel;
+            //BindingContext = Globals.SleepPageViewModel;
             InitializeComponent();
             BuildPage();
             //getPatient();
@@ -42,7 +42,7 @@ namespace SleepyTeddy.Views.TherapistViews
         protected override void OnAppearing()
         {
             Globals.SleepPageViewModel.OnAppearing();
-            base.OnAppearing();
+            //base.OnAppearing();
         }
 
         private void BuildPage()
