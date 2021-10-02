@@ -281,7 +281,7 @@ namespace SleepyTeddy.ViewModel
                                    .Instance
                                    .Collection("SleepRecords") 
                                    .WhereEqualsTo("Patient_ID", patient_ID)
-                                   .WhereGreaterThanOrEqualsTo("DateTimeHour", DateTime.Today.AddDays(-6).AddHours(8))
+                                   .WhereGreaterThanOrEqualsTo("DateTimeHour", DateTime.Today.AddDays(-6).AddHours(20))
                                    //.OrderBy("DateTimeHour", true)
                                    .LimitTo(10000)
                                    .GetAsync();
