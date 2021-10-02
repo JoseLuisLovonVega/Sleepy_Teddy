@@ -21,8 +21,11 @@ namespace SleepyTeddy.ViewModel
 {
     public class SleepPageViewModel : INotifyPropertyChanged
     {
-        public static IEnumerable<Sleep> SleepInfo = new List<Sleep>();
+        //string documentID;
+        //SleepRecord sleepRecord1;
+        public static IEnumerable<SleepRecordsView> SleepInfo = new List<SleepRecordsView>();
         public static IEnumerable<Sleep> SleepInfo2 = new List<Sleep>();
+        List<SleepRecordsView> sleepRecords;
         public DateTime StartDate { get; }
         public DateTime SelectedDate;
         public DateTime StartDate2 { get; }
@@ -77,35 +80,33 @@ namespace SleepyTeddy.ViewModel
                 OnPropertyChanged();
             }
         }
+        /*public async void getndeleteSleepRecord(int sleepRecord_ID)
+        {
+            var document = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("SleepRecords")
+                                       .WhereEqualsTo("SleepRecord_ID", sleepRecord_ID)
+                                       .GetAsync();
+            documentID = document.Documents.ElementAt(0).Id;
+            await CrossCloudFirestore.Current
+                         .Instance
+                         .Collection("SleepRecords")
+                         .Document(documentID)
+                         .DeleteAsync();
+        }*/
         public async void OnAppearing()
         {
             objData = new GetDataFromLoginUser();
             Debug.WriteLine("Globals.Patient_ID: " + Globals.patientID);
-            do
-            {
-                await objData.GetSleepRecordsViewAsync(Globals.patientID);
-                Debug.WriteLine("Cantidad de sleep records: " + objData.ListSleepRecords.Count);
-                Globals.Database.Instance.BeginTransaction();
-                foreach (var sleepRecord in objData.ListSleepRecords)
-                {
-                    if (((List<SleepRecordsView>)_sleepRepository.GetAll()).Exists(x => x.DateTimeHour == sleepRecord.DateTimeHour) == false)
-                    {
-                        Sleep sleep;
-                        if (sleepRecord.Kind == 3)
-                        {
-                            sleep = new Sleep(sleepRecord.DateTimeHour, SleepType.Empty, sleepRecord.Patient_ID);
-                        }
-                        else
-                        {
-                            sleep = new Sleep(sleepRecord.DateTimeHour, (SleepType) sleepRecord.Kind, sleepRecord.Patient_ID);
-                        }
-                        Globals.SleepRepository.Add(sleep);
-                    }
-                }
-            } while (objData.ListSleepRecords.Count != 0);
-            Globals.Database.Instance.Commit();
+            //do
+            //{
+            IsLoading = true;
+            await objData.GetSleepRecordsViewAsync(Globals.patientID);
+            Debug.WriteLine("Cantidad de sleep records: " + objData.ListSleepRecords.Count);
+            IsLoading = false;
             //Get all sleep data of the patient from DB
-            SleepInfo = _sleepRepository.GetAll();
+            SleepInfo = objData.ListSleepRecords;
+            //SleepInfo = _sleepRepository.GetAll();
 
             if (SleepInfo.Count() == 0)
             {
@@ -195,13 +196,13 @@ namespace SleepyTeddy.ViewModel
             });
         }
 
-        private List<Sleep> GetCurrentSleep()
+        private List<SleepRecordsView> GetCurrentSleep()
         {
-            return SleepInfo.Where(s => s.DateTime.Year == SelectedDate.Year &&
-            s.DateTime.Month == SelectedDate.Month &&
-            s.DateTime > SelectedDate.AddHours(-4) &&
-            s.DateTime < SelectedDate.AddHours(12)).
-            OrderBy(x => x.DateTime).ToList();
+            return SleepInfo.Where(s => s.DateTimeHour.Year == SelectedDate.Year &&
+            s.DateTimeHour.Month == SelectedDate.Month &&
+            s.DateTimeHour > SelectedDate.AddHours(-4) &&
+            s.DateTimeHour < SelectedDate.AddHours(12)).
+            OrderBy(x => x.DateTimeHour).ToList();
         }
 
         private List<Sleep> GetCurrentSleep2()
@@ -248,10 +249,10 @@ namespace SleepyTeddy.ViewModel
                                         Key = data[j].Id,
                                         Patient_ID = LoginViewModel.Patient_ID,
                                         DateTimeHour = data[j].DateTime,
-                                        Kind = (int) data[j].SleepType
+                                        Kind = (int)data[j].SleepType
                                     });
                                 }
-                                if (((List<SleepRecordsView>)_sleepRepository.GetAll()).Exists(x => x.DateTimeHour == data[j].DateTime) == false)
+                                if (((List<SleepRecordsView>)_sleepRepository.GetAll()).Exists(x => x.Key == data[j].Id) == false)
                                 {
                                     await CrossCloudFirestore.Current
                                          .Instance
@@ -565,7 +566,7 @@ namespace SleepyTeddy.ViewModel
 
         private List<Entry> GetData()
         {
-            List<Sleep> sleepData = GetCurrentSleep();
+            List<SleepRecordsView> sleepData = GetCurrentSleep();
             List<Entry> entries = new List<Entry>();
 
             //For each hour
@@ -575,13 +576,13 @@ namespace SleepyTeddy.ViewModel
                 if (i >= 24) hour -= 24;
 
                 //Get sleep data for that hour
-                List<Sleep> data = sleepData.Where(x => x.DateTime.Hour == hour).ToList();
+                List<SleepRecordsView> data = sleepData.Where(x => x.DateTimeHour.Hour == hour).ToList();
 
                 for (int j = 0; j < 60; j++)
                 {
                     if (data.ElementAtOrDefault(j) != null)
                     {
-                        switch ((int) data[j].SleepType)
+                        switch (data[j].Kind)
                         {
                             case 0:
                             case 2:

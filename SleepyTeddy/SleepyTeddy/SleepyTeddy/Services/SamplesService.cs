@@ -133,11 +133,11 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
-                    else if (sample.HeartRate > 60 && sample.HeartRate < 100)
+                    else if (sample.HeartRate > 70 && sample.HeartRate < 100)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake, LoginViewModel.Patient_ID);
                     }
-                    else if (sample.HeartRate < 60 && sample.HeartRate > 40)
+                    else if (sample.HeartRate <= 65 && sample.HeartRate > 40)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
@@ -158,11 +158,11 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
-                    else if (sample.HeartRate > 60 && sample.HeartRate < 100)
+                    else if (sample.HeartRate > 70 && sample.HeartRate < 100)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake, LoginViewModel.Patient_ID);
                     }
-                    else if (sample.HeartRate < 60 && sample.HeartRate > 40)
+                    else if (sample.HeartRate <= 65 && sample.HeartRate > 40)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
@@ -194,11 +194,11 @@ namespace SleepyTeddy.Services
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }
-                    else if (sample.HeartRate > 60 && sample.HeartRate < 100)
+                    else if (sample.HeartRate > 70 && sample.HeartRate < 100)
                     {
                         sleep = new Sleep(datetime, SleepType.Awake, LoginViewModel.Patient_ID);
                     }
-                    else if (sample.HeartRate < 60 && sample.HeartRate > 40)
+                    else if (sample.HeartRate <= 65 && sample.HeartRate > 40)
                     {
                         sleep = new Sleep(datetime, SleepType.Sleep, LoginViewModel.Patient_ID);
                     }

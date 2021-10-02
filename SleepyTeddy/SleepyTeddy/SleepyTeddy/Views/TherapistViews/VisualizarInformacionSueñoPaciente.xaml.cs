@@ -55,7 +55,7 @@ namespace SleepyTeddy.Views.TherapistViews
             PageBuilder.AddLabel(absoluteLayout, "Información del Sueño", 0.80, 0.03, Color.Black, "", 25);
             PageBuilder.AddReturnButton(absoluteLayout, this);
 
-            ImageButton previousBtn = new ImageButton
+            /*ImageButton previousBtn = new ImageButton
             {
                 Source = "arrow_left.png",
                 BackgroundColor = Color.Transparent
@@ -73,9 +73,9 @@ namespace SleepyTeddy.Views.TherapistViews
             nextBtn.Clicked += Globals.SleepPageViewModel.NextDayBtnClick;
             AbsoluteLayout.SetLayoutFlags(nextBtn, AbsoluteLayoutFlags.All);
             AbsoluteLayout.SetLayoutBounds(nextBtn, new Rectangle(0.7, 0.175, 0.1, 0.1));
-            absoluteLayout.Children.Add(nextBtn);
+            absoluteLayout.Children.Add(nextBtn);*/
 
-            CurrentDayLabel = PageBuilder.AddLabel(absoluteLayout, "Hoy", 0.5, 0.19, Color.Black, "", 14);
+            CurrentDayLabel = PageBuilder.AddLabel(absoluteLayout, "Hoy", 0.5, 0.19, Color.Black, "", 20);
             //CurrentDayLabel.FontSize = 16;
 
             BoxView awakeRectangle = new BoxView();

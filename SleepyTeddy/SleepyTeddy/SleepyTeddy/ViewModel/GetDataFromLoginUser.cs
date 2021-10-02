@@ -279,9 +279,11 @@ namespace SleepyTeddy.ViewModel
         ListSleepRecords = new List<SleepRecordsView>();
         var document = await CrossCloudFirestore.Current
                                    .Instance
-                                   .Collection("SleepRecords")
+                                   .Collection("SleepRecords") 
                                    .WhereEqualsTo("Patient_ID", patient_ID)
-                                   .LimitTo(500)
+                                   .WhereGreaterThanOrEqualsTo("DateTimeHour", DateTime.Today.AddDays(-6).AddHours(8))
+                                   //.OrderBy("DateTimeHour", true)
+                                   .LimitTo(10000)
                                    .GetAsync();
 
         var resModel = document.ToObjects<SleepRecord>().ToList();
