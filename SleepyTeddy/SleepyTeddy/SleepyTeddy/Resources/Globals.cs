@@ -13,7 +13,7 @@ namespace SleepyTeddy.Resources
         public static MiCuentaPacienteViewModel MiCuentaPacienteViewModel;
         public static DevicePageViewModel DevicePageViewModel;
         public static SleepPageViewModel SleepPageViewModel;
-
+        public static List<SleepRecordsView> listSleepRecordsGlobal;
         public static double ScreenHeight { get; set; }
         public static double ScreenWidth { get; set; }
         public static string patientID;

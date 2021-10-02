@@ -25,7 +25,7 @@ namespace SleepyTeddy.ViewModel
         //SleepRecord sleepRecord1;
         public static IEnumerable<SleepRecordsView> SleepInfo = new List<SleepRecordsView>();
         public static IEnumerable<Sleep> SleepInfo2 = new List<Sleep>();
-        List<SleepRecordsView> sleepRecords;
+
         public DateTime StartDate { get; }
         public DateTime SelectedDate;
         public DateTime StartDate2 { get; }
@@ -46,7 +46,6 @@ namespace SleepyTeddy.ViewModel
         SleepWakeDiary sleepWakeDiary;
         GetDataFromLoginUser objData { get; set; }
 
-        List<SleepRecordsView> listSleepRecordsLocalDB;
         List<SleepRecordsView> listSleepRecords1;
         List<SleepRecordsView> listSleepRecords2;
         List<SleepRecordsView> listSleepRecords3;
@@ -158,7 +157,6 @@ namespace SleepyTeddy.ViewModel
             objData = new GetDataFromLoginUser();
             sleepWakeDiary = new SleepWakeDiary();
 
-            listSleepRecordsLocalDB = new List<SleepRecordsView>();
             listSleepRecords1 = new List<SleepRecordsView>();
             listSleepRecords2 = new List<SleepRecordsView>();
             listSleepRecords3 = new List<SleepRecordsView>();
@@ -214,12 +212,12 @@ namespace SleepyTeddy.ViewModel
 
         public async void CreateSleepRecords()
         {
-            listSleepRecordsLocalDB = new List<SleepRecordsView>();
+            Globals.listSleepRecordsGlobal = new List<SleepRecordsView>();
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             Debug.WriteLine("Cantidad de sleep records en la BD local: " + SleepInfo2.Count());
             //await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
-            Debug.WriteLine("Cantidad de sleep records en la BD Firebase: " + objData.ListSleepRecords.Count());
+            //Debug.WriteLine("Cantidad de sleep records en la BD Firebase: " + objData.ListSleepRecords.Count());
             for (int k = 0; k > -7; k--)
             {
                 SelectedDate2 = StartDate2.AddDays(k);
@@ -241,7 +239,7 @@ namespace SleepyTeddy.ViewModel
                             {
                                 if (data[j].SleepType == SleepType.Awake || data[j].SleepType == SleepType.Sleep)
                                 {
-                                    listSleepRecordsLocalDB.Add(new SleepRecordsView
+                                    Globals.listSleepRecordsGlobal.Add(new SleepRecordsView
                                     {
                                         Key = data[j].Id,
                                         Patient_ID = LoginViewModel.Patient_ID,
@@ -264,6 +262,7 @@ namespace SleepyTeddy.ViewModel
                                 }*/
                             }
                         }
+
                     }
                 }
             }
@@ -273,10 +272,10 @@ namespace SleepyTeddy.ViewModel
             try
             {
                 CreateSleepRecords();
-                Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + listSleepRecordsLocalDB.Count);
-                if (listSleepRecordsLocalDB.Count > 0)
+                Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
+                if (Globals.listSleepRecordsGlobal.Count > 0)
                 {
-                    listSleepRecordsLocalDB = listSleepRecordsLocalDB.OrderBy(o => o.DateTimeHour).ToList();
+                    Globals.listSleepRecordsGlobal = Globals.listSleepRecordsGlobal.OrderBy(o => o.DateTimeHour).ToList();
                     Debug.WriteLine("Se logró ordenar ascendentemente todos los sleep records del paciente.");
 
                     Debug.WriteLine("CREANDO DIARIOS DE SUEÑO-VIGILIA...");
@@ -331,13 +330,13 @@ namespace SleepyTeddy.ViewModel
                             Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddDays(contador - 1).ToString("dd/MM/yy"));
                             //Ordenar de la más antigua a la más reciente
 
-                            foreach (var sleepRecord in objData.ListSleepRecords)
+                            foreach (var sleepRecord in Globals.listSleepRecordsGlobal)
                             {
-                                if (sleepRecord.Kind < 2 && sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(-4).ToString("dd/MM/yy") && sleepRecord.DateTimeHour > DateTime.Today.AddDays(contador).AddHours(-4))
+                                if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(-4).ToString("dd/MM/yy") && sleepRecord.DateTimeHour > DateTime.Today.AddDays(contador).AddHours(-4))
                                 {
                                     listSleepRecords1.Add(sleepRecord);
                                 }
-                                else if (sleepRecord.Kind < 2 && sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(12).ToString("dd/MM/yy") && sleepRecord.DateTimeHour < DateTime.Today.AddDays(contador).AddHours(12))
+                                else if (sleepRecord.DateTimeHour.ToString("dd/MM/yy") == DateTime.Today.AddDays(contador).AddHours(12).ToString("dd/MM/yy") && sleepRecord.DateTimeHour < DateTime.Today.AddDays(contador).AddHours(12))
                                 {
                                     listSleepRecords2.Add(sleepRecord);
                                 }
