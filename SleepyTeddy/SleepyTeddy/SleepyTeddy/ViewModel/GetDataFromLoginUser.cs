@@ -284,8 +284,33 @@ namespace SleepyTeddy.ViewModel
                                        .Instance
                                        .Collection("SleepRecords")
                                        .WhereEqualsTo("Patient_ID", patient_ID)
-                                       .WhereGreaterThanOrEqualsTo("DateTimeHour", DateTime.Today.AddDays(-6).AddHours(20))
+                                       .WhereGreaterThan("DateTimeHour", DateTime.Today.AddDays(-6).AddHours(20))
                                        //.OrderBy("DateTimeHour", true)
+                                       .LimitTo(10000)
+                                       .GetAsync();
+
+            var resModel = document.ToObjects<SleepRecord>().ToList();
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<SleepRecord, SleepRecordsView>()
+                .ForMember(d => d.Key, o => o.MapFrom(c => c.SleepRecord_ID))
+                .ForMember(d => d.DateTimeHour, o => o.MapFrom(c => c.DateTimeHour))
+                .ForMember(d => d.Kind, o => o.MapFrom(c => c.Kind));
+            });
+
+            resModel.ForEach(a => ListSleepRecords.Add(config.CreateMapper().Map<SleepRecord, SleepRecordsView>(a)));
+            return;
+        }
+        public async Task GetSleepRecordsSpecificDayViewAsync(string patient_ID, DateTime day)
+        {
+            ListSleepRecords = new List<SleepRecordsView>();
+            var document = await CrossCloudFirestore.Current
+                                       .Instance
+                                       .Collection("SleepRecords")
+                                       .WhereEqualsTo("Patient_ID", patient_ID)
+                                       .WhereGreaterThan("DateTimeHour", day.AddHours(-4))
+                                       .WhereLessThan("DateTimeHour", day.AddHours(12))
+                                       //.OrderBy("DateTimeHour", false)
                                        .LimitTo(10000)
                                        .GetAsync();
 

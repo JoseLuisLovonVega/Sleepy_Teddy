@@ -115,7 +115,6 @@ namespace SleepyTeddy.ViewModel
                     await Application.Current.MainPage.DisplayAlert("No existen datos", "Desafortunadamente, el paciente no tiene datos de sueño registrados.", "OK");
                 });
             }
-
             //Init buttons on bottom
             List<Button> dayButtons = new List<Button>
             {
@@ -128,12 +127,11 @@ namespace SleepyTeddy.ViewModel
                 VisualizarInformacionSueñoPaciente.TodayButton
             };
             _buttonRow = new ButtonRow(dayButtons);
-
+            IsLoading = true;
             //Switch to today
             TodayBtnClick(VisualizarInformacionSueñoPaciente.TodayButton, new EventArgs());
-
+            Debug.WriteLine("Cantidad de sleep records del Día de Hoy: " + objData.ListSleepRecords.Count);
             //Update chart in other thread
-            IsLoading = true;
             await Task.Run(() =>
             {
                 var data = GetData();
@@ -220,7 +218,7 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             Debug.WriteLine("Cantidad de sleep records en la BD local: " + SleepInfo2.Count());
-            await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
+            //await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
             Debug.WriteLine("Cantidad de sleep records en la BD Firebase: " + objData.ListSleepRecords.Count());
             for (int k = 0; k > -7; k--)
             {
@@ -251,7 +249,7 @@ namespace SleepyTeddy.ViewModel
                                         Kind = (int)data[j].SleepType
                                     });
                                 }
-                                if (objData.ListSleepRecords.Exists(x => x.Key == data[j].Id) == false)
+                                /*if (objData.ListSleepRecords.Exists(x => x.Key == data[j].Id) == false)
                                 {
                                     await CrossCloudFirestore.Current
                                          .Instance
@@ -263,7 +261,7 @@ namespace SleepyTeddy.ViewModel
                                              DateTimeHour = data[j].DateTime.AddHours(-5),
                                              Kind = (int)data[j].SleepType
                                          });
-                                }
+                                }*/
                             }
                         }
                     }
@@ -565,7 +563,9 @@ namespace SleepyTeddy.ViewModel
 
         private List<Entry> GetData()
         {
-            List<SleepRecordsView> sleepData = GetCurrentSleep();
+
+            //List<SleepRecordsView> sleepData = GetCurrentSleep();
+            List<SleepRecordsView> sleepData = objData.ListSleepRecords.OrderBy(x => x.DateTimeHour).ToList();
             List<Entry> entries = new List<Entry>();
 
             //For each hour
@@ -617,7 +617,7 @@ namespace SleepyTeddy.ViewModel
             };
             IsLoading = false;
         }
-
+        /*
         public async void PreviousDayBtnClick(object sender, EventArgs args)
         {
             Trace.WriteLine("Día anterior seleccionado!");
@@ -637,9 +637,11 @@ namespace SleepyTeddy.ViewModel
                 await UpdateInfo();
             }
         }
-
+        */
         public async void TodayBtnClick(object sender, EventArgs args)
         {
+            IsLoading = true;
+            await objData.GetSleepRecordsSpecificDayViewAsync(Globals.patientID, DateTime.Today);
             SelectedDate = StartDate;
             if (_buttonRow.SwitchTo(sender as Button))
             {
@@ -649,6 +651,8 @@ namespace SleepyTeddy.ViewModel
 
         public async void Day6BtnClick(object sender, EventArgs args)
         {
+            IsLoading = true;
+            await objData.GetSleepRecordsSpecificDayViewAsync(Globals.patientID, DateTime.Today.AddDays(-1));
             SelectedDate = StartDate.AddDays(-1);
             if (_buttonRow.SwitchTo(sender as Button))
             {
@@ -658,6 +662,8 @@ namespace SleepyTeddy.ViewModel
 
         public async void Day5BtnClick(object sender, EventArgs args)
         {
+            IsLoading = true;
+            await objData.GetSleepRecordsSpecificDayViewAsync(Globals.patientID, DateTime.Today.AddDays(-2));
             SelectedDate = StartDate.AddDays(-2);
             if (_buttonRow.SwitchTo(sender as Button))
             {
@@ -667,6 +673,8 @@ namespace SleepyTeddy.ViewModel
 
         public async void Day4BtnClick(object sender, EventArgs args)
         {
+            IsLoading = true;
+            await objData.GetSleepRecordsSpecificDayViewAsync(Globals.patientID, DateTime.Today.AddDays(-3));
             SelectedDate = StartDate.AddDays(-3);
             if (_buttonRow.SwitchTo(sender as Button))
             {
@@ -676,6 +684,8 @@ namespace SleepyTeddy.ViewModel
 
         public async void Day3BtnClick(object sender, EventArgs args)
         {
+            IsLoading = true;
+            await objData.GetSleepRecordsSpecificDayViewAsync(Globals.patientID, DateTime.Today.AddDays(-4));
             SelectedDate = StartDate.AddDays(-4);
             if (_buttonRow.SwitchTo(sender as Button))
             {
@@ -685,6 +695,8 @@ namespace SleepyTeddy.ViewModel
 
         public async void Day2BtnClick(object sender, EventArgs args)
         {
+            IsLoading = true;
+            await objData.GetSleepRecordsSpecificDayViewAsync(Globals.patientID, DateTime.Today.AddDays(-5));
             SelectedDate = StartDate.AddDays(-5);
             if (_buttonRow.SwitchTo(sender as Button))
             {
@@ -694,6 +706,8 @@ namespace SleepyTeddy.ViewModel
 
         public async void Day1BtnClick(object sender, EventArgs args)
         {
+            IsLoading = true;
+            await objData.GetSleepRecordsSpecificDayViewAsync(Globals.patientID, DateTime.Today.AddDays(-6));
             SelectedDate = StartDate.AddDays(-6);
             if (_buttonRow.SwitchTo(sender as Button))
             {
