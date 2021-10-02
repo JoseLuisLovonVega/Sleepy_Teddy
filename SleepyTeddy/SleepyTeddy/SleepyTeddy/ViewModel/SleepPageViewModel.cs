@@ -220,9 +220,8 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             Debug.WriteLine("Cantidad de sleep records en la BD local: " + SleepInfo2.Count());
-            //await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
+            await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
             Debug.WriteLine("Cantidad de sleep records en la BD Firebase: " + objData.ListSleepRecords.Count());
-            //listSleepRecordsLocalDB = new List<SleepRecordsView>();
             for (int k = 0; k > -7; k--)
             {
                 SelectedDate2 = StartDate2.AddDays(k);
@@ -252,7 +251,7 @@ namespace SleepyTeddy.ViewModel
                                         Kind = (int)data[j].SleepType
                                     });
                                 }
-                                if (((List<SleepRecordsView>)_sleepRepository.GetAll()).Exists(x => x.Key == data[j].Id) == false)
+                                if (objData.ListSleepRecords.Exists(x => x.Key == data[j].Id) == false)
                                 {
                                     await CrossCloudFirestore.Current
                                          .Instance
