@@ -292,7 +292,7 @@ namespace SleepyTeddy.ViewModel
                         {
                             foreach (var SWDiary in objData.ListSleepWakeDiaries)
                             {
-                                if (DateTime.Now.AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
+                                if (DateTime.Today.AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
                                 {
                                     verificacion = 1;
                                 }
@@ -327,7 +327,7 @@ namespace SleepyTeddy.ViewModel
 
                             dia = contador - 1;
 
-                            Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Now.AddDays(contador - 1).ToString("dd/MM/yy"));
+                            Debug.WriteLine("Se logró obtener todos los sleep records del paciente del día: " + DateTime.Today.AddDays(contador - 1).ToString("dd/MM/yy"));
                             //Ordenar de la más antigua a la más reciente
 
                             foreach (var sleepRecord in Globals.listSleepRecordsGlobal)
