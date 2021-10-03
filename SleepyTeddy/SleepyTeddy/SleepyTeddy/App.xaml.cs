@@ -24,7 +24,7 @@ namespace SleepyTeddy
             var database = new Database();
             Globals.BuildGlobals(new HeartrateRepository(database), new SleepRepository(database), new StepsRepository(database), database);
             //database.EmptyDatabase();
-            MainPage = new NavigationPage(new Wearable());
+            MainPage = new NavigationPage(new MiCuentaPaciente());
             //MainPage = new NavigationPage(new MainPageLogin());
         }
 
