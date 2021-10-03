@@ -234,7 +234,7 @@ namespace SleepyTeddy.ViewModel
                         List<Sleep> data = sleepData.Where(x => x.DateTime.Hour == hour).ToList();
                         for (int j = 0; j < 60; j++)
                         {
-                            if (data.ElementAt(j) != null) //ElementAtOrDefault
+                            if (data.ElementAtOrDefault(j) != null)
                             {
                                 if (data[j].SleepType == SleepType.Awake || data[j].SleepType == SleepType.Sleep)
                                 {
@@ -266,12 +266,12 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
+            Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
         }
         public async void CreateSleepWakeDiaries()
         {
             try
             {
-                CreateSleepRecords();
                 Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
                 if (Globals.listSleepRecordsGlobal.Count > 0)
                 {
@@ -292,7 +292,7 @@ namespace SleepyTeddy.ViewModel
                         {
                             foreach (var SWDiary in objData.ListSleepWakeDiaries)
                             {
-                                if (DateTime.Now.AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
+                                if (SWDiary.CreatedDate_S == DateTime.Now.AddDays(contador - 1).Date.ToString("dd/MM/yy"))
                                 {
                                     verificacion = 1;
                                 }
