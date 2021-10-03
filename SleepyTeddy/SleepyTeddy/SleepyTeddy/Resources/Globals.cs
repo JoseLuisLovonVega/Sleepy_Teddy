@@ -36,6 +36,7 @@ namespace SleepyTeddy.Resources
             SamplesService = new SamplesService(HeartrateRepository, StepsRepository, SleepRepository);
             DevicePageViewModel = new DevicePageViewModel();
             MiCuentaPacienteViewModel = new MiCuentaPacienteViewModel();
+            listSleepRecordsGlobal = new List<SleepRecordsView>();
             SleepPageViewModel = new SleepPageViewModel(SleepRepository);
         }
     }
