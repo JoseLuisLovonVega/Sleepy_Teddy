@@ -237,7 +237,7 @@ namespace SleepyTeddy.ViewModel
                         {
                             if (data.ElementAt(j) != null) //ElementAtOrDefault
                             {
-                                if (data[j].SleepType == SleepType.Awake || data[j].SleepType == SleepType.Sleep)
+                                if (data.ElementAt(j).SleepType != SleepType.Empty)
                                 {
                                     Globals.listSleepRecordsGlobal.Add(new SleepRecordsView
                                     {
