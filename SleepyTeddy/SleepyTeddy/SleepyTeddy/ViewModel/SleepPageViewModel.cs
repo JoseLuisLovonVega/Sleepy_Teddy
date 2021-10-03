@@ -216,7 +216,7 @@ namespace SleepyTeddy.ViewModel
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             Debug.WriteLine("Cantidad de sleep records en la BD local: " + SleepInfo2.Count());
-            //await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
+            await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
             //Debug.WriteLine("Cantidad de sleep records en la BD Firebase: " + objData.ListSleepRecords.Count());
             for (int k = 0; k > -7; k--)
             {
@@ -247,8 +247,8 @@ namespace SleepyTeddy.ViewModel
                                         Kind = (int)data[j].SleepType
                                     });
                                 }
-                                //if (objData.ListSleepRecords.Exists(x => x.Key == data[j].Id) == false)
-                                //{
+                                if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == data[j].DateTime) == false)
+                                {
                                     await CrossCloudFirestore.Current
                                          .Instance
                                          .Collection("SleepRecords")
@@ -259,7 +259,7 @@ namespace SleepyTeddy.ViewModel
                                              DateTimeHour = data[j].DateTime.AddHours(-5),
                                              Kind = (int)data[j].SleepType
                                          });
-                                //}
+                                }
                             }
                         }
 
