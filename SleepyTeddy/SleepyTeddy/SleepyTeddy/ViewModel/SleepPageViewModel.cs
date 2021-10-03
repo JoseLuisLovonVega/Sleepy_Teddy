@@ -212,7 +212,6 @@ namespace SleepyTeddy.ViewModel
 
         public async void CreateSleepRecords()
         {
-            Globals.listSleepRecordsGlobal = new List<SleepRecordsView>();
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             Debug.WriteLine("Cantidad de sleep records en la BD local: " + SleepInfo2.Count());
@@ -246,6 +245,7 @@ namespace SleepyTeddy.ViewModel
                                         DateTimeHour = data[j].DateTime,
                                         Kind = (int)data[j].SleepType
                                     });
+                                    Debug.WriteLine("Cantidad de sleep records en el listSleepRecordsGlobal: " + Globals.listSleepRecordsGlobal.Count());
                                 }
                                 /*if (objData.ListSleepRecords.Exists(x => x.Key == data[j].Id) == false)
                                 {
