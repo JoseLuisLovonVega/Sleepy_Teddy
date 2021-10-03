@@ -235,7 +235,7 @@ namespace SleepyTeddy.ViewModel
                         List<Sleep> data = sleepData.Where(x => x.DateTime.Hour == hour).ToList();
                         for (int j = 0; j < 60; j++)
                         {
-                            if (data.ElementAt(j) != null) //ElementAtOrDefault
+                            if (data.ElementAtOrDefault(j) != null)
                             {
                                 if (data.ElementAt(j).SleepType != SleepType.Empty)
                                 {
