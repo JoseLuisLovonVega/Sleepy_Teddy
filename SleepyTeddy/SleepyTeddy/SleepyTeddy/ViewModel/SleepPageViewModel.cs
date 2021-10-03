@@ -247,8 +247,8 @@ namespace SleepyTeddy.ViewModel
                                         Kind = (int)data[j].SleepType
                                     });
                                 }
-                                /*if (objData.ListSleepRecords.Exists(x => x.Key == data[j].Id) == false)
-                                {
+                                //if (objData.ListSleepRecords.Exists(x => x.Key == data[j].Id) == false)
+                                //{
                                     await CrossCloudFirestore.Current
                                          .Instance
                                          .Collection("SleepRecords")
@@ -259,7 +259,7 @@ namespace SleepyTeddy.ViewModel
                                              DateTimeHour = data[j].DateTime.AddHours(-5),
                                              Kind = (int)data[j].SleepType
                                          });
-                                }*/
+                                //}
                             }
                         }
 
