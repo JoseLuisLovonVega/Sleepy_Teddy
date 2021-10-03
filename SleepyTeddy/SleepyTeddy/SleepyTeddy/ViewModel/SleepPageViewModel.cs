@@ -246,8 +246,8 @@ namespace SleepyTeddy.ViewModel
                                         DateTimeHour = data[j].DateTime,
                                         Kind = (int)data[j].SleepType
                                     });
+                                    Debug.WriteLine("Cantidad de sleep records en el listSleepRecordsGlobal: " + Globals.listSleepRecordsGlobal.Count);
                                 }
-                                Debug.WriteLine("Cantidad de sleep records en el listSleepRecordsGlobal: " + Globals.listSleepRecordsGlobal.Count);
                                 if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == data[j].DateTime) == false)
                                 {
                                     await CrossCloudFirestore.Current
