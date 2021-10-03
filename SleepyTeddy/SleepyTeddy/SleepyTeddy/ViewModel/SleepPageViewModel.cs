@@ -237,7 +237,7 @@ namespace SleepyTeddy.ViewModel
                         {
                             if (data.ElementAtOrDefault(j) != null)
                             {
-                                if (data.ElementAt(j).SleepType != SleepType.Empty)
+                                if (data.ElementAt(j).SleepType == SleepType.Awake || data.ElementAt(j).SleepType == SleepType.Sleep)
                                 {
                                     Globals.listSleepRecordsGlobal.Add(new SleepRecordsView
                                     {
@@ -266,12 +266,12 @@ namespace SleepyTeddy.ViewModel
                     }
                 }
             }
+            Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
         }
         public async void CreateSleepWakeDiaries()
         {
             try
             {
-                CreateSleepRecords();
                 Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
                 if (Globals.listSleepRecordsGlobal.Count > 0)
                 {
@@ -292,7 +292,7 @@ namespace SleepyTeddy.ViewModel
                         {
                             foreach (var SWDiary in objData.ListSleepWakeDiaries)
                             {
-                                if (DateTime.Today.AddDays(contador - 1).Date.ToString("dd/MM/yy") == SWDiary.CreatedDate_S)
+                                if (SWDiary.CreatedDate_S == DateTime.Today.AddDays(contador - 1).Date.ToString("dd/MM/yy"))
                                 {
                                     verificacion = 1;
                                 }
