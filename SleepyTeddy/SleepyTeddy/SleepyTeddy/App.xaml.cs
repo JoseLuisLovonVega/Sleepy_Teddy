@@ -10,6 +10,7 @@ using Plugin.Permissions.Abstractions;
 using SleepyTeddy.Data.Repository;
 using SleepyTeddy.Data;
 using System.Diagnostics;
+using SleepyTeddy.Views.PatientViews;
 
 namespace SleepyTeddy
 {
@@ -23,7 +24,8 @@ namespace SleepyTeddy
             var database = new Database();
             Globals.BuildGlobals(new HeartrateRepository(database), new SleepRepository(database), new StepsRepository(database), database);
             //database.EmptyDatabase();
-            MainPage = new NavigationPage(new MainPageLogin());
+            MainPage = new NavigationPage(new Wearable());
+            //MainPage = new NavigationPage(new MainPageLogin());
         }
 
         protected override void OnStart()

@@ -89,7 +89,7 @@ namespace SleepyTeddy.Views
         {
             absoluteLayout = new AbsoluteLayout();
             BuildPageBasics(absoluteLayout, this);
-            await getPatient();
+            //await getPatient();
             PageBuilder.AddLabel(absoluteLayout, NombreCompleto, 0.5, 0.07, Color.Black, "", 22);
             PageBuilder.AddAccountImage(absoluteLayout);
             #region define fetch progressbar 

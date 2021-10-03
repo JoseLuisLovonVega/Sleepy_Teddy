@@ -31,7 +31,7 @@ namespace SleepyTeddy.Views.PatientViews
         public Wearable()
         {
             InitializeComponent(); 
-            getPatient();
+            //getPatient();
             //devicePageViewModel = new DevicePageViewModel();
             //BindingContext = devicePageViewModel;
             BuildPage();

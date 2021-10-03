@@ -242,7 +242,7 @@ namespace SleepyTeddy.ViewModel
                                     Globals.listSleepRecordsGlobal.Add(new SleepRecordsView
                                     {
                                         Key = data[j].Id,
-                                        Patient_ID = LoginViewModel.Patient_ID,
+                                       // Patient_ID = LoginViewModel.Patient_ID,
                                         DateTimeHour = data[j].DateTime,
                                         Kind = (int)data[j].SleepType
                                     });
