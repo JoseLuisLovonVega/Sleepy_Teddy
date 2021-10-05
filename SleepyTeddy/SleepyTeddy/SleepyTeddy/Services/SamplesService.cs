@@ -63,7 +63,7 @@ namespace SleepyTeddy.Services
                 Globals.MiCuentaPacienteViewModel.ShowFetchProgress(calculatedProgress);
             });
         }
-        private async void FillDatabase(List<ActivitySample> samples)
+        private void FillDatabase(List<ActivitySample> samples)
         {
             Debug.WriteLine("Filling DB with samples: " + samples.Count);
             Globals.Database.Instance.BeginTransaction();
@@ -77,9 +77,8 @@ namespace SleepyTeddy.Services
             }
             Globals.Database.Instance.Commit();
             Debug.WriteLine("DB filled with samples");
-            Globals.SleepPageViewModel.CreateSleepRecords2();
-            await Globals.SleepPageViewModel.CreateSleepRecords();
-            await Globals.SleepPageViewModel.CreateSleepWakeDiaries();
+            Globals.SleepPageViewModel.CreateSleepRecords();
+            Globals.SleepPageViewModel.CreateSleepWakeDiaries();
             Device.BeginInvokeOnMainThread(delegate
             {
                 Globals.MiCuentaPacienteViewModel.IsLoading = false;
