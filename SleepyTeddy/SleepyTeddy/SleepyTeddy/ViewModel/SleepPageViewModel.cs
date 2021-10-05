@@ -477,7 +477,7 @@ namespace SleepyTeddy.ViewModel
                                             }
                                         }
                                     }
-                                    if (sleepWakeDiary.GoToSleepTime == DateTime.MinValue)
+                                    if (sleepWakeDiary.GoToSleepTime.ToString("dd/MM/yyyy") == DateTime.MinValue.ToString("dd/MM/yyyy"))
                                     {
                                         for (int i = 1; i < listSleepRecords2.Count; i++)
                                         {
@@ -493,20 +493,20 @@ namespace SleepyTeddy.ViewModel
                                     //Calcular a qué hora se durmió el paciente el día anterior al día a evaluar
                                     if (listSleepRecords1.Count > 0)
                                     {
-                                        for (int i = 2; i < listSleepRecords1.Count; i++)
+                                        for (int i = 1; i < listSleepRecords1.Count; i++)
                                         {
-                                            if (listSleepRecords1.ElementAt(i - 2).Kind == 0 && listSleepRecords1.ElementAt(i - 1).Kind == 1 && listSleepRecords1.ElementAt(i).Kind == 1 && count == 0)
+                                            if (listSleepRecords1.ElementAt(i - 1).Kind == 0 && listSleepRecords1.ElementAt(i).Kind == 1 && count == 0)
                                             {
                                                 sleepWakeDiary.SleepTime = listSleepRecords1.ElementAt(i - 1).DateTimeHour;
                                                 count = 1;
                                             }
                                         }
                                     }
-                                    if (sleepWakeDiary.SleepTime == DateTime.MinValue)
+                                    if (sleepWakeDiary.SleepTime.ToString("dd/MM/yyyy") == DateTime.MinValue.ToString("dd/MM/yyyy"))
                                     {
-                                        for (int i = 2; i < listSleepRecords2.Count; i++)
+                                        for (int i = 1; i < listSleepRecords2.Count; i++)
                                         {
-                                            if (listSleepRecords2.ElementAt(i - 2).Kind == 0 && listSleepRecords2.ElementAt(i - 1).Kind == 1 && listSleepRecords2.ElementAt(i).Kind == 1 && count == 0)
+                                            if (listSleepRecords2.ElementAt(i - 1).Kind == 0 && listSleepRecords2.ElementAt(i).Kind == 1 && count == 0)
                                             {
                                                 sleepWakeDiary.SleepTime = listSleepRecords2.ElementAt(i - 1).DateTimeHour;
                                                 count = 1;
@@ -521,9 +521,9 @@ namespace SleepyTeddy.ViewModel
                                     Debug.WriteLine("TimeToFallSleep: " + sleepWakeDiary.TimeToFallSleep);
                                     //Calcular a que horá se despertó el paciente, el criterio es si el sleep record es de tipo 0 y si
                                     //el sleep record registrado antes de éste es 1 o 2
-                                    for (int i = 2; i < listSleepRecords2.Count; i++)
+                                    for (int i = 1; i < listSleepRecords2.Count; i++)
                                     {
-                                        if (listSleepRecords2.ElementAt(i - 2).Kind == 1 && listSleepRecords2.ElementAt(i - 1).Kind == 1 && listSleepRecords2.ElementAt(i).Kind == 0)
+                                        if (listSleepRecords2.ElementAt(i - 1).Kind == 1 && listSleepRecords2.ElementAt(i).Kind == 0)
                                         {
                                             sleepWakeDiary.WakeUpTime = listSleepRecords2.ElementAt(i).DateTimeHour;
                                         }
@@ -583,8 +583,8 @@ namespace SleepyTeddy.ViewModel
                                     Debug.WriteLine("SleepEfficiency: " + sleepWakeDiary.SleepEfficiency);
 
                                     //Se crea el diario de sueño-vigilia
-                                    if (sleepWakeDiary.SleepTime != DateTime.MinValue && sleepWakeDiary.CreatedDate != DateTime.MinValue &&
-                                    sleepWakeDiary.GoToSleepTime != DateTime.MinValue && sleepWakeDiary.WakeUpTime != DateTime.MinValue) {
+                                    if (sleepWakeDiary.SleepTime.ToString("dd/MM/yyyy") != DateTime.MinValue.ToString("dd/MM/yyyy") && sleepWakeDiary.CreatedDate.ToString("dd/MM/yyyy") != DateTime.MinValue.ToString("dd/MM/yyyy") &&
+                                    sleepWakeDiary.GoToSleepTime.ToString("dd/MM/yyyy") != DateTime.MinValue.ToString("dd/MM/yyyy") && sleepWakeDiary.WakeUpTime.ToString("dd/MM/yyyy") != DateTime.MinValue.ToString("dd/MM/yyyy")) {
                                         await CrossCloudFirestore.Current
                                                   .Instance
                                                   .Collection("SleepWakeDiaries")
