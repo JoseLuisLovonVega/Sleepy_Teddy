@@ -221,7 +221,7 @@ namespace SleepyTeddy.ViewModel
             {
                 SelectedDate2 = StartDate2.AddDays(k);
                 List<Sleep> sleepData = GetCurrentSleep2();
-                Debug.WriteLine("Cantidad de sleep records en la BD local del Día " + DateTime.Today.AddDays(k) + ": " + SleepInfo2.Count());
+                Debug.WriteLine("Cantidad de sleep records en la BD local del Día " + DateTime.Today.AddDays(k) + ": " + sleepData.Count());
                 if (sleepData.Count() > 0)
                 {
                     Debug.WriteLine("Se analiza el Día: " + StartDate2.AddDays(k));
@@ -570,9 +570,16 @@ namespace SleepyTeddy.ViewModel
                                     Debug.WriteLine("HoursSlept: " + sleepWakeDiary.HoursSlept);
 
                                     //Y con ello se calcula la eficiencia del sueño del diario de sueño-vigilia
-                                    sleepWakeDiary.SleepEfficiency = sleepWakeDiary.HoursSlept / sleepWakeDiary.HoursTotal * 100;
-                                    sleepWakeDiary.SleepEfficiency = Math.Round(sleepWakeDiary.SleepEfficiency, 2);
-                                    Debug.WriteLine("Se calculó la eficiencia del sueño del diario de sueño-vigilia");
+                                    if (sleepWakeDiary.HoursTotal != 0)
+                                    {
+                                        sleepWakeDiary.SleepEfficiency = sleepWakeDiary.HoursSlept / sleepWakeDiary.HoursTotal * 100;
+                                        sleepWakeDiary.SleepEfficiency = Math.Round(sleepWakeDiary.SleepEfficiency, 2);
+                                    }
+                                    else
+                                    {
+                                        sleepWakeDiary.SleepEfficiency = 0;
+                                    }
+                                        Debug.WriteLine("Se calculó la eficiencia del sueño del diario de sueño-vigilia");
                                     Debug.WriteLine("SleepEfficiency: " + sleepWakeDiary.SleepEfficiency);
 
                                     //Se crea el diario de sueño-vigilia
