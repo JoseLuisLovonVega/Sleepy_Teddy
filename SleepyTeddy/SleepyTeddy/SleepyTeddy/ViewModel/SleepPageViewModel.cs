@@ -583,24 +583,27 @@ namespace SleepyTeddy.ViewModel
                                     Debug.WriteLine("SleepEfficiency: " + sleepWakeDiary.SleepEfficiency);
 
                                     //Se crea el diario de sueño-vigilia
-                                    await CrossCloudFirestore.Current
-                                              .Instance
-                                              .Collection("SleepWakeDiaries")
-                                              .AddAsync(new SleepWakeDiary
-                                              {
-                                                  SleepWakeDiary_ID = Guid.NewGuid().ToString().Replace("-", ""),
-                                                  Patient_ID = LoginViewModel.Patient_ID,
-                                                  CreatedDate = sleepWakeDiary.CreatedDate,
-                                                  SleepTime = sleepWakeDiary.SleepTime.AddHours(-5),
-                                                  WakeUpTime = sleepWakeDiary.WakeUpTime.AddHours(-5),
-                                                  GoToSleepTime = sleepWakeDiary.GoToSleepTime.AddHours(-5),
-                                                  TimeToFallSleep = sleepWakeDiary.TimeToFallSleep,
-                                                  HoursSlept = sleepWakeDiary.HoursSlept,
-                                                  HoursTotal = sleepWakeDiary.HoursTotal,
-                                                  SleepEfficiency = sleepWakeDiary.SleepEfficiency
-                                              });
-                                    Debug.WriteLine("Se registró el diario de sueño-vigilia del día a evaluar: Día: " + (contador - 1));
-                                    verificacion2++;
+                                    if (sleepWakeDiary.SleepTime != DateTime.MinValue && sleepWakeDiary.CreatedDate != DateTime.MinValue &&
+                                    sleepWakeDiary.GoToSleepTime != DateTime.MinValue && sleepWakeDiary.WakeUpTime != DateTime.MinValue) {
+                                        await CrossCloudFirestore.Current
+                                                  .Instance
+                                                  .Collection("SleepWakeDiaries")
+                                                  .AddAsync(new SleepWakeDiary
+                                                  {
+                                                      SleepWakeDiary_ID = Guid.NewGuid().ToString().Replace("-", ""),
+                                                      Patient_ID = LoginViewModel.Patient_ID,
+                                                      CreatedDate = sleepWakeDiary.CreatedDate,
+                                                      SleepTime = sleepWakeDiary.SleepTime.AddHours(-5),
+                                                      WakeUpTime = sleepWakeDiary.WakeUpTime.AddHours(-5),
+                                                      GoToSleepTime = sleepWakeDiary.GoToSleepTime.AddHours(-5),
+                                                      TimeToFallSleep = sleepWakeDiary.TimeToFallSleep,
+                                                      HoursSlept = sleepWakeDiary.HoursSlept,
+                                                      HoursTotal = sleepWakeDiary.HoursTotal,
+                                                      SleepEfficiency = sleepWakeDiary.SleepEfficiency
+                                                  });
+                                        Debug.WriteLine("Se registró el diario de sueño-vigilia del día a evaluar: Día: " + (contador - 1));
+                                        verificacion2++;
+                                    }
                                 }
                                 else
                                 {
