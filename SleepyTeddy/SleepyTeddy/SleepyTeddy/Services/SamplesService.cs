@@ -77,8 +77,8 @@ namespace SleepyTeddy.Services
             }
             Globals.Database.Instance.Commit();
             Debug.WriteLine("DB filled with samples");
-            await Globals.SleepPageViewModel.CreateSleepRecords();
             Globals.SleepPageViewModel.CreateSleepRecords2();
+            await Globals.SleepPageViewModel.CreateSleepRecords();
             await Globals.SleepPageViewModel.CreateSleepWakeDiaries();
             Device.BeginInvokeOnMainThread(delegate
             {
