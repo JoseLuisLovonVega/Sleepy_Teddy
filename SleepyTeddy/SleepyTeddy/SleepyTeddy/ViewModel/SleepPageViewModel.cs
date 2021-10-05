@@ -210,13 +210,58 @@ namespace SleepyTeddy.ViewModel
             OrderBy(x => x.DateTime).ToList();
         }
 
-        public async void CreateSleepRecords()
+        public async Task CreateSleepRecords()
         {
             Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
             SleepInfo2 = _sleepRepository.GetAll();
             Debug.WriteLine("Cantidad de sleep records en la BD local: " + SleepInfo2.Count());
             await objData.GetSleepRecordsViewAsync(LoginViewModel.Patient_ID);
             Debug.WriteLine("Cantidad de sleep records en la BD Firebase: " + objData.ListSleepRecords.Count());
+            for (int k = 0; k > -7; k--)
+            {
+                SelectedDate2 = StartDate2.AddDays(k);
+                List<Sleep> sleepData = GetCurrentSleep2();
+                Debug.WriteLine("Cantidad de sleep records en la BD local del Día " + DateTime.Today.AddDays(k) + ": " + SleepInfo2.Count());
+                if (sleepData.Count() > 0)
+                {
+                    Debug.WriteLine("Se analiza el Día: " + StartDate2.AddDays(k));
+                    //For each hour
+                    for (int i = 20; i < 36; i++)
+                    {
+                        int hour = i;
+                        if (i >= 24) hour -= 24;
+
+                        //Get sleep data for that hour
+                        List<Sleep> data = sleepData.Where(x => x.DateTime.Hour == hour).ToList();
+                        for (int j = 0; j < 60; j++)
+                        {
+                            if (data.ElementAtOrDefault(j) != null)
+                            {
+                                if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == data[j].DateTime) == false)
+                                {
+                                    await CrossCloudFirestore.Current
+                                         .Instance
+                                         .Collection("SleepRecords")
+                                         .AddAsync(new SleepRecord
+                                         {
+                                             SleepRecord_ID = data[j].Id,
+                                             Patient_ID = LoginViewModel.Patient_ID,
+                                             DateTimeHour = data[j].DateTime.AddHours(-5),
+                                             Kind = (int)data[j].SleepType
+                                         });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void CreateSleepRecords2()
+        {
+            Debug.WriteLine("Se inicia el proceso para agregar los sleeprecords a la lista designada");
+            SleepInfo2 = _sleepRepository.GetAll();
+            Debug.WriteLine("Cantidad de sleep records en la BD local: " + SleepInfo2.Count());
             for (int k = 0; k > -7; k--)
             {
                 SelectedDate2 = StartDate2.AddDays(k);
@@ -248,19 +293,6 @@ namespace SleepyTeddy.ViewModel
                                     });
                                     Debug.WriteLine("Cantidad de sleep records en el listSleepRecordsGlobal: " + Globals.listSleepRecordsGlobal.Count);
                                 }
-                                if (objData.ListSleepRecords.Exists(x => x.DateTimeHour == data[j].DateTime) == false)
-                                {
-                                    await CrossCloudFirestore.Current
-                                         .Instance
-                                         .Collection("SleepRecords")
-                                         .AddAsync(new SleepRecord
-                                         {
-                                             SleepRecord_ID = data[j].Id,
-                                             Patient_ID = LoginViewModel.Patient_ID,
-                                             DateTimeHour = data[j].DateTime.AddHours(-5),
-                                             Kind = (int)data[j].SleepType
-                                         });
-                                }
                             }
                         }
                     }
@@ -268,11 +300,11 @@ namespace SleepyTeddy.ViewModel
             }
             Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
         }
-        public async void CreateSleepWakeDiaries()
+        public async Task CreateSleepWakeDiaries()
         {
             try
             {
-                Debug.WriteLine("Cantidad de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
+                Debug.WriteLine("CANTIDAD de sleep records agregados a la lista para crear diarios de sueño-vigilia: " + Globals.listSleepRecordsGlobal.Count);
                 if (Globals.listSleepRecordsGlobal.Count > 0)
                 {
                     Globals.listSleepRecordsGlobal = Globals.listSleepRecordsGlobal.OrderBy(o => o.DateTimeHour).ToList();
