@@ -313,7 +313,7 @@ namespace SleepyTeddy.ViewModel
                 {
                     SelectedDate2 = StartDate2.AddDays(k);
                     List<Sleep> sleepData = GetCurrentSleep2();
-                    Debug.WriteLine("Cantidad de sleep records en la BD local del Día " + DateTime.Today.AddDays(k) + ": " + SleepInfo2.Count());
+                    Debug.WriteLine("Cantidad de sleep records en la BD local del Día " + DateTime.Today.AddDays(k) + ": " + sleepData.Count());
                     if (sleepData.Count() > 0)
                     {
                         Debug.WriteLine("Se analiza el Día: " + StartDate2.AddDays(k));
