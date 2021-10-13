@@ -13,7 +13,7 @@ namespace SleepyTeddy.Resources
         public static MiCuentaPacienteViewModel MiCuentaPacienteViewModel;
         public static DevicePageViewModel DevicePageViewModel;
         public static SleepPageViewModel SleepPageViewModel;
-        public static List<SleepRecordsView> listSleepRecordsGlobal;
+       // public static List<SleepRecordsView> listSleepRecordsGlobal;
         public static double ScreenHeight { get; set; }
         public static double ScreenWidth { get; set; }
         public static string patientID;
@@ -36,7 +36,7 @@ namespace SleepyTeddy.Resources
             SamplesService = new SamplesService(HeartrateRepository, StepsRepository, SleepRepository);
             DevicePageViewModel = new DevicePageViewModel();
             MiCuentaPacienteViewModel = new MiCuentaPacienteViewModel();
-            listSleepRecordsGlobal = new List<SleepRecordsView>();
+            //listSleepRecordsGlobal = new List<SleepRecordsView>();
             SleepPageViewModel = new SleepPageViewModel(SleepRepository);
         }
     }

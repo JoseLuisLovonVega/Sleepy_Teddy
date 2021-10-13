@@ -98,6 +98,8 @@ namespace SleepyTeddy.Views.AdministratorViews
                             .UpdateAsync(questionnaire);
                         }
                     }
+                    await objTableBinding.GetTherapistsAdministratorViewAsync();
+                    await objTableBinding.GetPatientsAdministratorViewAsync();
                 }
                 //Obtener el documento del paciente seleccionado
                 var document = await CrossCloudFirestore.Current
