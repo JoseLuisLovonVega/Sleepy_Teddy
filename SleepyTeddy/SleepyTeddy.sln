@@ -6,13 +6,16 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleepyTeddy.Android", "SleepyTeddy\SleepyTeddy.Android\SleepyTeddy.Android.csproj", "{437C44D3-BC59-49FC-8453-72B401066923}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SleepyTeddy", "SleepyTeddy\SleepyTeddy\SleepyTeddy.csproj", "{60F56486-F04E-451A-8D89-5D779E7D67C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{86A29872-360B-41DD-A362-2C5F21F06B41} = {86A29872-360B-41DD-A362-2C5F21F06B41}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{909EA80B-BBE4-4F09-93A3-06F399A9FFF4}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindesHeartSDK", "..\..\WindesHeartSDK\WindesHeartSDK.csproj", "{AFA3D0DD-27AE-4A68-98F3-0E18AE92E7EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindesHeartSDK", "..\WindesHeartSDK\WindesHeartSDK.csproj", "{86A29872-360B-41DD-A362-2C5F21F06B41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +35,10 @@ Global
 		{60F56486-F04E-451A-8D89-5D779E7D67C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60F56486-F04E-451A-8D89-5D779E7D67C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60F56486-F04E-451A-8D89-5D779E7D67C9}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{AFA3D0DD-27AE-4A68-98F3-0E18AE92E7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFA3D0DD-27AE-4A68-98F3-0E18AE92E7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFA3D0DD-27AE-4A68-98F3-0E18AE92E7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFA3D0DD-27AE-4A68-98F3-0E18AE92E7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86A29872-360B-41DD-A362-2C5F21F06B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86A29872-360B-41DD-A362-2C5F21F06B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86A29872-360B-41DD-A362-2C5F21F06B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86A29872-360B-41DD-A362-2C5F21F06B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
